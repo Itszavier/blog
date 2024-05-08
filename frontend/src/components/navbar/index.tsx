@@ -18,8 +18,8 @@ export default function Navbar() {
         <Link className={style.link} to="#">
           Login
         </Link>
-        <Link className={style.link} to="#">
-          Get Started
+        <Link className={` ${style.link} ${style.get_started_link} `} to="#">
+          Get started
         </Link>
       </div>
     </div>

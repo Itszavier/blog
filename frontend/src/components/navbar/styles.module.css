@@ -17,9 +17,18 @@
   width: fit-content;
   align-items: center;
   gap: 15px;
-  font-size: 15.78px;
+  font-size: 14.78px;
 }
 
 .link {
   color: none;
+  text-decoration: none;
+  color: rgb(7, 7, 7);
+}
+
+.get_started_link {
+  background-color: rgb(14, 13, 13);
+  color: white;
+  padding: 10px;
+  border-radius: 15px;
 }
