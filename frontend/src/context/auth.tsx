@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 
 export const authContext = createContext({
   user: {},
@@ -7,4 +7,8 @@ export const authContext = createContext({
   setloading: () => {},
 });
 
-export function AuthProvider() {}
+export function AuthProvider() {
+  useEffect(() => {}, []);
+
+  return <div></div>;
+}

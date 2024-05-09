@@ -4,6 +4,7 @@ import { Router } from "express";
 import bycrpt from "bcrypt";
 import { generateFromEmail } from "unique-username-generator";
 import jwt from "jsonwebtoken";
+import verifyAuth from "../middleware/checkauth";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -93,5 +94,7 @@ router.post("/login", async (req, res, next) => {
       .json({ message: "Internal server error during registration." });
   }
 });
+
+router.post("/check", verifyAuth);
 
 export default router;
