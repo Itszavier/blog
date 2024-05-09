@@ -15,10 +15,13 @@ export default function Navbar() {
           Membership
         </Link>
 
-        <Link className={style.link} to="#">
+        <Link className={style.link} to="/login">
           Login
         </Link>
-        <Link className={` ${style.link} ${style.get_started_link} `} to="#">
+        <Link
+          className={` ${style.link} ${style.get_started_link} `}
+          to="/signup"
+        >
           Get started
         </Link>
       </div>

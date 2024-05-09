@@ -16,3 +16,9 @@ body {
 #root {
   height: 100%;
 }
+
+:root {
+  --primary: #d6dad8;
+  --secoundary: #cacfcd;
+  --accent: rgb(34, 37, 46);
+}

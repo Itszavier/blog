@@ -14,13 +14,14 @@ router.get("/", (req, res, next) => {
   res.send("welcome to the auth api");
 });
 
-
 router.post("/signup", async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required fields." });
+      return res
+        .status(400)
+        .json({ message: "Email and password are required fields." });
     }
 
     const existingUser = await UserModel.findOne({ email });
@@ -44,17 +45,20 @@ router.post("/signup", async (req, res, next) => {
     res.status(200).json({ message: `Welcome ${username}` });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error during registration." });
+    res
+      .status(500)
+      .json({ message: "Internal server error during registration." });
   }
 });
-
 
 router.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required fields." });
+      return res
+        .status(400)
+        .json({ message: "Email and password are required fields." });
     }
 
     const user = await UserModel.findOne({ email });
@@ -66,14 +70,24 @@ router.post("/login", async (req, res, next) => {
     if (!bycrpt.compareSync(password, user.password)) {
       return res.status(400).json({ message: "Incorrect password" });
     }
-
     const token = jwt.sign({ _id: user._id }, process.env.JWTSECRET as string);
 
-    res.status(200).json({ message: `Welcome back ${user.email}`, token });
-
+    res
+      .status(200)
+      .setHeader("Authorization", token)
+      .json({
+        message: `Welcome back ${user.email}`,
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+        },
+      });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error during registration." });
+    res
+      .status(500)
+      .json({ message: "Internal server error during registration." });
   }
 });
 

@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 
+import authRoutes from "./routes/auth";
 dotenv.config();
 
 mongoose
@@ -14,9 +15,8 @@ mongoose
 const app = express();
 const port = process.env.PORT || 8080;
 
-
-app.use(bodyParser);
-
+app.use(bodyParser.json());
+app.use("/auth", authRoutes);
 app.get("/", (req, res, next) => {
   res.send("hello world");
 });
