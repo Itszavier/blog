@@ -42,7 +42,10 @@ router.post("/signup", async (req, res, next) => {
 
     await createdUser.save();
 
-    res.status(200).json({ message: `Welcome ${username}` });
+    res.status(200).json({
+      message: `Welcome ${username}`,
+      user: { name: createdUser.name, email: createdUser.email },
+    });
   } catch (error) {
     console.error(error);
     res
