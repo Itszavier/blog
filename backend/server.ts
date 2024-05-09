@@ -18,6 +18,7 @@ const port = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
 app.use("/auth", authRoutes);
+app.use(cors({ credentials: true }));
 app.get("/", (req, res, next) => {
   res.send("hello world");
 });

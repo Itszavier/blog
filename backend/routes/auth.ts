@@ -76,9 +76,9 @@ router.post("/login", async (req, res, next) => {
     }
     const token = jwt.sign({ _id: user._id }, process.env.JWTSECRET as string);
 
+    res.setHeader("Authorization", token);
+
     res
-      .status(200)
-      .setHeader("Authorization", token)
       .json({
         message: `Welcome back ${user.email}`,
         user: {
@@ -86,7 +86,8 @@ router.post("/login", async (req, res, next) => {
           name: user.name,
           email: user.email,
         },
-      });
+      })
+      .status(200);
   } catch (error) {
     console.error(error);
     res

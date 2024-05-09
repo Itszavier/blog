@@ -6,8 +6,6 @@ dotenv.config();
 
 const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers["Authorization"];
-  console.log(token);
-  console.log(req.headers);
 
   if (!token) {
     return res.status(400).json({
