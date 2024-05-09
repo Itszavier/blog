@@ -4,7 +4,7 @@
   padding: 10px;
   display: flex;
   align-items: center;
-  background-color: #ffffff;
+  background-color: #d6dad8;
   justify-content: space-between;
   position: fixed;
   top: 0;
@@ -24,7 +24,7 @@
 .link {
   color: none;
   text-decoration: none;
-  color: rgb(41, 40, 40);
+  color: rgb(24, 24, 24);
 }
 
 .get_started_link {
@@ -35,5 +35,5 @@
 }
 
 .logo_text {
-  color: rgb(20, 20, 20);
+  color: rgb(5, 5, 5);
 }
