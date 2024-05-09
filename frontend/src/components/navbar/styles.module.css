@@ -4,12 +4,13 @@
   padding: 10px;
   display: flex;
   align-items: center;
-  background-color: #e6e6e6;
+  background-color: #ffffff;
   justify-content: space-between;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 10;
+  color: rgb(0, 0, 0);
 }
 
 .link_container {
@@ -23,12 +24,16 @@
 .link {
   color: none;
   text-decoration: none;
-  color: rgb(7, 7, 7);
+  color: rgb(41, 40, 40);
 }
 
 .get_started_link {
-  background-color: rgb(14, 13, 13);
+  background-color: rgb(75, 75, 75);
   color: white;
   padding: 10px;
   border-radius: 15px;
+}
+
+.logo_text {
+  color: rgb(20, 20, 20);
 }
