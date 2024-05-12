@@ -30,7 +30,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(cors({ credentials: true }));
+app.use(
+  cors({
+    origin: ["https://nht55j-5173.csb.app", "http://localhost:5173"],
+    credentials: true,
+  }),
+);
 app.use(bodyParser.json());
 
 app.use("/auth", authRoutes);

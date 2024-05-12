@@ -16,7 +16,7 @@ export function useModal() {
 }
 
 export function ModalProvider(props: any) {
-  const [authModal, setAuthModal] = useState(true);
+  const [authModal, setAuthModal] = useState(false);
 
   return (
     <modalContext.Provider value={{ authModal, setAuthModal }}>

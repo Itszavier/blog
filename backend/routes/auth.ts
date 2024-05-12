@@ -16,9 +16,8 @@ router.get("/login/google", passport.authenticate("google"));
 
 router.get(
   "/google/redirect",
-  passport.authenticate("google"),
-  (req, res, next) => {
-    res.json(req.user);
-  },
+  passport.authenticate("google", {
+    successRedirect: "https://nht55j-5173.csb.app/profile",
+  }),
 );
 export default router;
