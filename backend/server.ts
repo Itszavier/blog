@@ -6,6 +6,8 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import passport from "passport";
 import authRoutes from "./routes/auth";
+import userRoutes from "./routes/user";
+
 import { IUser } from "./model/user";
 import session from "express-session";
 import "./stratetgies/google";
@@ -13,14 +15,11 @@ import errorHandler from "./middleware/error";
 
 dotenv.config();
 
-
-
 declare global {
   namespace Express {
     interface User extends IUser {}
   }
 }
-
 
 mongoose
   .connect(process.env.DB_URI as string)
@@ -51,6 +50,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 
 app.get("/", (req, res, next) => {
   res.send("hello world");

@@ -14,12 +14,10 @@ const router = Router();
 
 router.get("/login/google", passport.authenticate("google"));
 
-router.get(
-  "/google/redirect",
-  passport.authenticate("google", {
-    successRedirect: "http://localhost:5173/profile",
-  })
-);
+router.get("/google/redirect", passport.authenticate("google"), (req, res, next) => {
+  res.redirect(`http://localhost:5173/profile/${req.user?._id}`);
+});
+
 
 router.get("/check", verifyAuth, (req, res, next) => {
   res.status(201).json({

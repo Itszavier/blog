@@ -1,3 +1,34 @@
+/** @format */
+
 .container {
   padding-top: 60px;
+  background-color: var(--secoundary);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.defualt_banner {
+  width: 100%;
+  background: linear-gradient(to right, lightblue, rgb(90, 186, 218));
+  display: inline-block;
+  height: 200px;
+}
+
+.wrapper {
+  width: 90%;
+}
+
+.header {
+}
+
+.content_wrapper {
+  background-color: #acaaaa;
+  padding: 10px;
+  display: flex;
+}
+
+.profile_img {
+  width: 100px;
+  height: 100px;
 }
