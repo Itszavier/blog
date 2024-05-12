@@ -17,7 +17,7 @@ passport.use(
     async function (accessToken, RefresshToken, profile, done) {
       try {
         if (!profile.emails || profile.emails.length <= 0) {
-          return done(new Error("Can authenticate an account with no email"));
+          return done(new Error("Can not authenticate an account with no email"));
         }
 
         const userEmail = profile.emails[0].value;

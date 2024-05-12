@@ -1,9 +1,26 @@
 /** @format */
 
 import { Schema, SchemaTypes, model } from "mongoose";
+import generateUniqueId from "generate-unique-id";
 
-const userSchema = new Schema({
+export interface IUser extends Document {
+  _id: string;
+  name: string;
+  avater: string;
+  email: string;
+}
+
+const userSchema = new Schema<IUser>({
+  _id: {
+    type: SchemaTypes.String,
+    default: generateUniqueId({
+      length: 17,
+      excludeSymbols: ["0", "-"],
+    }),
+  },
+
   name: { type: SchemaTypes.String, required: true },
+  
   avater: {
     type: SchemaTypes.String,
     default:
@@ -13,6 +30,6 @@ const userSchema = new Schema({
   email: { type: SchemaTypes.String, required: true },
 });
 
-const UserModel = model("model", userSchema);
+const UserModel = model("User", userSchema, "users");
 
 export default UserModel;
