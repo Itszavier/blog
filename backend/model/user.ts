@@ -11,7 +11,6 @@ const userSchema = new Schema({
     required: true,
   },
   email: { type: SchemaTypes.String, required: true },
-  password: { type: SchemaTypes.String, required: true },
 });
 
 const UserModel = model("model", userSchema);

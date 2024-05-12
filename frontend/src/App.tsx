@@ -1,16 +1,19 @@
 import { Routes, Route } from "react-router-dom";
-import Signup from "./pages/signup";
 import Navbar from "./components/navbar";
-import Login from "./pages/login";
+import Home from "./pages/home";
+import AuthModal from "./components/authmodal";
+import { useModal } from "./context/modalContext";
 
 function App() {
+  const { authModal } = useModal();
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Signup />} />
+        <Route path="/" element={<Home />} />
       </Routes>
+
+      {authModal && <AuthModal />}
     </>
   );
 }

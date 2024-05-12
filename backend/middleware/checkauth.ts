@@ -5,7 +5,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers["Authorization"];
+  const token = req.headers.authorization;
+  console.log(token);
 
   if (!token) {
     return res.status(400).json({
@@ -20,8 +21,8 @@ const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
 
     res.json({ decodedToken });
   } catch (error) {
-    console.log(error);
-    res.status(400).json("Invalid token");
+    console.log("verify function error", error);
+    res.status(400).json({ message: "Invalid token" });
   }
 };
 

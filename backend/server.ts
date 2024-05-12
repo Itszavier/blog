@@ -4,8 +4,11 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
-
+import passport from "passport";
 import authRoutes from "./routes/auth";
+import session from "express-session";
+import "./stratetgies/google";
+
 dotenv.config();
 
 mongoose
@@ -16,9 +19,22 @@ mongoose
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(bodyParser.json());
-app.use("/auth", authRoutes);
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+  }),
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(cors({ credentials: true }));
+app.use(bodyParser.json());
+
+app.use("/auth", authRoutes);
+
 app.get("/", (req, res, next) => {
   res.send("hello world");
 });

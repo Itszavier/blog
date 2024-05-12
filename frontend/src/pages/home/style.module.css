@@ -1,0 +1,59 @@
+.container {
+  padding-top: 60px;
+  background-color: var(--secoundary);
+  height: 100vh;
+  background: url("../../assets/land.jpg");
+  background-size: cover;
+  background-blend-mode: darken;
+}
+
+.landing {
+  /*background-color: rgb(17, 123, 243);*/
+  display: flex;
+  padding: 10px;
+  gap: 20px;
+  /* background: url("../../assets/landing.jpg");*/
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.title {
+  font-size: 19.8px;
+  text-align: center;
+  font-weight: bold;
+  /* Replace with your colors */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text {
+  text-align: center;
+  width: 65%;
+  font-weight: bold;
+  font-size: 19.15px;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 1px rgb(0, 0, 0);
+}
+
+.button_wrapper {
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.button_wrapper button {
+  padding: 10px;
+  width: 150px;
+  border: none;
+  border-radius: 3px;
+  background-color: var(--accent);
+  color: rgb(223, 216, 216);
+  box-shadow: 38px 19px 100px -3px rgba(7, 6, 6, 0.1);
+}
+
+.button_wrapper button:hover {
+  cursor: pointer;
+}

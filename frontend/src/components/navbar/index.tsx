@@ -1,6 +1,14 @@
+import { useModal } from "../../context/modalContext";
 import style from "./styles.module.css";
 import { Link } from "react-router-dom";
 export default function Navbar() {
+  
+  const { setAuthModal } = useModal();
+
+  const handleLoginPopup = () => {
+    setAuthModal(true);
+  };
+
   return (
     <div className={style.container}>
       <div className={style.logo_wrapper}>
@@ -15,15 +23,12 @@ export default function Navbar() {
           Membership
         </Link>
 
-        <Link className={style.link} to="/login">
-          Login
-        </Link>
-        <Link
+        <button
           className={` ${style.link} ${style.get_started_link} `}
-          to="/signup"
+          onClick={handleLoginPopup}
         >
           Get started
-        </Link>
+        </button>
       </div>
     </div>
   );
