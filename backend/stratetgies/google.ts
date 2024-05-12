@@ -10,7 +10,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      callbackURL: "https://nht55j-8080.csb.app/auth/google/redirect",
+      callbackURL: "/auth/google/redirect",
       scope: ["profile", "email"],
     },
 

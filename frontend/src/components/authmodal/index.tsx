@@ -11,7 +11,7 @@ export default function AuthModal() {
 
   const handleLogin = () => {
     setAuthModal(false);
-    window.open("https://nht55j-8080.csb.app/auth/login/google", "_self");
+    window.open("http://localhost:8080/auth/login/google", "_self");
   };
 
   return (
