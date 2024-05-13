@@ -67,7 +67,12 @@ export default function Profile() {
                 <span className={style.highlighted_number}>5</span> Posts
               </span>
             </div>
-            <button className={style.follow_button}>follow</button>
+            <div className={style.profile_buttons}>
+              <button className={style.follow_button}>follow</button>
+              <button className={style.settings_button}>
+                <span className="material-icons">settings</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
