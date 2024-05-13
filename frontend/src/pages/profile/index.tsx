@@ -13,8 +13,8 @@ interface IMember {
 
 export default function Profile() {
   //const { id } = useParams();
-  const [member, setMember] = useState<IMember | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  //  const [member, setMember] = useState<IMember | null>(null);
+  // const [loading, setLoading] = useState<boolean>(true);
   /*
   useEffect(() => {
     serverAxios
@@ -35,19 +35,39 @@ export default function Profile() {
 
   return (
     <div className={style.container}>
-      <div className={style.wrapper}>
-        <div className={style.header}>
-          <div className={style.defualt_banner}></div>
-          <div className={style.content_wrapper}>
-            <img
-              className={style.profile_img}
-              src={
-                member?.avatar || "https://avatar.iran.liara.run/public/boy?username=Ash"
-              }
-            />
-            <div>
-              <span className={style.name}>{member?.name || "Ash Lord"} </span>
+      <div className={style.profile_card}>
+        <div className={style.profile_card_header}>
+          <img
+            src="https://avatar.iran.liara.run/public/boy?username=Ash"
+            alt=""
+            className={style.profile_img}
+            width={90}
+            height={90}
+          />
+          <div className={style.default_banner}></div>
+        </div>
+
+        <div className={style.profile_card_body}>
+          <p
+            className={`${style.profile_user_text} ${style.profile_username} `}
+          >
+            Ash Lad
+          </p>
+          <p
+            className={`${style.profile_user_text} ${style.profile_user_bio} `}
+          >
+            Hi, I am Lad a Writer and avid reader
+          </p>
+          <div className={style.info_container}>
+            <div className={style.profile_info_wrapper}>
+              <span>
+                <span className={style.highlighted_number}>200</span> Followers
+              </span>
+              <span>
+                <span className={style.highlighted_number}>5</span> Posts
+              </span>
             </div>
+            <button className={style.follow_button}>follow</button>
           </div>
         </div>
       </div>

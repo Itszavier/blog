@@ -8,27 +8,92 @@
   justify-content: center;
 }
 
-.defualt_banner {
-  width: 100%;
-  background: linear-gradient(to right, lightblue, rgb(90, 186, 218));
-  display: inline-block;
-  height: 200px;
-}
-
-.wrapper {
-  width: 90%;
-}
-
-.header {
-}
-
-.content_wrapper {
-  background-color: #acaaaa;
-  padding: 10px;
+.profile_card {
   display: flex;
+  background-color: #eee;
+  width: 760px;
+  border-radius: 5px;
+  flex-direction: column;
+  height: 300px;
+  margin-top: 10px;
+  height: 359px;
+}
+
+.profile_card_header {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border-top-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.default_banner {
+  background-color: rgb(32, 32, 32);
+  display: inline-block;
+  width: inherit;
+  height: inherit;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .profile_img {
+  position: absolute; /* Position the image absolutely within the container */
+  bottom: -50px; /* Position the image at the bottom */
+  left: 68px; /* Center the image horizontally */
+  transform: translateX(-50%); /* Adjust horizontal position if needed */
+  border-radius: 50%; /* Make the image a circle (optional) */
+  width: 100px; /* Adjust image size as needed */
+  height: 100px; /* Adjust image size as needed */
+  border-bottom: 2px solid white;
+}
+
+.profile_card_body {
+  margin-top: 45px;
+  padding: 10px;
+  margin-left: 20px;
+}
+
+.profile_user_text {
+  margin-top: 2px;
+}
+
+.highlighted_number {
+  font-weight: bold;
+}
+
+.follow_button {
   width: 100px;
-  height: 100px;
+  padding: 10px 15px;
+  border: none;
+  background-color: var(--accent);
+  color: white;
+  border-radius: 5px;
+}
+
+.profile_username {
+  font-weight: bold;
+  font-size: 19.9px;
+}
+
+.profile_info_wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.info_container {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+@media screen and (max-width: 680px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .profile_card {
+    width: 100%;
+    height: 360;
+  }
 }
