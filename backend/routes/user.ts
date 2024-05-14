@@ -21,6 +21,8 @@ router.get("/:id", async (req, res, next) => {
         _id: user._id,
         name: user.name,
         avatar: user.avater,
+        bio: user.bio,
+        bannerUrl: user.bannerUrl,
       },
     });
   } catch (error) {

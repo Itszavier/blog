@@ -1,0 +1,38 @@
+/** @format */
+.header {
+  height: fit-content;
+  width: fit-content;
+  position: relative;
+  margin-right: 10px;
+}
+
+.header:hover {
+  cursor: pointer;
+}
+
+.user_profile {
+  width: 48px;
+  height: 48px;
+  border-radius: 50px;
+}
+
+.body {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  background-color: #eee;
+  padding: 10px;
+  width: 180px;
+  gap: 10px;
+  height: 90px;
+  border-radius: 10px;
+  right: 10px;
+  top: 64px;
+}
+
+.body a {
+  text-decoration: none;
+  padding: 6px;
+  text-transform: capitalize;
+  color: black;
+}

@@ -46,6 +46,7 @@ export function AuthProvider(props: any) {
       .get("/auth/check")
       .then(function (response) {
         setUser(response.data.user);
+        console.log("form context", response.data);
       })
       .catch(function (error) {
         setError(error.response.data.message);

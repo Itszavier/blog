@@ -6,6 +6,8 @@ import generateUniqueId from "generate-unique-id";
 export interface IUser extends Document {
   _id: string;
   name: string;
+  bio?: string;
+  bannerUrl?: string;
   avater: string;
   email: string;
 }
@@ -20,7 +22,7 @@ const userSchema = new Schema<IUser>({
   },
 
   name: { type: SchemaTypes.String, required: true },
-  
+
   avater: {
     type: SchemaTypes.String,
     default:
@@ -28,6 +30,14 @@ const userSchema = new Schema<IUser>({
     required: true,
   },
   email: { type: SchemaTypes.String, required: true },
+
+  bio: {
+    type: SchemaTypes.String,
+  },
+
+  bannerUrl: {
+    type: SchemaTypes.String,
+  },
 });
 
 const UserModel = model("User", userSchema, "users");

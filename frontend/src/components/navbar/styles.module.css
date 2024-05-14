@@ -1,3 +1,5 @@
+/** @format */
+
 .container {
   width: 100%;
   height: 60px;
@@ -11,6 +13,10 @@
   left: 0;
   z-index: 10;
   color: rgb(0, 0, 0);
+}
+.logo_link {
+  text-decoration: none;
+  color: black;
 }
 
 .link_container {
