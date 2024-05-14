@@ -44,7 +44,7 @@ export default function ProfileDropdown() {
           <Link id={"dropdown"} onClick={hideMenu} to={`/profile/${user._id}`}>
             profile
           </Link>
-          <Link id={"dropdown"} onClick={hideMenu} to="#">
+          <Link id={"dropdown"} onClick={hideMenu} to="/settings">
             settings
           </Link>
         </div>

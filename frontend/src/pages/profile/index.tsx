@@ -4,7 +4,7 @@ import style from "./style.module.css";
 import { useEffect, useState } from "react";
 import { serverAxios } from "../../api/axios";
 import { useParams } from "react-router-dom";
-import Loading from "../../components/loading/loading";
+import Loading from "../../components/loading";
 import { useAuth } from "../../context/auth";
 import banner from "../../assets/landing.jpg";
 
