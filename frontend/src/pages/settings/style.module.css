@@ -1,23 +1,25 @@
 /** @format */
 .container {
   padding-top: 60px;
-  height: 100%;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   box-sizing: border-box;
   align-items: center;
-  gap: 10px;
+  display: flex;
+  background-color: #eee;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
 .profile_settings_form {
-  background-color: #eee;
   padding: 10px;
-  width: 540px;
-  height: 690px;
+  /* width: 540px;*/
+  /* height: 690px;*/
   display: flex;
   gap: 20px;
   flex-direction: column;
-  border-radius: 5px;
+  width: 600px;
 }
 
 .input_group {
@@ -79,6 +81,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  margin-bottom: 20px;
 }
 
 .defaultProfileImage {
@@ -109,4 +112,67 @@
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.settings_tab {
+  width: 15%;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--secoundary);
+}
+
+.nav_wrapper {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav_btn {
+  padding: 10px;
+  border: none;
+  width: 100%;
+  font-size: 16.34px;
+  text-align: left;
+  margin-bottom: 10px;
+  width: 100%;
+  padding-left: 18px;
+  background-color: transparent;
+  border-bottom: 2px #919191 solid;
+}
+
+.nav_btn:hover {
+  cursor: pointer;
+  background-color: #919191;
+}
+
+.navbtn_highlighted {
+  border-left: 2px var(--accent) solid;
+}
+
+.profile_container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  padding: 10px;
+  gap: 20px;
+  background-color: #dadddc;
+}
+
+.profile_img {
+  border-radius: 60px;
+  width: 90px;
+  height: 90px;
+  margin-top: 20px;
+}
+
+.profile_name_text {
+  width: 100%;
+  font-weight: bold;
+  text-align: center;
 }

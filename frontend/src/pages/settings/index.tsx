@@ -5,12 +5,33 @@ import { useState } from "react";
 export default function Settings() {
   return (
     <section className={style.container}>
-      <div className={style.settings_tab}>tabs</div>
+      <div className={style.settings_tab}>
+        <div className={style.profile_container}>
+          <img
+            className={style.profile_img}
+            src="https://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce802?d=identicon"
+            alt=""
+            height={80}
+            width={80}
+          />
+          <p className={style.profile_name_text}>Ash Lord</p>
+        </div>
+
+        <div className={style.nav_wrapper}>
+          <button className={`${style.nav_btn} ${style.navbtn_highlighted}`}>Profile</button>
+          <button className={style.nav_btn}>Privacy</button>
+          <button className={style.nav_btn}>Apis</button>
+        </div>
+      </div>
       <form className={style.profile_settings_form}>
         <div className={style.header}>
           <h2 className={style.header_title}>Profile Settings</h2>
         </div>
         <div className={style.input_group}>
+          <div className={style.input_wrapper}>
+            <ProfileImage defaultImageUrl="https://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce802?d=identicon" />
+          </div>
+
           <div className={style.input_wrapper}>
             <span className={style.label_text}>name</span>
             <p className={style.description_text}>
@@ -48,12 +69,7 @@ export default function Settings() {
               defaultValue={"I am a avid writer"}
             />
           </div>
-
-          <div className={style.input_wrapper}>
-            <ProfileImage defaultImageUrl="https://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce802?d=identicon" />
-          </div>
         </div>
-
         <button className={style.save_button} type="submit">
           save
         </button>
