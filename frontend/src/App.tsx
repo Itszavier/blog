@@ -18,9 +18,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile/:id" element={<Profile />} />
-        <Route element={<ProtectedRoutes />}>
-          <Route element={<Settings />} path="/settings" />
-        </Route>
+
+        <Route element={<Settings />} path="/settings" />
       </Routes>
 
       {authModal && <AuthModal />}
