@@ -2,3 +2,91 @@
 .container {
   padding-top: 60px;
 }
+
+.nav_header {
+  height: 50px;
+  width: 600px;
+  padding: 8px;
+  background-color: #eee;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.nav_btn {
+  padding: 8px;
+  width: 101px;
+  text-transform: capitalize;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+}
+
+.body {
+  width: 600px;
+  background-color: #eee;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 2px;
+}
+
+.input_group {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  gap: 6px;
+}
+
+.input {
+  border: none;
+  padding: 8px;
+  width: 200px;
+  border: 1px dashed black;
+}
+
+.input::placeholder {
+  text-transform: capitalize;
+}
+
+.form {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.input_label {
+  color: gray;
+  text-transform: uppercase;
+  font-size: 14.17px;
+  margin-left: 2px;
+}
+
+.form_body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.form_footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.form_footer button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--accent);
+  color: white;
+  cursor: pointer;
+}
