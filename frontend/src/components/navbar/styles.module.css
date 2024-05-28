@@ -14,9 +14,10 @@
   z-index: 10;
   color: rgb(0, 0, 0);
 }
+
 .logo_link {
   text-decoration: none;
-  color: black;
+  color: rgb(0, 0, 0);
 }
 
 .link_container {

@@ -19,7 +19,7 @@ router.get("/google/redirect", passport.authenticate("google"), (req, res, next)
   res.redirect(`http://localhost:5173/profile/${req.user?._id}`);
 });
 
-router.get("logout", ensureAuthenticated, async (req, res, next) => {
+router.get("/logout", ensureAuthenticated, async (req, res, next) => {
   req.logout({ keepSessionInfo: false }, (err) => {
     if (err) {
       return res.status(500).send("Logout failed");

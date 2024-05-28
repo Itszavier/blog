@@ -6,6 +6,7 @@
   height: 100%;
   display: flex;
   justify-content: center;
+  max-height: 100vh;
 }
 
 .profile_card {
@@ -27,7 +28,8 @@
   border-top-left-radius: 5px;
 }
 
-.banner, .default_banner {
+.banner,
+.default_banner {
   background-color: rgb(32, 32, 32);
   display: inline-block;
   width: inherit;

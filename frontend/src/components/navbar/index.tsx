@@ -22,23 +22,33 @@ export default function Navbar() {
       </div>
 
       <div className={style.link_container}>
-        <Link className={style.link} to="#">
-          About
-        </Link>
-
-        <Link className={style.link} to="#">
-          Membership
-        </Link>
-
         {!user ? (
-          <button
-            className={` ${style.link} ${style.get_started_link} `}
-            onClick={handleLoginPopup}
-          >
-            Get started
-          </button>
+          <>
+            <Link className={style.link} to="#">
+              About
+            </Link>
+
+            <Link className={style.link} to="#">
+              Membership
+            </Link>
+
+            <button
+              className={` ${style.link} ${style.get_started_link} `}
+              onClick={handleLoginPopup}
+            >
+              Get started
+            </button>
+          </>
         ) : (
-          <ProfileDropdown />
+          <>
+            <Link to={"/settings"} className={style.link}>
+              Notification
+            </Link>
+            <Link to={"#"} className={style.link}>
+              Write
+            </Link>
+            <ProfileDropdown />
+          </>
         )}
       </div>
     </div>
