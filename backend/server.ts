@@ -7,7 +7,6 @@ import cors from "cors";
 import passport from "passport";
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
-
 import { IUser } from "./model/user";
 import session from "express-session";
 import "./stratetgies/google";

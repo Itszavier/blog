@@ -2,13 +2,15 @@
 
 import { Schema, SchemaTypes, model } from "mongoose";
 import generateUniqueId from "generate-unique-id";
+import { generateFromEmail } from "unique-username-generator";
 
 export interface IUser extends Document {
   _id: string;
   name: string;
+  username?: string;
   bio?: string;
   bannerUrl?: string;
-  avater: string;
+  profileImage: string;
   email: string;
 }
 
@@ -23,10 +25,11 @@ const userSchema = new Schema<IUser>({
 
   name: { type: SchemaTypes.String, required: true },
 
-  avater: {
+  username: { type: SchemaTypes.String },
+
+  profileImage: {
     type: SchemaTypes.String,
-    default:
-      "https://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce802?d=identicon",
+    default: "https://avatar.iran.liara.run/public/boy?username=Ash",
     required: true,
   },
   email: { type: SchemaTypes.String, required: true },
@@ -40,6 +43,14 @@ const userSchema = new Schema<IUser>({
   },
 });
 
+userSchema.pre("save", function (next) {
+  if (this.username) {
+    next();
+  } else {
+    this.username = generateFromEmail(this.email);
+    next();
+  }
+});
 const UserModel = model("User", userSchema, "users");
 
 export default UserModel;

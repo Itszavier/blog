@@ -25,7 +25,7 @@ router.get("/check", verifyAuth, (req, res, next) => {
       _id: req.user?._id,
       name: req.user?.name,
       email: req.user?.email,
-      avatar: req.user?.avater,
+      profileImage: req.user?.profileImage,
       bio: req.user?.bio,
       bannerUrl: req.user?.bannerUrl,
     },
