@@ -7,7 +7,9 @@ interface IUser {
   _id: string;
   email: string;
   name: string;
-  avatar: string;
+  username: string;
+  bio: string;
+  profileImage: string;
 }
 
 interface IAuthContext {

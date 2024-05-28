@@ -6,7 +6,6 @@ import Home from "./pages/home";
 import AuthModal from "./components/authmodal";
 import Profile from "./pages/profile";
 import { useModal } from "./context/modalContext";
-import ProtectedRoutes from "./components/protected";
 import Settings from "./pages/settings";
 
 function App() {
@@ -19,7 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/profile/:id" element={<Profile />} />
 
-        <Route element={<Settings />} path="/settings" />
+        <Route element={<Settings />} path="/settings/*" />
       </Routes>
 
       {authModal && <AuthModal />}

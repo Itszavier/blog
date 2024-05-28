@@ -41,7 +41,7 @@ const profileUpload = multer();
 // update user profile
 
 router.post(
-  "/profile",
+  "/profileImage",
   verify,
   profileUpload.single("avatar"),
   async (req, res, next) => {
@@ -138,13 +138,18 @@ router.post(
       }
       // TODO: Make sure username does not cotain duplcate in the database
       if (req.body.username) {
+        const existingUser = await UserModel.findOne({ username: req.body.username });
+        if (existingUser && existingUser._id.toString() !== user._id.toString()) {
+          return next(errorMessage(400, "Username already exists"));
+        }
         user.username = req.body.username;
       }
+
       if (req.body.bio) {
         user.bio = req.body.bio;
       }
       const updated = await user.save();
-      
+
       res.status(200).json({
         message: "successfully updated profile",
         updated: {
@@ -160,5 +165,7 @@ router.post(
     }
   }
 );
+
+
 
 export default router;
