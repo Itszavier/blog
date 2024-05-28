@@ -2,12 +2,13 @@
 
 import style from "./style.module.css";
 import { useAuth } from "../../context/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function ProfileDropdown() {
   const [toggle, setToggle] = useState(false);
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
 
   const handleClickOutside = (event: any) => {
     if (toggle && !event.target.closest("#dropdown")) {
@@ -29,6 +30,19 @@ export default function ProfileDropdown() {
 
   const hideMenu = () => setToggle(false);
 
+  const handleLogout = async () => {
+    try {
+      setToggle(false);
+      const Navgate = useNavigate();
+
+      const response = await axios.get("/login");
+
+      setUser(null);
+      Navgate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div id={"dropdown"} className={style.container}>
       <div
@@ -36,7 +50,7 @@ export default function ProfileDropdown() {
         onClick={() => setToggle((prev) => !prev)}
         className={style.header}
       >
-        <img className={style.user_profile} src={user.avatar} alt="" />
+        <img className={style.user_profile} src={user.profileImage} alt="" />
       </div>
 
       {toggle && (
@@ -47,6 +61,7 @@ export default function ProfileDropdown() {
           <Link id={"dropdown"} onClick={hideMenu} to="/settings">
             settings
           </Link>
+          <button className={style.logout_btn}>logout</button>
         </div>
       )}
     </div>

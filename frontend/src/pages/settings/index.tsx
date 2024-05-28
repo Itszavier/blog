@@ -19,7 +19,7 @@ export default function Settings() {
       </div>
       <div className={style.body}>
         <Routes>
-          <Route path="/" element={<ProfileTab />} />
+          <Route path={"/"} element={<ProfileTab />} />
         </Routes>
       </div>
     </div>

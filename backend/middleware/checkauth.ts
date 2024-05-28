@@ -7,12 +7,12 @@ import { errorMessage } from "./error";
 
 dotenv.config();
 
-const verify = (req: Request, res: Response, next: NextFunction) => {
-  if (!req.user) {
-    return next(next(errorMessage(401, "Unauthorized access please login")));
+const ensureAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+  if (req.isAuthenticated()) {
+    return next();
   }
 
-  next();
+  next(next(errorMessage(401, "You are Unauthorized, please login")));
 };
 
-export default verify;
+export default ensureAuthenticated;

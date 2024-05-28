@@ -8,6 +8,8 @@ import { z } from "zod";
 import cloudinary from "../cloudinaryConfig";
 import multer, { memoryStorage } from "multer";
 import generateUniqueId from "generate-unique-id";
+import { UploadApiResponse, UploadResponseCallback } from "cloudinary";
+import ensureAuthenticated from "../middleware/checkauth";
 
 const router = Router();
 
@@ -42,7 +44,7 @@ const profileUpload = multer();
 
 router.post(
   "/profileImage",
-  verify,
+  ensureAuthenticated,
   profileUpload.single("avatar"),
   async (req, res, next) => {
     try {
@@ -83,10 +85,31 @@ router.post(
     }
   }
 );
+function uploadFile(file: Express.Multer.File): Promise<UploadApiResponse> {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream(
+        {
+          public_id: `${generateUniqueId({ length: 9 })}`,
+          resource_type: "auto",
+          folder: "profiles",
+        },
+        function (error, results) {
+          if (error) {
+            return reject(error);
+          }
+          console.log("done uploading", results);
+          resolve(results as UploadApiResponse);
+        }
+      )
+      .end(file.buffer);
+  });
+}
 
 router.post(
   "/update/profile",
-  profileUpload.single("profile"),
+  ensureAuthenticated,
+  profileUpload.single("profileImage"),
   async (req, res, next) => {
     try {
       const user = await UserModel.findOne({ _id: req.user?._id as string });
@@ -101,36 +124,20 @@ router.post(
           .string()
           .min(4, "Username must be atleast 4 charactors are more")
           .nullish(),
-        bio: z.string().max(250, "Bio can only be up to 250 characters long ").nullish(),
+        bio: z.string().max(150, "Bio can only be up to 250 characters long ").nullish(),
       });
 
       const valid = bodySchema.safeParse(req.body);
 
       if (!valid.success) {
-        console.log(valid.error);
         return next(valid.error);
       }
 
+      console.log(req.file);
       if (req.file) {
         const file = req.file;
-
-        cloudinary.uploader
-          .upload_stream(
-            {
-              public_id: `${generateUniqueId({ length: 9 })}-${file.originalname}-`,
-              resource_type: "auto",
-              folder: "profiles",
-            },
-
-            async function (err, result) {
-              if (err) {
-                return next(err);
-              }
-
-              user.profileImage = result?.url as string;
-            }
-          )
-          .end(file.buffer);
+        const results = await uploadFile(file);
+        user.profileImage = results.url;
       }
 
       if (req.body.name) {
@@ -140,7 +147,12 @@ router.post(
       if (req.body.username) {
         const existingUser = await UserModel.findOne({ username: req.body.username });
         if (existingUser && existingUser._id.toString() !== user._id.toString()) {
-          return next(errorMessage(400, "Username already exists"));
+          return next(
+            errorMessage(
+              400,
+              "The username you entered is already in use. Please choose a different one"
+            )
+          );
         }
         user.username = req.body.username;
       }
@@ -165,7 +177,5 @@ router.post(
     }
   }
 );
-
-
 
 export default router;

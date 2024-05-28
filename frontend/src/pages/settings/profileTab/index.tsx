@@ -1,98 +1,172 @@
-/** @format */
-
-import { useEffect, useState } from "react";
+//** @format */
 import style from "./style.module.css";
 import { useAuth } from "../../../context/auth";
 import { serverAxios } from "../../../api/axios";
-const defualtUrl =
-  "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250";
+import { useEffect, useState, ChangeEvent, FormEvent } from "react";
+
+const defaultUrl = "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250";
+
+// Define types for form data and initial data
+interface FormData {
+  username: string;
+  name: string;
+  bio: string;
+  profileImageFile: File | null;
+  imagePreview: string | null;
+}
+
+interface InitialData {
+  username: string;
+  name: string;
+  bio: string;
+}
 
 export default function ProfileTab() {
-  const { user } = useAuth();
+  const auth = useAuth();
 
-  const [username, setUsername] = useState<string>(user?.username || "");
-  const [name, setName] = useState(user?.name || "");
-  const [bio, setBio] = useState(user?.bio || "");
-  const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
-  const [ImagePreview, setImagePreview] = useState<string | null>(null);
+  const [formData, setFormData] = useState<FormData>({
+    username: "",
+    name: "",
+    bio: "",
+    profileImageFile: null,
+    imagePreview: null,
+  });
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [initialData, setInitialData] = useState<InitialData>({
+    username: "",
+    name: "",
+    bio: "",
+  });
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const { username, name, bio } = auth.user || {};
+    setFormData((prevState) => ({
+      ...prevState,
+      username: username || "",
+      name: name || "",
+      bio: bio || "",
+    }));
+    setInitialData({
+      username: username || "",
+      name: name || "",
+      bio: bio || "",
+    });
+  }, [auth.user]);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setProfileImageFile(file);
       const reader = new FileReader();
-
       reader.onloadend = () => {
-        setImagePreview(reader.result as string);
+        setFormData((prevState) => ({
+          ...prevState,
+          profileImageFile: file,
+          imagePreview: reader.result as string,
+        }));
       };
-
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+    setSuccessMessage(null);
 
-    const formData = new FormData();
+    const updatedData = new FormData();
+    const { name, username, bio, profileImageFile } = formData;
+    if (auth.user?.name !== name) updatedData.append("name", name);
+    if (auth.user?.username !== username) updatedData.append("username", username);
+    if (auth.user?.bio !== bio) updatedData.append("bio", bio);
+    if (profileImageFile) updatedData.append("profileImage", profileImageFile);
 
+    try {
+      const response = await serverAxios.post("/user/update/profile", updatedData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setSuccessMessage(response.data.message);
+      setTimeout(() => setSuccessMessage(null), 3000); // Clear success message after 3 seconds
+    } catch (error: any) {
+      setError(error.response?.data?.message || "There was a problem updating your profile. Please try again later.");
+      setTimeout(() => setError(null), 3000); // Clear error message after 3 seconds
+    } finally {
+      setLoading(false);
+    }
+  };
 
-
-
-    serverAxios.post("/user/update/profile");
+  const isFormChanged = (): boolean => {
+    const { username, name, bio } = formData;
+    const { username: initialUsername, name: initialName, bio: initialBio } = initialData;
+    return username !== initialUsername || name !== initialName || bio !== initialBio || formData.profileImageFile !== null;
   };
 
   return (
     <form onSubmit={handleSubmit} className={style.form}>
+      {error && <p className={style.error_message}><span className="material-icons">error</span> {error}</p>}
+      {successMessage && <p className={style.success_message}><span className="material-icons">check_circle</span> {successMessage}</p>}
       <div className={style.form_body}>
         <div className={style.input_group}>
-          <span className={style.input_label}>name:</span>
+          <span className={style.input_label}>Name:</span>
           <span className={style.input_description}>Update your full name.</span>
           <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
             className={style.input}
             type="text"
-            placeholder="full name"
+            placeholder="Full name"
           />
         </div>
 
         <div className={style.input_group}>
-          <span className={style.input_label}>username:</span>
+          <span className={style.input_label}>Username:</span>
           <span className={style.input_description}>Change your username (unique).</span>
           <input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            value={formData.username}
+            onChange={handleInputChange}
             className={style.input}
             type="text"
-            placeholder="username"
+            placeholder="Username"
           />
         </div>
 
         <div className={style.input_group}>
-          <span className={style.input_label}>bio:</span>
-          <span className={style.input_description}>
-            Edit your bio (max 150 characters).
-          </span>
+          <span className={style.input_label}>Bio:</span>
+          <span className={style.input_description}>Edit your bio (max 150 characters).</span>
           <input
+            name="bio"
             className={`${style.input} ${style.bio_input}`}
             type="text"
             placeholder="Bio"
-            max={240}
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
+            maxLength={150}
+            value={formData.bio}
+            onChange={handleInputChange}
           />
         </div>
 
         <div className={style.input_group}>
           <span className={style.input_label}>Profile Image:</span>
           <div className={style.profile_image_container}>
-            {ImagePreview ? (
-              <img src={ImagePreview} className={style.profile_image_preview}></img>
+            {formData.imagePreview ? (
+              <img src={formData.imagePreview} className={style.profile_image_preview} alt="Profile preview" />
             ) : (
-              <img src={defualtUrl} className={style.profile_image_preview}></img>
+              <img src={auth.user?.profileImage || defaultUrl} className={style.profile_image_preview} alt="Default profile" />
             )}
             <input
-              accept={"image/*"}
+              accept="image/*"
               type="file"
               className={style.profile_image_input}
               onChange={handleImageChange}
@@ -101,7 +175,9 @@ export default function ProfileTab() {
         </div>
       </div>
       <div className={style.form_footer}>
-        <button type="submit">Save changes</button>
+        <button type="submit" disabled={loading || !isFormChanged()}>
+          Save changes {loading && <span>....</span>}
+        </button>
       </div>
     </form>
   );

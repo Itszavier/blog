@@ -11,7 +11,8 @@ import banner from "../../assets/landing.jpg";
 interface IMember {
   _id: string;
   name: string;
-  avatar: string;
+  username: string;
+  profileImage: string;
   bio?: string;
   bannerUrl?: string;
 }
@@ -53,7 +54,7 @@ export default function Profile() {
       <div className={style.profile_card}>
         <div className={style.profile_card_header}>
           <img
-            src={member.avatar}
+            src={member.profileImage}
             alt=""
             className={style.profile_img}
             width={90}
