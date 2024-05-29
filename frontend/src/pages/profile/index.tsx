@@ -3,7 +3,7 @@
 import style from "./style.module.css";
 import { useEffect, useState } from "react";
 import { serverAxios } from "../../api/axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../components/loading";
 import { useAuth } from "../../context/auth";
 import banner from "../../assets/landing.jpg";
@@ -19,6 +19,7 @@ interface IMember {
 
 export default function Profile() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const auth = useAuth();
   const [member, setMember] = useState<IMember | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -87,11 +88,11 @@ export default function Profile() {
               <button className={style.follow_button}>follow</button>
 
               {auth.user && member._id === auth.user?._id ? (
-                <button className={style.settings_button}>
+                <button onClick={e => navigate('/settings/profile')} className={style.settings_button}>
                   <span className="material-icons">settings</span>
                 </button>
               ) : (
-                "hi"
+                ""
               )}
             </div>
           </div>

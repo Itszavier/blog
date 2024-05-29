@@ -1,6 +1,5 @@
 /** @format */
-
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Home from "./pages/home";
 import AuthModal from "./components/authmodal";
@@ -14,7 +13,7 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar  />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile/:id" element={<Profile />} />

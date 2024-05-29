@@ -1,10 +1,14 @@
+/** @format */
+
 //** @format */
 import style from "./style.module.css";
 import { useAuth } from "../../../context/auth";
 import { serverAxios } from "../../../api/axios";
 import { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import { Link } from "react-router-dom";
 
-const defaultUrl = "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250";
+const defaultUrl =
+  "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250";
 
 // Define types for form data and initial data
 interface FormData {
@@ -57,7 +61,9 @@ export default function ProfileTab() {
     });
   }, [auth.user]);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -99,7 +105,10 @@ export default function ProfileTab() {
       setSuccessMessage(response.data.message);
       setTimeout(() => setSuccessMessage(null), 3000); // Clear success message after 3 seconds
     } catch (error: any) {
-      setError(error.response?.data?.message || "There was a problem updating your profile. Please try again later.");
+      setError(
+        error.response?.data?.message ||
+          "There was a problem updating your profile. Please try again later."
+      );
       setTimeout(() => setError(null), 3000); // Clear error message after 3 seconds
     } finally {
       setLoading(false);
@@ -109,14 +118,54 @@ export default function ProfileTab() {
   const isFormChanged = (): boolean => {
     const { username, name, bio } = formData;
     const { username: initialUsername, name: initialName, bio: initialBio } = initialData;
-    return username !== initialUsername || name !== initialName || bio !== initialBio || formData.profileImageFile !== null;
+    return (
+      username !== initialUsername ||
+      name !== initialName ||
+      bio !== initialBio ||
+      formData.profileImageFile !== null
+    );
   };
 
   return (
     <form onSubmit={handleSubmit} className={style.form}>
-      {error && <p className={style.error_message}><span className="material-icons">error</span> {error}</p>}
-      {successMessage && <p className={style.success_message}><span className="material-icons">check_circle</span> {successMessage}</p>}
+      {error && (
+        <p className={style.error_message}>
+          <span className="material-icons">error</span> {error}
+        </p>
+      )}
+      {successMessage && (
+        <p className={style.success_message}>
+          <span className="material-icons">check_circle</span> {successMessage}
+        </p>
+      )}
       <div className={style.form_body}>
+        <div className={`${style.input_group} ${style.profile_image_group}`}>
+          <div className={style.profile_image_container}>
+            {formData.imagePreview ? (
+              <img
+                src={formData.imagePreview}
+                className={style.profile_image_preview}
+                alt="Profile preview"
+              />
+            ) : (
+              <img
+                src={auth.user?.profileImage || defaultUrl}
+                className={style.profile_image_preview}
+                alt="Default profile"
+              />
+            )}
+            <input
+              accept="image/*"
+              type="file"
+              className={style.profile_image_input}
+              onChange={handleImageChange}
+            />
+          </div>
+          <span className={style.input_description}>
+            <span className="material-icons">mail</span>
+            {auth.user?.email}
+          </span>
+        </div>
         <div className={style.input_group}>
           <span className={style.input_label}>Name:</span>
           <span className={style.input_description}>Update your full name.</span>
@@ -145,39 +194,28 @@ export default function ProfileTab() {
 
         <div className={style.input_group}>
           <span className={style.input_label}>Bio:</span>
-          <span className={style.input_description}>Edit your bio (max 150 characters).</span>
-          <input
+          <span className={style.input_description}>
+            Edit your bio (max 150 characters).
+          </span>
+          <textarea
             name="bio"
             className={`${style.input} ${style.bio_input}`}
-            type="text"
             placeholder="Bio"
             maxLength={150}
             value={formData.bio}
             onChange={handleInputChange}
           />
         </div>
-
-        <div className={style.input_group}>
-          <span className={style.input_label}>Profile Image:</span>
-          <div className={style.profile_image_container}>
-            {formData.imagePreview ? (
-              <img src={formData.imagePreview} className={style.profile_image_preview} alt="Profile preview" />
-            ) : (
-              <img src={auth.user?.profileImage || defaultUrl} className={style.profile_image_preview} alt="Default profile" />
-            )}
-            <input
-              accept="image/*"
-              type="file"
-              className={style.profile_image_input}
-              onChange={handleImageChange}
-            />
-          </div>
-        </div>
       </div>
+
       <div className={style.form_footer}>
         <button type="submit" disabled={loading || !isFormChanged()}>
           Save changes {loading && <span>....</span>}
         </button>
+
+        <Link to={`/profile/${auth.user?._id}`} className={style.view_profile_link}>
+          <span className="material-icons">person</span> View profile
+        </Link>
       </div>
     </form>
   );

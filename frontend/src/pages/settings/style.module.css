@@ -1,45 +1,68 @@
 /** @format */
 .container {
-  padding-top: 60px;
+  /*padding-top: 58px;*/
+  display: flex;
+  height: 100vh;
 }
 
 .nav_header {
   height: 50px;
-  width: 600px;
+  position: relative;
+  width: 300px;
   padding: 8px;
+  padding-top: 69px;
   background-color: #eee;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 100%;
+  gap: 5px;
+  background-color: var(--primary);
 }
 
 .nav_btn {
   padding: 8px;
-  width: 101px;
   text-transform: capitalize;
   border: none;
   display: flex;
+  width: 100%;
   flex-direction: row;
   gap: 5px;
   align-items: center;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
 }
 
 .active_btn {
   background-color: var(--accent);
   color: white;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 
 .body {
-  width: 600px;
-  margin-top: 20px;
-  background-color: #eee;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
   padding: 10px;
+  padding-top: 68px;
+  padding-left: 34px;
   border-radius: 2px;
+  height: 100%;
+  overflow-y: auto;
+  flex-direction: column;
+}
+
+.logout_btn {
+  margin-top: auto;
+  padding: 10px;
+  position: absolute;
+  font-size: 17px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
 }

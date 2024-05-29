@@ -11,10 +11,11 @@
 .input {
   border: none;
   padding: 10px;
-  width: 200px;
+  width: 300px;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 5px;
   outline: none;
+    background-color: #f3f3f3;
 }
 
 .input::placeholder {
@@ -23,6 +24,7 @@
 
 .form {
   display: flex;
+  width: 100%;
   gap: 10px;
   flex-direction: column;
 }
@@ -38,25 +40,31 @@
   font-size: 11px;
   margin-left: 2px;
   color: grey;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .form_body {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  flex-wrap: wrap;
+  width: 600px;
   gap: 20px;
 }
 
 .form_footer {
   display: flex;
+  width: fit-content;
   justify-content: flex-end;
+  margin-top: 10px;
+  gap: 14px;
 }
 
 .form_footer button {
   padding: 12px;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   background-color: var(--accent);
   color: white;
   cursor: pointer;
@@ -64,14 +72,14 @@
 .profile_image_container {
   position: relative;
   display: inline-block;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   margin: 8px;
 }
 
 .profile_image_preview {
-  width: 100px;
-  height: 100px;
+  width: inherit;
+  height: inherit;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #ccc;
@@ -103,7 +111,34 @@
   border-radius: 2px;
   align-items: center;
   padding: 5px;
+  width: 100%;
   background-color: var(--accent);
   color: red;
   justify-content: center;
+}
+
+.bio_input {
+  resize: none;
+  height: 190px;
+  width: 300px;
+  height: 105px;
+  border-radius: none;
+}
+
+.profile_image_group {
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.view_profile_link {
+  padding: 12px;
+  color: white;
+  background-color: rgb(46, 121, 226);
+  border-radius: 4px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
