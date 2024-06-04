@@ -8,8 +8,6 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@types/passport-google-oauth20": "^2.0.16",
-    "passport-google-oauth20": "^2.0.0"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
