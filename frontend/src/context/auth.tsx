@@ -47,10 +47,12 @@ export function AuthProvider(props: any) {
     serverAxios
       .get("/auth/check")
       .then(function (response) {
+        if (!response.data) return;
         setUser(response.data.user);
         console.log("form context", response.data);
       })
       .catch(function (error) {
+        if (!error.response.data) return;
         setError(error.response.data.message);
       })
       .finally(function () {

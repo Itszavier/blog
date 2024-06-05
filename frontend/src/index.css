@@ -34,7 +34,6 @@ body {
 /* Track */
 ::-webkit-scrollbar-track {
   background: var(--secoundary);
-  border-radius: 20px;
 }
 
 /* Handle */

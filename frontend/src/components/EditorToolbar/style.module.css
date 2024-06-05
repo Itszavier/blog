@@ -1,0 +1,38 @@
+/** @format */
+.toolbar {
+  background-color: #eeeded;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 34px;
+  border-radius: 1px;
+  background-color: var(--accent);
+  color: white;
+}
+
+.button {
+  border: none;
+  width: fit-content;
+  background-color: transparent;
+  font-size: 15.85px;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  padding: 0px 10px;
+  border-radius: 2px;
+  color: inherit;
+}
+
+.active {
+  background-color: var(--accent);
+  color: white;
+  background-color: rgb(21, 111, 230);
+  color: black;
+}
+
+.section {
+  display: flex;
+  width: fit-content;
+  gap: 10px;
+  height: 100%;
+  padding: 3px;
+}
