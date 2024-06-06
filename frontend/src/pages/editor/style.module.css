@@ -15,8 +15,8 @@
   align-items: center;
   gap: 5px;
   justify-content: flex-end;
- /* border-bottom: 1px solid #969696;*/
-  margin-bottom: 10px;
+  background-color: #eee;
+  border-bottom: 1px solid rgb(222, 225, 227);
 }
 
 .control_btn {
@@ -30,8 +30,9 @@
 
 .wrapper {
   width: 55%;
-  margin-left: auto;
-  margin-right: auto;
+  height:400px;
+  background-color: #eee;
+ margin: auto;
 }
 
 

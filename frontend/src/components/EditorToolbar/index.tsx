@@ -12,10 +12,15 @@ interface IToolbarProps {
 }
 
 export default function Toolbar({ editor }: IToolbarProps) {
+
+  const handleAlign = (e: React.MouseEvent<HTMLButtonElement> ) => {
+    editor.commands.setTextAlign(e.currentTarget.name)
+    editor.chain().focus().run();
+  }
   return (
     <div className={style.toolbar}>
       <div className={style.section}>
-        <div className={`${style.tool_container}`}>
+        <div className={`${style.tool_container}  ${style.history_container}`}>
         <button
           onClick={() => editor.commands.undo()}
           className={`${style.button} ${style.history}`}
@@ -47,15 +52,15 @@ export default function Toolbar({ editor }: IToolbarProps) {
         </div>
         
         <div className={`${style.tool_container}`}>
-          <button onClick={() => {editor.commands.setTextAlign('left')}} className={`${style.button}`}>
+          <button name="left" onClick={handleAlign} className={`${style.button}`}>
             <ImParagraphLeft />
         </button>
         
-        <button onClick={() => {editor.commands.setTextAlign('center')}} className={`${style.button} ${editor.isActive("italic") ? style.active : ""}`}> 
+        <button name='center' onClick={handleAlign} className={`${style.button} ${editor.isActive("italic") ? style.active : ""}`}> 
            <ImParagraphCenter />
         </button>
 
-        <button onClick={() => {editor.commands.setTextAlign('right')}} className={`${style.button} ${editor.isActive("italic") ? style.active : ""}`}>
+        <button name='right' onClick={handleAlign} className={`${style.button} ${editor.isActive("italic") ? style.active : ""}`}>
             <ImParagraphRight />
         </button>
          </div>

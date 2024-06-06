@@ -53,5 +53,6 @@ body {
   float: left;
   height: 0;
   pointer-events: none;
-  font-weight: bold;
+  font-style: italic;
+  color: rgb(95, 99, 104);
 }

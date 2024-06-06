@@ -4,9 +4,13 @@
   display: flex;
   align-items: center;
   height: 34px;
+  justify-content: center;
   border-radius: 1px;
   color: rgb(0, 0, 0);
+  padding: 8px;
+  height: 45px;
   background-color: #eee;
+  width: 100%;
 }
 
 
@@ -15,6 +19,17 @@
   align-items: center;
   height: 100%;
   gap: 8px;
+  padding: 8px;
+  border-right: 1px solid rgb(222, 225, 227);
+  height: 30px;
+}
+
+.history_container {
+  border-left: 1px solid rgb(222, 225, 227);
+}
+
+.tool_container:nth-child(odd){
+
 }
 
 .button {

@@ -11,13 +11,14 @@ export default function EditorPage() {
   const editor = useEditor({
     extensions: [StarterKit,
       Placeholder.configure({
-        placeholder: "Time to let your ideas flow!"
+        placeholder: "Time to let your ideas flow!",
       }),
       TextAlign.configure({
         types: ['heading', 'paragraph'],
         alignments: ['left', 'center', 'right'],
       })
     ],
+    autofocus: true, 
   });
 
   if (!editor) return;
@@ -28,11 +29,13 @@ export default function EditorPage() {
         <button className={style.back_btn}><IoMdArrowRoundBack /></button>
         <button className={style.control_btn}>Save daft</button>
         <button className={`${style.control_btn} ${style.publish_btn}`}>Publish</button>
+      
       </div>
-   <div className={style.wrapper}>
-         <Toolbar editor={editor}/>
-         <TiptapEditor editor={editor} />
-      </div>
+      <Toolbar editor={editor}/>
+  
+         
+      <TiptapEditor editor={editor} />
+      
     </div>
   );
 }
