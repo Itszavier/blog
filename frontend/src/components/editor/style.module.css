@@ -1,9 +1,1 @@
 /** @format */
-
-.editor_wrapper {
-  width: 60%;
-  height: 100%;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-}
