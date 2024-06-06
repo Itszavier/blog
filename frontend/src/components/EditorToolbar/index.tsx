@@ -11,6 +11,18 @@ interface IToolbarProps {
   editor: Editor;
 }
 
+function Dropdown() {
+return (
+<div className={style.dropdown_container}>
+<select className="custom-dropdown">
+  <option value="option1">normal</option>
+  <option value="option2">heading 1</option>
+  <option value="option3">heading 2</option>
+</select>
+</div>
+)
+}
+
 export default function Toolbar({ editor }: IToolbarProps) {
 
   const handleAlign = (e: React.MouseEvent<HTMLButtonElement> ) => {
@@ -35,6 +47,9 @@ export default function Toolbar({ editor }: IToolbarProps) {
           <FaRedo />
         </button>
         </div>
+
+< Dropdown/>
+        
         <div className={`${style.tool_container}`}>
           <button
           onClick={() => editor.chain().focus().toggleBold().run()}

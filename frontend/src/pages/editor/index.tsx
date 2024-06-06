@@ -7,11 +7,15 @@ import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
 import Toolbar from "../../components/EditorToolbar";
 import { IoMdArrowRoundBack } from "react-icons/io";
+
+const placeholder: string = "Start writing your article here. Use the toolbar above for formatting and paste your content if needed..."
+
+
 export default function EditorPage() {
   const editor = useEditor({
     extensions: [StarterKit,
       Placeholder.configure({
-        placeholder: "Time to let your ideas flow!",
+        placeholder,
       }),
       TextAlign.configure({
         types: ['heading', 'paragraph'],
@@ -19,12 +23,14 @@ export default function EditorPage() {
       })
     ],
     autofocus: true, 
+
   });
 
   if (!editor) return;
 
   return (
     <div className={style.container}>
+     <div className={style.header}> 
       <div className={style.control}>
         <button className={style.back_btn}><IoMdArrowRoundBack /></button>
         <button className={style.control_btn}>Save daft</button>
@@ -32,10 +38,10 @@ export default function EditorPage() {
       
       </div>
       <Toolbar editor={editor}/>
-  
-         
-      <TiptapEditor editor={editor} />
-      
+      </div>  
+      <div className={style.content}>
+         <TiptapEditor editor={editor} />s
+      </div> 
     </div>
   );
 }
