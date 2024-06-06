@@ -1,13 +1,20 @@
 /** @format */
 .toolbar {
-  background-color: #eeeded;
   width: 100%;
   display: flex;
   align-items: center;
   height: 34px;
   border-radius: 1px;
-  background-color: var(--accent);
-  color: white;
+  color: rgb(0, 0, 0);
+  background-color: #eee;
+}
+
+
+.tool_container{
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 8px;
 }
 
 .button {
@@ -20,19 +27,30 @@
   padding: 0px 10px;
   border-radius: 2px;
   color: inherit;
+  padding: 4px;
 }
 
 .active {
   background-color: var(--accent);
   color: white;
-  background-color: rgb(21, 111, 230);
-  color: black;
+  
+}
+
+.button:hover {
+  background-color:var(--accent);
+  color: white;
 }
 
 .section {
   display: flex;
   width: fit-content;
-  gap: 10px;
+  gap: 14px;
+  align-items: center;
   height: 100%;
   padding: 3px;
+}
+
+
+@media  screen and (min-width: 100px) and (max-width: 600px) {
+  
 }

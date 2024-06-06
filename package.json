@@ -9,5 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tiptap/extension-placeholder": "^2.4.0"
   }
 }

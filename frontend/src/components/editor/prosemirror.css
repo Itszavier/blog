@@ -1,12 +1,12 @@
 /** @format */
 
 .ProseMirror {
-  background-color: #f3f3f3;
+  background-color: var(--secoundary);
   outline: none;
   border: 4px;
-  padding: 5px;
+  padding: 15px 5px;
   width: 100%;
   outline: none;
-  padding: 3px;
-  height: 100%;
 }
+
+
