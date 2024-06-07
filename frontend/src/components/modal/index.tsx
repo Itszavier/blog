@@ -1,6 +1,6 @@
 // reusable code
 import React from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import styles from "./styles.module.css";
 import { useModal } from "../../context/modalContext";
 
@@ -11,10 +11,9 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ modalKey, children }) => {
   const { isOpen, closeModal } = useModal(modalKey);
-
+  console.log(isOpen);
   if (!isOpen) return null;
-
-  return ReactDOM.createPortal(
+  return (
     <div className={styles["modal-overlay"]}>
       <div className={styles["modal-content"]} data-modal-key={modalKey}>
         {children}
@@ -22,8 +21,7 @@ const Modal: React.FC<ModalProps> = ({ modalKey, children }) => {
           Close
         </button>
       </div>
-    </div>,
-    document.getElementById("modal-root")!,
+    </div>
   );
 };
 

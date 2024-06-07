@@ -7,10 +7,10 @@ import style from "./styles.module.css";
 import { Link } from "react-router-dom";
 export default function Navbar() {
   const { user } = useAuth();
-  const { setAuthModal } = useModal();
+  const { openModal } = useModal("auth");
 
   const handleLoginPopup = () => {
-    setAuthModal(true);
+    openModal();
   };
 
   return (

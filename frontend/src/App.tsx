@@ -14,9 +14,8 @@ function App() {
 
   return (
     <>
+      {location.pathname !== "/editor" ? <Navbar /> : <></>}
 
-     {location.pathname !== "/editor" ?  <Navbar /> : <></>} 
-      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile/:id" element={<Profile />} />
@@ -26,21 +25,10 @@ function App() {
         </Route>
       </Routes>
 
-      <ModalProvider>
-        <ModalWrapper />
-      </ModalProvider>
+     
+        <AuthModal />
     </>
   );
 }
 
-const ModalWrapper = () => {
-  const { openModal } = useModal("auth");
-
-  openModal();
-  return (
-    <>
-      <AuthModal />
-    </>
-  );
-};
 export default App;

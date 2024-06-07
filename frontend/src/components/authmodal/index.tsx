@@ -1,15 +1,10 @@
 import style from "./style.module.css";
 import googleIcon from "../../assets/google.png";
-import { useModal } from "../../context/modalContext";
+//import { useModal } from "../../context/modalContext";
 import Modal from "../modal";
 
 export default function AuthModal() {
-  const {} = useModal();
-
-  const handleClose = () => {};
-
   const handleLogin = () => {
-    setAuthModal(false);
     window.open("http://localhost:8080/auth/login/google", "_self");
   };
 
