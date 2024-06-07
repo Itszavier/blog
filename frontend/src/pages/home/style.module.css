@@ -2,9 +2,9 @@
   padding-top: 60px;
   background-color: var(--secoundary);
   height: 100vh;
-  background: url("../../assets/land.jpg");
+/*  background: url("../../assets/land.jpg");
   background-size: cover;
-  background-blend-mode: darken;
+  background-blend-mode: darken;*/
 }
 
 .landing {
