@@ -2,32 +2,63 @@
 
 import { Editor } from "@tiptap/react";
 import style from "./style.module.css";
+import Dropdown, { Option } from "../dropdown";
 import { FaBold, FaItalic } from "react-icons/fa";
 import { ImParagraphRight } from "react-icons/im";
 import { ImParagraphLeft } from "react-icons/im";
 import { ImParagraphCenter } from "react-icons/im";
 import {FaRedo, FaUndo}from "react-icons/fa";
+
 interface IToolbarProps {
   editor: Editor;
 }
 
-function Dropdown() {
-return (
-<div className={style.dropdown_container}>
-<select className="custom-dropdown">
-  <option value="option1">normal</option>
-  <option value="option2">heading 1</option>
-  <option value="option3">heading 2</option>
-</select>
-</div>
-)
-}
+const TextTypeOptions: Option[] = [
+  {
+    name: "Paragraph",
+    value: "paragraph",
+    type: "paragraph",
+  },
+
+  {
+    name: "Heading 1",
+    value: 1,
+    type: "heading",
+  },
+
+  {
+    name: "Heading 2",
+    value: 2,
+    type: "heading",
+  },
+
+  {
+    name: "Heading 3",
+    value: 3,
+    type: "heading",
+  }
+]
 
 export default function Toolbar({ editor }: IToolbarProps) {
 
   const handleAlign = (e: React.MouseEvent<HTMLButtonElement> ) => {
     editor.commands.setTextAlign(e.currentTarget.name)
     editor.chain().focus().run();
+  }
+
+
+  const handleDropdownChange = (option: Option) =>{
+    if(option.type === "paragraph") {
+      return editor.chain().focus().setParagraph().run();
+    }
+
+    if(option.type === "fontFamily") return;
+
+    
+    if(option.type === "heading") {
+      return  editor.commands.setHeading({level: option.value as any});
+    }
+     
   }
   return (
     <div className={style.toolbar}>
@@ -48,7 +79,7 @@ export default function Toolbar({ editor }: IToolbarProps) {
         </button>
         </div>
 
-< Dropdown/>
+       <Dropdown selectedValue="Paragraph" options={TextTypeOptions} onChange={handleDropdownChange}/>
         
         <div className={`${style.tool_container}`}>
           <button

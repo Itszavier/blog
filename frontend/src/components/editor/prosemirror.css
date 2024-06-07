@@ -9,7 +9,7 @@
   background-color: #ececec;
   margin-top: 25px;
   min-height: 400px;
-  max-height: 600px;
+  max-height: 1400px;
 }
 
 .ProseMirror {
@@ -21,8 +21,9 @@
   padding: 10px;
   max-height: 600px;
   min-height: 300px;
-  max-height: calc(600px - 25px);
+  max-height: calc(1300px - 25px);
   background-color: transparent;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 
