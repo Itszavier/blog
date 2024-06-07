@@ -29,11 +29,6 @@ export const ModalProvider: React.FC<{ children: any }> = ({ children }) => {
   }, [modals]);
 
   const openModal = (modalKey: string) => {
-    const updatedModals: Record<string, boolean> = {};
-    Object.keys(modals).forEach((key) => {
-      updatedModals[key] = false;
-    });
-
     setModals((prevModals) => ({
       ...prevModals,
       [modalKey]: true,
@@ -47,10 +42,8 @@ export const ModalProvider: React.FC<{ children: any }> = ({ children }) => {
     }));
   };
 
-  const contextValue = useMemo(
-    () => ({ modals, openModal, closeModal }),
-    [modals, openModal, closeModal],
-  );
+  const contextValue = { modals, openModal, closeModal };
+
   return (
     <ModalContext.Provider value={contextValue}>
       {children}

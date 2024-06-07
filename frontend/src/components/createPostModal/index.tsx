@@ -1,9 +1,21 @@
+import Modal from "../modal";
+import { useModal } from "../../context/modalContext";
 import style from "./style.module.css";
-import Modal from "../modal"
+
 export default function CreatePostModal() {
-  return (<Modal>
-      <div>
-        
+  const { closeModal } = useModal("createPost");
+  return (
+    <Modal
+      contentClassName={style.container}
+      handleClose={() => closeModal}
+      isOpen={true}
+      modalKey="createPost"
+    >
+      <form className={style.form}>
         <div>
-     </Modal>);
+          <input className={style.input} />
+        </div>
+      </form>
+    </Modal>
+  );
 }

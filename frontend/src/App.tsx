@@ -8,6 +8,7 @@ import ProtectedRoutes from "./components/protected";
 import Settings from "./pages/settings";
 import AuthModal from "./components/authmodal";
 import EditorPage from "./pages/editor";
+import CreatePostModal from "./components/createPostModal";
 
 function App() {
   const location = useLocation();
@@ -24,9 +25,8 @@ function App() {
           <Route element={<Settings />} path="/settings/*" />
         </Route>
       </Routes>
-
-     
-        <AuthModal />
+      <CreatePostModal />
+      <AuthModal />
     </>
   );
 }
