@@ -1,26 +1,49 @@
+// ModalContext.tsx
 import React, { createContext, useContext, useState } from "react";
 
-export interface IModalContextType {
-  authModal: boolean;
-  setAuthModal: React.Dispatch<React.SetStateAction<boolean>>;
+interface ModalContextType {
+  currentModal: string | null;
+  openModal: (modalKey: string) => void;
+  closeModal: () => void;
 }
 
-export const modalContext = createContext<IModalContextType>({
-  authModal: false,
-  setAuthModal: () => {},
-});
+const defaultModalContextValue: ModalContextType = {
+  currentModal: null,
+  openModal: () => {},
+  closeModal: () => {},
+};
 
-export function useModal() {
-  const context = useContext(modalContext);
-  return context;
-}
+const ModalContext = createContext<ModalContextType>(defaultModalContextValue);
 
-export function ModalProvider(props: any) {
-  const [authModal, setAuthModal] = useState(false);
+export const ModalProvider: React.FC<{ children: any }> = ({ children }) => {
+  const [currentModal, setCurrentModal] = useState<string | null>(null);
+
+  const openModal = (modalKey: string) => {
+    setCurrentModal(modalKey);
+  };
+
+  const closeModal = () => {
+    setCurrentModal(null);
+  };
 
   return (
-    <modalContext.Provider value={{ authModal, setAuthModal }}>
-      {props.children}
-    </modalContext.Provider>
+    <ModalContext.Provider value={{ currentModal, openModal, closeModal }}>
+      {children}
+    </ModalContext.Provider>
   );
-}
+};
+
+export const useModal = (modalKey: string) => {
+  const context = useContext(ModalContext);
+  if (!context) {
+    throw new Error("useModal must be used within a ModalProvider");
+  }
+
+  const { currentModal, openModal, closeModal } = context;
+
+  return {
+    isOpen: currentModal === modalKey,
+    openModal: () => openModal(modalKey),
+    closeModal,
+  };
+};
