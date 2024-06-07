@@ -1,6 +1,7 @@
 /** @format */
 
 import { Request, Response, NextFunction } from "express";
+import { z } from "zod";
 
 export class ErrorResponse extends Error {
   code: number;
@@ -20,6 +21,15 @@ export default function errorHandler(
   res: Response,
   next: NextFunction
 ) {
+  if (error instanceof z.ZodError) {
+    // Zod validation error occurred
+    const errorMessages = error.errors.map((err) => err.message);
+    return res.status(400).json({
+      message: "Validation failed",
+      errors: errorMessages,
+    });
+  }
+
   if (error.code) {
     return res
       .status(error.code)

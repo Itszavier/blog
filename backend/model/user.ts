@@ -1,11 +1,11 @@
 /** @format */
 
-import { Schema, SchemaTypes, model } from "mongoose";
+import { Schema, SchemaTypes, model, Document } from "mongoose";
 import generateUniqueId from "generate-unique-id";
-import { generateFromEmail } from "unique-username-generator";
+import { generateUsername } from "unique-username-generator";
 
 export interface IUser extends Document {
-  _id: string;
+  _id: Schema.Types.ObjectId | string;
   name: string;
   username?: string;
   bio?: string;
@@ -15,24 +15,16 @@ export interface IUser extends Document {
 }
 
 const userSchema = new Schema<IUser>({
-  _id: {
-    type: SchemaTypes.String,
-    default: generateUniqueId({
-      length: 17,
-      excludeSymbols: ["0", "-"],
-    }),
-  },
-
   name: { type: SchemaTypes.String, required: true },
 
-  username: { type: SchemaTypes.String },
+  username: { type: SchemaTypes.String, unique: true },
 
   profileImage: {
     type: SchemaTypes.String,
     default: "https://avatar.iran.liara.run/public/boy?username=Ash",
     required: true,
   },
-  email: { type: SchemaTypes.String, required: true },
+  email: { type: SchemaTypes.String, required: true, unique: true },
 
   bio: {
     type: SchemaTypes.String,
@@ -47,10 +39,11 @@ userSchema.pre("save", function (next) {
   if (this.username) {
     next();
   } else {
-    this.username = generateFromEmail(this.email);
+    this.username = generateUsername("_", 3, 8);
     next();
   }
 });
-const UserModel = model("User", userSchema, "users");
+
+const UserModel = model<IUser>("User", userSchema, "users");
 
 export default UserModel;

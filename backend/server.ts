@@ -7,6 +7,7 @@ import cors from "cors";
 import passport from "passport";
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
+import postRoutes from './routes/posts';
 import { IUser } from "./model/user";
 import session from "express-session";
 import "./stratetgies/google";
@@ -48,6 +49,7 @@ app.use(
 );
 app.use(bodyParser.json());
 
+app.use("/posts", postRoutes)
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 
