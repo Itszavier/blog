@@ -14,11 +14,13 @@ function App() {
 
   return (
     <>
-      {location.pathname !== "/" ? <Navbar /> : <></>}
+
+     {location.pathname !== "/editor" ?  <Navbar /> : <></>} 
+      
       <Routes>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/profile/:id" element={<Profile />} />
-        <Route path="/" element={<EditorPage />} />
+        <Route path="/editor" element={<EditorPage />} />
         <Route element={<ProtectedRoutes />}>
           <Route element={<Settings />} path="/settings/*" />
         </Route>
