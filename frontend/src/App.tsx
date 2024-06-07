@@ -1,21 +1,22 @@
 /** @format */
-import { Routes, Route, useLocation} from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Home from "./pages/home";
-import AuthModal from "./components/authmodal";
 import Profile from "./pages/profile";
-import { useModal } from "./context/modalContext";
+import { ModalProvider, useModal } from "./context/modalContext";
 import ProtectedRoutes from "./components/protected";
 import Settings from "./pages/settings";
+import AuthModal from "./components/authmodal";
 import EditorPage from "./pages/editor";
 
 function App() {
   const location = useLocation();
-  const { authModal } = useModal();
 
   return (
     <>
+
      {location.pathname !== "/editor" ?  <Navbar /> : <></>} 
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile/:id" element={<Profile />} />
@@ -25,9 +26,21 @@ function App() {
         </Route>
       </Routes>
 
-      {authModal && <AuthModal />}
+      <ModalProvider>
+        <ModalWrapper />
+      </ModalProvider>
     </>
   );
 }
 
+const ModalWrapper = () => {
+  const { openModal } = useModal("auth");
+
+  openModal();
+  return (
+    <>
+      <AuthModal />
+    </>
+  );
+};
 export default App;

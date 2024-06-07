@@ -1,13 +1,12 @@
 import style from "./style.module.css";
 import googleIcon from "../../assets/google.png";
 import { useModal } from "../../context/modalContext";
+import Modal from "../modal";
 
 export default function AuthModal() {
-  const { setAuthModal } = useModal();
+  const {} = useModal();
 
-  const handleClose = () => {
-    setAuthModal(false);
-  };
+  const handleClose = () => {};
 
   const handleLogin = () => {
     setAuthModal(false);
@@ -15,15 +14,8 @@ export default function AuthModal() {
   };
 
   return (
-    <div className={style.container}>
-      <div className={style.overlay} onClick={handleClose}></div>
+    <Modal modalKey="auth">
       <div className={style.content}>
-        <button
-          className={`material-icons ${style.close_btn}`}
-          onClick={handleClose}
-        >
-          close
-        </button>
         <div className={style.header}>Sign in</div>
         <div onClick={handleLogin} className={style.button_container}>
           <button className={style.google_signin_btn}>
@@ -32,6 +24,6 @@ export default function AuthModal() {
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
