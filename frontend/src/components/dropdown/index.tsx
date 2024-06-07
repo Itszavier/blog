@@ -48,6 +48,23 @@ const Dropdown: React.FC<DropdownProps> = ({
     }
   };
 
+  const getOptionStyle = (option: Option) => {
+    let style = '';
+
+    // Apply custom styles based on option type and value
+    if (option.type === 'heading') {
+      if (option.name === 'Heading 1') {
+        style = `${styles.heading1}`;
+      } else if (option.name === 'Heading 2') {
+        style = `${styles.heading2}`;
+      }else if (option.name === 'Heading 3'){
+        style = `${styles.heading3}`
+      }
+    } 
+
+    return style;
+  };
+
   // Close the dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -81,7 +98,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           {options.map((option, index) => (
             <div
               key={index}
-              className={`${styles['dropdown-option']} ${highlightedIndex === index ? styles.highlighted : ''}`}
+              className={`${styles['dropdown-option']} ${getOptionStyle(option)} ${highlightedIndex === index ? styles.highlighted : ''}`}
               onClick={() => handleOptionClick(option)}
               role="option"
               aria-selected={highlightedIndex === index}

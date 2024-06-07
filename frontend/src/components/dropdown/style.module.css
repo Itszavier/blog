@@ -58,3 +58,19 @@
     color: white;
   }
   
+
+  .heading1 {
+    font-size: 17.86px;
+    font-weight: bold;
+  }
+  
+  .heading2 {
+    font-size: 17.20px;
+    font-weight: bold;
+  }
+  
+
+  .heading3 {
+    font-size:16.50px;
+    font-weight: bold;
+  } 

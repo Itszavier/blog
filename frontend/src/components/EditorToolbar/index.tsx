@@ -56,6 +56,7 @@ export default function Toolbar({ editor }: IToolbarProps) {
 
     
     if(option.type === "heading") {
+      editor.commands.focus();
       return  editor.commands.setHeading({level: option.value as any});
     }
      
@@ -79,7 +80,7 @@ export default function Toolbar({ editor }: IToolbarProps) {
         </button>
         </div>
 
-       <Dropdown selectedValue="Paragraph" options={TextTypeOptions} onChange={handleDropdownChange}/>
+       <Dropdown selectedValue="Paragraph"  options={TextTypeOptions} onChange={handleDropdownChange}/>
         
         <div className={`${style.tool_container}`}>
           <button
