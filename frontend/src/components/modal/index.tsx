@@ -1,30 +1,40 @@
 // reusable code
 import React from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import styles from "./styles.module.css";
-import { useModal } from "../../context/modalContext";
 
 interface ModalProps {
   modalKey: string;
+  isOpen: boolean;
+
+  contentClassName?: string;
+  overlayClassName?: string;
+  handleClose: () => {};
+  onClickOff?: () => {};
   children: any;
 }
+export default function Modal(props: ModalProps) {
+  if (!props.isOpen) return null;
 
-const Modal: React.FC<ModalProps> = ({ modalKey, children }) => {
-  const { isOpen, closeModal } = useModal(modalKey);
-
-  if (!isOpen) return null;
-
-  return ReactDOM.createPortal(
-    <div className={styles["modal-overlay"]}>
-      <div className={styles["modal-content"]} data-modal-key={modalKey}>
-        {children}
-        <button className={styles["modal-close-btn"]} onClick={closeModal}>
+  return (
+    <div
+      className={`${styles["modal-overlay"]} ${props.overlayClassName}`}
+      onClick={props.onClickOff}
+    >
+      <div
+        className={`${styles["modal-content"]} ${props.contentClassName}`}
+        data-modal-key={props.modalKey}
+      >
+        {props.children}
+        <button
+          className={styles["modal-close-btn"]}
+          onClick={() => {
+            props.handleClose();
+          }}
+        >
           Close
         </button>
       </div>
-    </div>,
-    document.getElementById("modal-root")!,
+    </div>
   );
-};
-
-export default Modal;
+}

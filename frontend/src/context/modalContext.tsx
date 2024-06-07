@@ -1,14 +1,20 @@
 // ModalContext.tsx
-import React, { createContext, useContext, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 interface ModalContextType {
-  currentModal: string | null;
+  modals: Record<string, boolean>;
   openModal: (modalKey: string) => void;
-  closeModal: () => void;
+  closeModal: (modalKey: string) => void;
 }
 
 const defaultModalContextValue: ModalContextType = {
-  currentModal: null,
+  modals: {},
   openModal: () => {},
   closeModal: () => {},
 };
@@ -16,18 +22,30 @@ const defaultModalContextValue: ModalContextType = {
 const ModalContext = createContext<ModalContextType>(defaultModalContextValue);
 
 export const ModalProvider: React.FC<{ children: any }> = ({ children }) => {
-  const [currentModal, setCurrentModal] = useState<string | null>(null);
+  const [modals, setModals] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    console.log(modals);
+  }, [modals]);
 
   const openModal = (modalKey: string) => {
-    setCurrentModal(modalKey);
+    setModals((prevModals) => ({
+      ...prevModals,
+      [modalKey]: true,
+    }));
   };
 
-  const closeModal = () => {
-    setCurrentModal(null);
+  const closeModal = (modalKey: string) => {
+    setModals((prevModals) => ({
+      ...prevModals,
+      [modalKey]: false,
+    }));
   };
+
+  const contextValue = { modals, openModal, closeModal };
 
   return (
-    <ModalContext.Provider value={{ currentModal, openModal, closeModal }}>
+    <ModalContext.Provider value={contextValue}>
       {children}
     </ModalContext.Provider>
   );
@@ -39,11 +57,11 @@ export const useModal = (modalKey: string) => {
     throw new Error("useModal must be used within a ModalProvider");
   }
 
-  const { currentModal, openModal, closeModal } = context;
+  const { modals, openModal, closeModal } = context;
 
   return {
-    isOpen: currentModal === modalKey,
+    isOpen: modals[modalKey] || false, // Ensuring it always returns a boolean
     openModal: () => openModal(modalKey),
-    closeModal,
+    closeModal: () => closeModal(modalKey),
   };
 };

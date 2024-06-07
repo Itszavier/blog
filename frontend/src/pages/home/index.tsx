@@ -2,7 +2,7 @@ import { useModal } from "../../context/modalContext";
 import style from "./style.module.css";
 
 export default function Home() {
-  const { setAuthModal } = useModal();
+  const { openModal } = useModal("auth");
 
   return (
     <div className={style.container}>
@@ -22,7 +22,7 @@ export default function Home() {
         <div className={style.button_wrapper}>
           <button
             onClick={() => {
-              setAuthModal(true);
+              openModal();
             }}
           >
             Get Started

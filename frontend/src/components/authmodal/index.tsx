@@ -1,20 +1,18 @@
 import style from "./style.module.css";
 import googleIcon from "../../assets/google.png";
-import { useModal } from "../../context/modalContext";
+
 import Modal from "../modal";
+import { useModal } from "../../context/modalContext";
 
 export default function AuthModal() {
-  const {} = useModal();
-
-  const handleClose = () => {};
+  const { isOpen, closeModal } = useModal("auth");
 
   const handleLogin = () => {
-    setAuthModal(false);
     window.open("http://localhost:8080/auth/login/google", "_self");
   };
 
   return (
-    <Modal modalKey="auth">
+    <Modal handleClose={() => closeModal} isOpen={isOpen} modalKey="auth">
       <div className={style.content}>
         <div className={style.header}>Sign in</div>
         <div onClick={handleLogin} className={style.button_container}>

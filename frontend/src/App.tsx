@@ -8,15 +8,15 @@ import ProtectedRoutes from "./components/protected";
 import Settings from "./pages/settings";
 import AuthModal from "./components/authmodal";
 import EditorPage from "./pages/editor";
+import CreatePostModal from "./components/createPostModal";
 
 function App() {
   const location = useLocation();
 
   return (
     <>
+      {location.pathname !== "/editor" ? <Navbar /> : <></>}
 
-     {location.pathname !== "/editor" ?  <Navbar /> : <></>} 
-      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile/:id" element={<Profile />} />
@@ -25,22 +25,10 @@ function App() {
           <Route element={<Settings />} path="/settings/*" />
         </Route>
       </Routes>
-
-      <ModalProvider>
-        <ModalWrapper />
-      </ModalProvider>
+      <CreatePostModal />
+      <AuthModal />
     </>
   );
 }
 
-const ModalWrapper = () => {
-  const { openModal } = useModal("auth");
-
-  openModal();
-  return (
-    <>
-      <AuthModal />
-    </>
-  );
-};
 export default App;
