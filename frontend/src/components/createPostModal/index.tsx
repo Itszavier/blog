@@ -1,3 +1,5 @@
+/** @format */
+
 import Modal from "../modal";
 import { useModal } from "../../context/modalContext";
 import style from "./style.module.css";
@@ -8,12 +10,14 @@ export default function CreatePostModal() {
     <Modal
       contentClassName={style.container}
       handleClose={() => closeModal}
-      isOpen={true}
+      isOpen={false}
       modalKey="createPost"
     >
       <form className={style.form}>
         <div>
-          <input className={style.input} />
+          <div>
+            <input className={style.input} placeholder="Title" />
+          </div>
         </div>
       </form>
     </Modal>

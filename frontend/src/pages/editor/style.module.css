@@ -5,16 +5,19 @@
   width: 100%;
   height: 100vh;
   flex-direction: column;
+  background-color: var(--primary);
 }
 
 .header {
- position: fixed;
- top: 0;
- right: 0;
- width: 100%;
- background-color: #eee;
- z-index: 1;
- height: 97px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  background-color: #eee;
+  z-index: 1;
+  height: 97px;
+  background-color: var(--accent);
+  padding: 10px;
 }
 
 .content {
@@ -22,19 +25,18 @@
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  
 }
-
 
 .control {
   width: 100%;
-  height: 50px;
+  height: fit-content;
   padding: 0px 9px;
   display: flex;
   align-items: center;
   gap: 5px;
+  padding: 0px 35px;
   justify-content: flex-end;
-  border-bottom: 1px solid rgb(222, 225, 227);
+  /*border-bottom: 1px solid var(--borderColor); */
 }
 
 .control_btn {
@@ -48,33 +50,38 @@
 
 .wrapper {
   width: 55%;
-  height:400px;
-  background-color: #eee;
- margin: auto;
+  height: 400px;
+
+  margin: auto;
 }
 
-
 .back_btn {
- font-size: 1.8rem;
- margin-right: auto;
- border: none;
- display: flex;
- align-items: center;
- justify-content: center;
- height: inherit;
- width: 50px;
- background-color: transparent;
- cursor: pointer;
+  font-size: 1.8rem;
+  margin-right: auto;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: inherit;
+  width: 50px;
+  background-color: transparent;
+  cursor: pointer;
+  color: white;
 }
 
 .publish_btn {
   background-color: rgb(46, 121, 226);
 }
+.setting_btn {
+}
 
-
-@media  screen and (min-width: 100px) and (max-width: 600px) {
+.left_container {
+  display: flex;
+  align-items: center;
+}
+@media screen and (min-width: 100px) and (max-width: 600px) {
   .wrapper {
     width: 100%;
     padding: 4px;
-  };
+  }
 }

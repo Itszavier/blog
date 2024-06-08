@@ -3,22 +3,21 @@
 .container {
   width: 100%;
   height: 60px;
-  padding: 10px;
+  padding: 10px 55px;
   display: flex;
   align-items: center;
-  background-color: var(--primary);
   justify-content: space-between;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 10;
-  color: rgb(0, 0, 0);
-  background-color: var(--primary);
+
+  background-color: var(--accent);
 }
 
 .logo_link {
   text-decoration: none;
-  color: rgb(0, 0, 0);
+  color: var(---primaryFontColor);
 }
 
 .link_container {
@@ -27,12 +26,13 @@
   align-items: center;
   gap: 15px;
   font-size: 14.78px;
+  color: var(--secondaryFontColor);
 }
 
 .link {
   color: none;
   text-decoration: none;
-  color: rgb(24, 24, 24);
+  color: inherit;
 }
 
 .get_started_link {
@@ -49,6 +49,10 @@
   background-color: rgb(29, 31, 39);
 }
 
-.logo_text {
-  color: rgb(5, 5, 5);
+.logo_text h2 {
+  color: var(--primaryFontColor);
+}
+
+.logo {
+  color: var(--primaryFontColor);
 }

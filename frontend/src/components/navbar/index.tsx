@@ -16,9 +16,7 @@ export default function Navbar() {
   return (
     <div className={style.container}>
       <div className={style.logo_wrapper}>
-        <Link to={"/"} className={style.logo_link}>
-          <h2>Narrate</h2>
-        </Link>
+        <h2 className={style.logo}>Narrate</h2>
       </div>
 
       <div className={style.link_container}>

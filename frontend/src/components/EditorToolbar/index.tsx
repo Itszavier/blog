@@ -7,7 +7,7 @@ import { FaBold, FaItalic } from "react-icons/fa";
 import { ImParagraphRight } from "react-icons/im";
 import { ImParagraphLeft } from "react-icons/im";
 import { ImParagraphCenter } from "react-icons/im";
-import {FaRedo, FaUndo}from "react-icons/fa";
+import {BiRedo, BiUndo } from "react-icons/bi";
 
 interface IToolbarProps {
   editor: Editor;
@@ -69,14 +69,14 @@ export default function Toolbar({ editor }: IToolbarProps) {
           onClick={() => editor.commands.undo()}
           className={`${style.button} ${style.history}`}
         >
-          <FaUndo />
+          <BiUndo className={style.icon} />
         </button>
 
          <button
           onClick={() => editor.commands.redo()}
           className={`${style.button} ${style.history}`}
         >
-          <FaRedo />
+          <BiRedo className={style.icon}/>
         </button>
         </div>
 

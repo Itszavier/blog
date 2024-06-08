@@ -6,29 +6,27 @@
   height: 34px;
   justify-content: center;
   border-radius: 1px;
-  color: rgb(0, 0, 0);
-  padding: 8px;
-  height: 45px;
+  color: var(--primaryFontColor);
   width: 100%;
 }
 
-
-.tool_container{
+.tool_container {
   display: flex;
   align-items: center;
   height: 100%;
   gap: 8px;
-  padding: 8px;
-  border-right: 1px solid rgb(222, 225, 227);
+
   height: 30px;
 }
 
-.history_container {
-  border-left: 1px solid rgb(222, 225, 227);
+.icon {
+  font-size: 1.2rem;
 }
 
-.tool_container:nth-child(odd){
+.history_container {
+}
 
+.tool_container:nth-child(odd) {
 }
 
 .button {
@@ -47,11 +45,10 @@
 .active {
   background-color: var(--accent);
   color: white;
-  
 }
 
 .button:hover {
-  background-color:var(--accent);
+  background-color: var(--accent);
   color: white;
 }
 
@@ -75,10 +72,9 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-image: url('data:image/svg+xml;base64,...'); /* Custom arrow icon */
+  background-image: url("data:image/svg+xml;base64,..."); /* Custom arrow icon */
   background-repeat: no-repeat;
   background-position: right 10px center;
 }
-@media  screen and (min-width: 100px) and (max-width: 600px) {
-  
+@media screen and (min-width: 100px) and (max-width: 600px) {
 }

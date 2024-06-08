@@ -3,7 +3,6 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Home from "./pages/home";
 import Profile from "./pages/profile";
-import { ModalProvider, useModal } from "./context/modalContext";
 import ProtectedRoutes from "./components/protected";
 import Settings from "./pages/settings";
 import AuthModal from "./components/authmodal";

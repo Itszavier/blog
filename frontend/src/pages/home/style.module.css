@@ -1,10 +1,15 @@
+/** @format */
+
 .container {
   padding-top: 60px;
   background-color: var(--secoundary);
   height: 100vh;
-/*  background: url("../../assets/land.jpg");
+  /*  background: url("../../assets/land.jpg");
   background-size: cover;
   background-blend-mode: darken;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .landing {
@@ -17,8 +22,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  height: fit-content;
   flex-direction: column;
-  height: 100%;
+  border-radius: 10px;
+  background-color: var(--accent);
+  width: 60%;
 }
 
 .title {
@@ -31,12 +39,10 @@
 }
 
 .text {
-  text-align: center;
-  width: 65%;
-  font-weight: bold;
+  margin: 20px;
   font-size: 19.15px;
-  color: rgb(255, 255, 255);
-  text-shadow: 1px 1px rgb(0, 0, 0);
+  color: var(--primaryFontColor);
+  /* text-shadow: 1px 1px rgb(0, 0, 0);*/
 }
 
 .button_wrapper {
@@ -49,7 +55,7 @@
   width: 150px;
   border: none;
   border-radius: 3px;
-  background-color: var(--accent);
+  background-color: var(--tertiary);
   color: rgb(223, 216, 216);
   box-shadow: 38px 19px 100px -3px rgba(7, 6, 6, 0.1);
 }
