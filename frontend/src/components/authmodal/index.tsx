@@ -12,7 +12,7 @@ export default function AuthModal() {
   };
 
   return (
-    <Modal handleClose={() => closeModal} isOpen={isOpen} modalKey="auth">
+    <Modal handleClose={closeModal} isOpen={isOpen} modalKey="auth">
       <div className={style.content}>
         <div className={style.header}>Sign in</div>
         <div onClick={handleLogin} className={style.button_container}>

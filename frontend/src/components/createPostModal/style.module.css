@@ -1,6 +1,108 @@
+/** @format */
+
 .container {
+  height: 100%;
+  border-radius: 4px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  
+  padding: 18px;
 }
 
+.form {
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  padding: 10px;
+  height: fit-content;
+  background-color: var(--accent);
+  border-radius: 8px;
+}
+
+.image_upload_container {
+  position: relative;
+  width: 718px;
+  height: 200px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.image_upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: inherit;
+  height: inherit;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file_intruction_container {
+  height: inherit;
+  width: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: var(--primaryFontColor);
+}
+
+.divider {
+  width: 650px;
+  border: 1px solid var(--primaryFontColor);
+  border-radius: 10px;
+  margin: auto;
+}
+
+.icon {
+  font-size: 2.6rem;
+  margin-bottom: 8px;
+}
+
+.input_group {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--accent);
+  padding: 10px 19px;
+}
+
+.label {
+  margin-left: 5px;
+  color: var(--primaryFontColor);
+}
+.input_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .input {
-    
+  padding: 8px 15px;
+  width: 350px;
+  height: 50px;
+  border: none;
+  outline: none;
+  background-color: var(--accent);
+  color: var(--primaryFontColor);
+}
+
+.title_input {
+  font-size: 1.7rem;
+  font-weight: bold;
+  width: 100%;
+}
+
+.title_input::placeholder {
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+
+.subtitle_input {
+  font-size: 1rem;
+  width: 100%;
+  margin-left: 4px;
+}
+
+.subtitle_input::placeholder {
+  font-size: 1rem;
 }

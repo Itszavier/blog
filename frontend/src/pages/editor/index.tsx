@@ -62,7 +62,7 @@ export default function EditorPage() {
           </button>
           <div className={style.left_container}>
             <button className={`${style.control_btn} ${style.setting_btn}`}>
-              <IoMdSettings size={25}/>
+              <IoMdSettings size={25} />
             </button>
             <button className={style.control_btn}>Save Draft</button>
             <button className={`${style.control_btn} ${style.publish_btn}`}>
@@ -73,6 +73,14 @@ export default function EditorPage() {
         <Toolbar editor={editor} />
       </div>
       <div ref={contentRef} className={style.content}>
+        <div className={style.meta_container}>
+          <div className={style.input_wrapper}>
+            <input type="text" placeholder="Title" className={`${style.input} ${style.title_input}`} />
+          </div>
+          <div className={style.input_wrapper}>
+            <input placeholder="Subtitle" className={`${style.input} ${style.subtitle_input}`} />
+          </div>
+        </div>
         <TiptapEditor editor={editor} />
       </div>
     </div>

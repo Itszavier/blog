@@ -9,7 +9,7 @@ interface ModalProps {
 
   contentClassName?: string;
   overlayClassName?: string;
-  handleClose: () => {};
+  handleClose: () => any;
   onClickOff?: () => {};
   children: any;
 }

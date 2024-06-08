@@ -79,6 +79,44 @@
   display: flex;
   align-items: center;
 }
+
+.meta_container {
+  margin: auto;
+  margin-top: 20px;
+  width: 50%;
+  flex-direction: column;
+  display: flex;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: var(--tertiary);
+  padding: 10px;
+}
+
+.input {
+  padding: 8px 15px;
+  width: 100%;
+  height: 50px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+.title_input {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--primaryFontColor);
+}
+.title_input::placeholder {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+.subtitle_input {
+  font-size: 1rem;
+  color: var(--primaryFontColor);
+}
+.subtitle_input {
+  font-size: 1rem;
+}
+
 @media screen and (min-width: 100px) and (max-width: 600px) {
   .wrapper {
     width: 100%;

@@ -1,11 +1,7 @@
+/** @format */
+
 // ModalContext.tsx
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 interface ModalContextType {
   modals: Record<string, boolean>;
@@ -44,11 +40,7 @@ export const ModalProvider: React.FC<{ children: any }> = ({ children }) => {
 
   const contextValue = { modals, openModal, closeModal };
 
-  return (
-    <ModalContext.Provider value={contextValue}>
-      {children}
-    </ModalContext.Provider>
-  );
+  return <ModalContext.Provider value={contextValue}>{children}</ModalContext.Provider>;
 };
 
 export const useModal = (modalKey: string) => {
