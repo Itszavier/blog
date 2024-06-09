@@ -56,7 +56,6 @@
 }
 
 .back_btn {
-  font-size: 1.8rem;
   margin-right: auto;
   border: none;
   display: flex;
@@ -69,6 +68,15 @@
   color: white;
 }
 
+.back_btn span {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.back_icon {
+  font-size: 23px;
+  color: white;
+}
 .publish_btn {
   background-color: rgb(46, 121, 226);
 }
@@ -88,9 +96,6 @@
 }
 
 .meta_container {
-  margin: auto;
-  margin-top: 20px;
-  width: 50%;
   flex-direction: column;
   display: flex;
   border-top-left-radius: 8px;
@@ -122,6 +127,12 @@
 }
 .subtitle_input {
   font-size: 1rem;
+}
+
+.middle_content {
+  margin: auto;
+  margin-top: 25px;
+  width: 50%;
 }
 
 @media screen and (min-width: 100px) and (max-width: 600px) {

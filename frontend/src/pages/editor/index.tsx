@@ -9,11 +9,13 @@ import Toolbar from "../../components/EditorToolbar";
 import { IoMdArrowRoundBack, IoMdSettings } from "react-icons/io";
 import { useEffect, useRef } from "react";
 import { BiDotsHorizontal } from "react-icons/bi";
+import { Link, useLocation } from "react-router-dom";
 
 const placeholder: string =
   "Start writing your article here. Use the toolbar above for formatting and paste your content if needed...";
 
 export default function EditorPage() {
+
   const contentRef = useRef<HTMLDivElement>(null);
   const editor = useEditor({
     extensions: [
@@ -58,7 +60,7 @@ export default function EditorPage() {
       <div className={style.header}>
         <div className={style.control}>
           <button className={style.back_btn}>
-            <IoMdArrowRoundBack />
+            <span>Narrate</span>
           </button>
           <div className={style.left_container}>
             <button className={`${style.control_btn} ${style.setting_btn}`}>
@@ -73,15 +75,24 @@ export default function EditorPage() {
         <Toolbar editor={editor} />
       </div>
       <div ref={contentRef} className={style.content}>
-        <div className={style.meta_container}>
-          <div className={style.input_wrapper}>
-            <input type="text" placeholder="Title" className={`${style.input} ${style.title_input}`} />
+        <div className={style.middle_content}>
+          <div className={style.meta_container}>
+            <div className={style.input_wrapper}>
+              <input
+                type="text"
+                placeholder="Title"
+                className={`${style.input} ${style.title_input}`}
+              />
+            </div>
+            <div className={style.input_wrapper}>
+              <input
+                placeholder="Subtitle"
+                className={`${style.input} ${style.subtitle_input}`}
+              />
+            </div>
           </div>
-          <div className={style.input_wrapper}>
-            <input placeholder="Subtitle" className={`${style.input} ${style.subtitle_input}`} />
-          </div>
+          <TiptapEditor editor={editor} />
         </div>
-        <TiptapEditor editor={editor} />
       </div>
     </div>
   );

@@ -19,6 +19,9 @@
   --secondaryFontColor: rgb(175, 175, 175);
   --accent: #161616;
   --borderColor: rgb(205, 206, 207);
+
+  --primaryButtonColor: #1E90FF;
+  --secondaryButtonColor: #3f3f3f;
 }
 
 body {
