@@ -8,6 +8,9 @@ import { z } from "zod";
 import unqineId from "generate-unique-id";
 import mongoose from "mongoose";
 import generateUniqueId from "generate-unique-id";
+import { heroImageUpload } from "../multer/file";
+import { errorMessage } from "../middleware/error";
+import uploadFile from "../utils";
 const router = Router();
 
 export const getAuthorFields = (custom?: string) => {
@@ -32,7 +35,6 @@ router.get("/create", ensureAuthenticated, async function (req, res, next) {
       useNumbers: false,
       useLetters: true,
     })}`;
-
 
     const postSchema = z.object({
       type: z.string(),
@@ -119,11 +121,38 @@ router.post("/update/content", ensureAuthenticated, async function (req, res, ne
   }
 });
 
+router.post(
+  "/update/hero-image/:id",
+  ensureAuthenticated,
+  heroImageUpload.single("image"),
+  async function (req, res, next) {
+    const post = await PostModel.findOne({
+      _id: req.params.id,
+    });
 
+    if (!post) {
+      return next(errorMessage(404, "there is no posts with that id"));
+    }
+    const userId: any = req.user?._id;
 
+    if (!post.author.equals(userId))
+      return next(errorMessage(404, "Unauthorized post access this is not your post"));
 
-router.post("/update/hero-image/", async function(req, res, next)  {
+    if (!req.file) {
+      return next(errorMessage(400, "Failed to hero image"));
+    }
 
-})
+    const { public_id, url } = await uploadFile(req.file);
+
+    post.heroImage = {
+      storage: "cloud",
+      url: url,
+      id: public_id,
+    };
+
+    const saved = (await post.save()).populate("author", getAuthorFields());
+    res.status(200).json({ message: "updated post hero image", updated: saved });
+  }
+);
 
 export default router;

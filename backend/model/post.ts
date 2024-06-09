@@ -14,15 +14,18 @@ export interface IPost {
     html: string;
     text: string;
   };
+
+  heroImage?: {
+    storage: string; // ("cloud" us)| "google" ...
+    url: string;
+    id: string;
+  };
   createdAt: Date;
   updatedAt: Date;
   published: boolean;
 }
 
 export interface IPostSchema extends IPost, Document {}
-
-
-
 
 // Mongoose schema definition
 const postSchema = new Schema<IPostSchema>({
@@ -47,7 +50,7 @@ const postSchema = new Schema<IPostSchema>({
   },
   author: {
     type: SchemaTypes.ObjectId,
-    ref: "User", 
+    ref: "User",
     required: true,
   },
   content: {
@@ -60,6 +63,24 @@ const postSchema = new Schema<IPostSchema>({
       required: true,
     },
   },
+
+  heroImage: {
+    storage: {
+      type: SchemaTypes.String,
+      required: true,
+      defualt: "cloud",
+    },
+    url: {
+      type: SchemaTypes.String,
+      required: true,
+    },
+
+    id: {
+      type: SchemaTypes.String,
+      required: true,
+    },
+  },
+
   createdAt: {
     type: Date,
     immutable: true,
