@@ -5,7 +5,9 @@ import ensureAuthenticated from "../middleware/checkauth";
 import UserModel from "../model/user";
 import PostModel, { IPost } from "../model/post";
 import { z } from "zod";
+import unqineId from "generate-unique-id";
 import mongoose from "mongoose";
+import generateUniqueId from "generate-unique-id";
 const router = Router();
 
 export const getAuthorFields = (custom?: string) => {
@@ -25,12 +27,20 @@ router.get("/create", ensureAuthenticated, async function (req, res, next) {
   try {
     const fields = getAuthorFields();
 
+    const defaultTitle = `draft-${generateUniqueId({
+      length: 9,
+      useNumbers: false,
+      useLetters: true,
+    })}`;
+
+
     const postSchema = z.object({
       type: z.string(),
       title: z
         .string()
         .min(5, { message: "Title must be at least 5 characters long" })
-        .max(100, { message: "Title cannot exceed 100 characters" }),
+        .max(100, { message: "Title cannot exceed 100 characters" })
+        .default(defaultTitle),
       subtitle: z
         .string()
         .min(5, { message: "Subtitle must be at least 5 characters long" })
@@ -87,7 +97,7 @@ router.post("/update/content", ensureAuthenticated, async function (req, res, ne
 
     // Check if the current user is the author of the post
     const userId: any = req.user?._id;
-    
+
     if (!post.author.equals(userId)) {
       return res
         .status(403)
@@ -108,5 +118,12 @@ router.post("/update/content", ensureAuthenticated, async function (req, res, ne
     next(error);
   }
 });
+
+
+
+
+router.post("/update/hero-image/", async function(req, res, next)  {
+
+})
 
 export default router;

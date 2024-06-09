@@ -6,9 +6,8 @@ import { StarterKit } from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
 import Toolbar from "../../components/EditorToolbar";
-import { IoMdArrowRoundBack, IoMdSettings } from "react-icons/io";
+import { IoMdSettings } from "react-icons/io";
 import { useEffect, useRef } from "react";
-import { BiDotsHorizontal } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 
 const placeholder: string =

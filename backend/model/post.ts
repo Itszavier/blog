@@ -37,7 +37,6 @@ const postSchema = new Schema<IPostSchema>({
   },
   subtitle: {
     type: SchemaTypes.String,
-    required: true,
   },
   description: {
     type: SchemaTypes.String,
