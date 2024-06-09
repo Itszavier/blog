@@ -62,9 +62,9 @@ export default function EditorPage() {
           </button>
           <div className={style.left_container}>
             <button className={`${style.control_btn} ${style.setting_btn}`}>
-              <IoMdSettings size={25} />
+              <IoMdSettings />
             </button>
-            <button className={style.control_btn}>Save Draft</button>
+            <button className={style.control_btn}>Save</button>
             <button className={`${style.control_btn} ${style.publish_btn}`}>
               Publish
             </button>

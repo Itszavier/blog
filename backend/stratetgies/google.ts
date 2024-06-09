@@ -1,3 +1,5 @@
+/** @format */
+
 import passport from "passport";
 import { Strategy as OAuth2Strategy } from "passport-google-oauth20";
 import UserModel from "../model/user";
@@ -10,7 +12,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      callbackURL: "/auth/google/redirect",
+      callbackURL: "https://narrate-server.loca.lt/auth/google/redirect",
       scope: ["profile", "email"],
     },
 
@@ -42,8 +44,8 @@ passport.use(
       } catch (err) {
         done(err);
       }
-    },
-  ),
+    }
+  )
 );
 
 passport.serializeUser(function (user: any, done) {

@@ -56,3 +56,22 @@
 .logo {
   color: var(--primaryFontColor);
 }
+
+.nav_btn {
+  width: 90px;
+  height: 34px;
+  background-color: var(--tertiary);
+  color: var(---primaryFontColor);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.nav_notification_btn {
+  font-size: 1.5rem;
+  width: fit-content;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+}

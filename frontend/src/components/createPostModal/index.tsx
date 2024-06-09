@@ -10,7 +10,7 @@ export default function CreatePostModal() {
   return (
     <Modal
       contentClassName={style.container}
-      handleClose={() => closeModal}
+      handleClose={() => closeModal()}
       isOpen={isOpen}
       modalKey="createPost"
     >

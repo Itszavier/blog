@@ -1,3 +1,5 @@
+/** @format */
+
 import style from "./style.module.css";
 import googleIcon from "../../assets/google.png";
 
@@ -8,7 +10,7 @@ export default function AuthModal() {
   const { isOpen, closeModal } = useModal("auth");
 
   const handleLogin = () => {
-    window.open("http://localhost:8080/auth/login/google", "_self");
+    window.open(`https://narrate-server.loca.lt/auth/login/google`, "_self");
   };
 
   return (

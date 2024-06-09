@@ -15,8 +15,8 @@ const router = Router();
 
 router.get("/login/google", passport.authenticate("google"));
 
-router.get("/google/redirect", passport.authenticate("google"), (req, res, next) => {
-  res.redirect(`http://localhost:5173/profile/${req.user?._id}`);
+router.get("/google/redirect", passport.authenticate("google", {failureMessage: "failed"}), (req, res, next) => {
+  res.redirect(`https://narrate-client.loca.lt/profile/${req.user?._id}`);
 });
 
 router.get("/logout", ensureAuthenticated, async (req, res, next) => {

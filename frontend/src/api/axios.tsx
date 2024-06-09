@@ -3,6 +3,6 @@
 import axios from "axios";
 
 export const serverAxios = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://narrate-server.loca.lt",
   withCredentials: true,
 });

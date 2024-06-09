@@ -1,5 +1,6 @@
 /** @format */
 
+import { IoNotifications } from "react-icons/io5";
 import { useAuth } from "../../context/auth";
 import { useModal } from "../../context/modalContext";
 import ProfileDropdown from "../profileDropdown";
@@ -7,6 +8,7 @@ import style from "./styles.module.css";
 import { Link } from "react-router-dom";
 export default function Navbar() {
   const { user } = useAuth();
+  const postModal = useModal("createPost");
   const { openModal } = useModal("auth");
 
   const handleLoginPopup = () => {
@@ -39,12 +41,20 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <Link to={"/settings"} className={style.link}>
-              Notification
-            </Link>
-            <Link to={"#"} className={style.link}>
+            <Link to={"/Browse"} className={style.link}>
+              Browse
+            </Link>{" "}
+            <button
+              onClick={() => postModal.openModal()}
+              className={`${style.link} ${style.nav_btn}`}
+            >
               Write
-            </Link>
+            </button>
+            <button
+              className={`${style.link} ${style.nav_btn} ${style.nav_notification_btn}`}
+            >
+              <IoNotifications />
+            </button>
             <ProfileDropdown />
           </>
         )}

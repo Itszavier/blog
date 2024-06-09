@@ -48,7 +48,7 @@ const postSchema = new Schema<IPostSchema>({
   },
   author: {
     type: SchemaTypes.ObjectId,
-    ref: "User", // Assuming the author is a reference to a User model
+    ref: "User", 
     required: true,
   },
   content: {

@@ -44,7 +44,7 @@
   border: none;
   border-radius: 4px;
   background-color: var(--accent);
-  color: white;
+  color: var(--primaryFontColor);
   cursor: pointer;
 }
 
@@ -73,10 +73,17 @@
   background-color: rgb(46, 121, 226);
 }
 .setting_btn {
+  margin: 0;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
 }
 
 .left_container {
   display: flex;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
   align-items: center;
 }
 

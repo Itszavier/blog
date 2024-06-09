@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run dev --prefix ./frontend & npm start --prefix ./backend & lt --port 5173 --subdomain narrate-client lt --port 8080 --subdomain narrate-server"
   },
   "author": "",
   "license": "ISC",

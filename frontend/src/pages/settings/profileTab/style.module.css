@@ -12,10 +12,10 @@
   border: none;
   padding: 10px;
   width: 300px;
-  background-color: #fff;
   border-radius: 5px;
   outline: none;
-    background-color: #f3f3f3;
+  background-color: var(--accent);
+  color: var(--primaryFontColor);
 }
 
 .input::placeholder {
@@ -30,7 +30,7 @@
 }
 
 .input_label {
-  color: black;
+  color: var(--secondaryFontColor);
   text-transform: uppercase;
   font-size: 14.17px;
   margin-left: 2px;
@@ -123,6 +123,7 @@
   width: 300px;
   height: 105px;
   border-radius: none;
+  background-color: var(--accent);
 }
 
 .profile_image_group {
