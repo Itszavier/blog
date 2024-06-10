@@ -7,15 +7,23 @@ import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
 import Toolbar from "../../components/EditorToolbar";
 import { IoMdSettings } from "react-icons/io";
-import { useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
-
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { serverAxios } from "../../api/axios";
+import { IPost } from "../../api/types";
+import { useAuth } from "../../context/auth";
 const placeholder: string =
   "Start writing your article here. Use the toolbar above for formatting and paste your content if needed...";
 
 export default function EditorPage() {
+  const { id } = useParams();
+  const auth = useAuth();
+  const [post, setPost] = useState<IPost | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const contentRef = useRef<HTMLDivElement>(null);
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -29,6 +37,22 @@ export default function EditorPage() {
     ],
     autofocus: true,
   });
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    setLoading(true);
+    serverAxios
+      .get(`/posts/fetch/unpublished/${id}`, { signal: abortController.signal })
+      .then((response) => {
+        setLoading(false);
+        console.log(response.data);
+        setPost(response.data.post);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.response.data.message);
+      });
+  }, []);
 
   useEffect(() => {
     // Ensure editor is available before setting up event listener
@@ -54,6 +78,22 @@ export default function EditorPage() {
   // Return early if editor is not available yet
   if (!editor) return null;
 
+  if (error) {
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "red",
+        }}
+      >
+        {error}
+      </div>
+    );
+  }
   return (
     <div className={style.container}>
       <div className={style.header}>

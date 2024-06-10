@@ -6,6 +6,7 @@ import generateUniqueId from "generate-unique-id";
 
 export default async function uploadFile(
   file: Express.Multer.File,
+  folder?: string
 ): Promise<UploadApiResponse> {
   return new Promise((resolve, reject) => {
     const public_id = generateUniqueId({
@@ -19,6 +20,7 @@ export default async function uploadFile(
         {
           public_id: public_id,
           resource_type: "image",
+          folder,
         },
         function (error, results) {
           if (error) {

@@ -6,7 +6,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  
+
   padding: 18px;
 }
 
@@ -18,6 +18,17 @@
   height: fit-content;
   background-color: var(--accent);
   border-radius: 8px;
+}
+
+.image_preview {
+  width: 100%;
+  height: inherit;
+
+  border-radius: 8px;
+  /*filter: blur(10px);*/
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .image_upload_container {
@@ -105,4 +116,27 @@
 
 .subtitle_input::placeholder {
   font-size: 1rem;
+}
+
+.create_btn {
+  width: 100px;
+  height: 38px;
+  border: none;
+  border-radius: 8px;
+  margin-left: auto;
+  margin-right: 16px;
+  font-size: 0.87rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--secondaryButtonColor);
+  color: var(--primaryFontColor);
+  transition: ease-in-out;
+}
+
+.create_btn_active {
+  background-color: var(--primaryButtonColor);
+  transition: 200ms ease-in-out;
+  color: black;
 }

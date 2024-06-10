@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "concurrently \"npm run dev-frontend\" \"npm run start\" \"lt --port 3000 --subdomain narrate-client \" \"lt --port 8080 --subdomain narrate-server\"",
+    "test": "concurrently \"npm run dev-frontend\" \"npm run dev\" \"lt --port 3000 --subdomain narrate-client \" \"lt --port 8080 --subdomain narrate-server\"",
     "start": "ts-node server.ts",
     "dev": "ts-node-dev server.ts",
     "dev-frontend": "npm run dev --prefix ../frontend",

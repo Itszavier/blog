@@ -31,8 +31,8 @@ export interface IPostSchema extends IPost, Document {}
 const postSchema = new Schema<IPostSchema>({
   type: {
     type: SchemaTypes.String,
-    immutable: true,
     required: true,
+    defualt: "Article",
   },
   title: {
     type: SchemaTypes.String,
@@ -56,28 +56,25 @@ const postSchema = new Schema<IPostSchema>({
   content: {
     html: {
       type: SchemaTypes.String,
-      required: true,
+      default: "",
     },
     text: {
       type: SchemaTypes.String,
-      required: true,
+      default: "",
     },
   },
 
   heroImage: {
     storage: {
       type: SchemaTypes.String,
-      required: true,
       defualt: "cloud",
     },
     url: {
       type: SchemaTypes.String,
-      required: true,
     },
 
     id: {
       type: SchemaTypes.String,
-      required: true,
     },
   },
 

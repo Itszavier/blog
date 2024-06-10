@@ -46,11 +46,7 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: [
-      "https://nht55j-5173.csb.app",
-      "http://localhost:5173",
-      "https://narrate-client.loca.lt",
-    ],
+    origin: "https://narrate-client.loca.lt",
     credentials: true,
   })
 );
@@ -66,10 +62,7 @@ app.get("/", (req, res, next) => {
   );
 });
 
-app.use((err: any, req: any, res: any, next: any) => {
-  console.log(err);
-  res.json(err);
-});
+app.use(errorHandler)
 
 app.listen(port, async () => {
   /* try {

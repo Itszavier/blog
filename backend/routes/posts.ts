@@ -26,55 +26,90 @@ router.get("/", async function (req, res, next) {
   }
 });
 
-router.get("/create", ensureAuthenticated, async function (req, res, next) {
+router.get("/fetch/unpublished/:id", ensureAuthenticated, async (req, res, next) => {
   try {
-    const fields = getAuthorFields();
+    const postId = req.params.id;
+    const post = await PostModel.findOne({ _id: postId, published: false });
 
-    const defaultTitle = `draft-${generateUniqueId({
-      length: 9,
-      useNumbers: false,
-      useLetters: true,
-    })}`;
+    if (!post) return next(errorMessage(404, "There isn't any unpublished post with id"));
 
-    const postSchema = z.object({
-      type: z.string(),
-      title: z
-        .string()
-        .min(5, { message: "Title must be at least 5 characters long" })
-        .max(100, { message: "Title cannot exceed 100 characters" })
-        .default(defaultTitle),
-      subtitle: z
-        .string()
-        .min(5, { message: "Subtitle must be at least 5 characters long" })
-        .max(150, { message: "Subtitle cannot exceed 150 characters" }),
-      description: z
-        .string()
-        .min(10, { message: "Description must be at least 10 characters long" })
-        .max(500, { message: "Description cannot exceed 500 characters" })
-        .optional(),
-      tags: z.array(z.string()).default([]),
-      content: z.object({
-        html: z.string().default(""),
-        text: z.string().default(""),
-      }),
+    const userId: any = req.user?._id;
 
-      published: z.boolean().default(false),
-    });
-
-    const body = postSchema.safeParse(req.body);
-
-    const post = await (
-      await PostModel.create({ ...body, author: req.user?._id })
-    ).populate("author", fields);
+    if (!post.author.equals(userId)) {
+      return next(
+        errorMessage(401, "You can only access unpublished post if it's yours")
+      );
+    }
+    
+    await post.populate("author", getAuthorFields());
 
     res.status(200).json({
-      message: "successfully created post",
-      post,
+      message: `${req.user?.name} here is your unpublished post`,
+      post: post,
     });
   } catch (error) {
     next(error);
   }
 });
+
+router.post(
+  "/create",
+  ensureAuthenticated,
+  heroImageUpload.single("heroImage"),
+  async function (req, res, next) {
+    try {
+      const fields = getAuthorFields();
+
+      console.log(req.body);
+      const defaultTitle = `draft-${generateUniqueId({
+        length: 9,
+        useNumbers: false,
+        useLetters: true,
+      })}`;
+
+      const postSchema = z.object({
+        title: z
+          .string()
+          .min(5, { message: "Title must be at least 5 characters long" })
+          .max(100, { message: "Title cannot exceed 100 characters" })
+          .default(defaultTitle),
+        subtitle: z
+          .string()
+          .min(0, { message: "Subtitle must be at least 5 characters long" })
+          .max(150, { message: "Subtitle cannot exceed 150 characters" }),
+        description: z
+          .string()
+          .min(10, { message: "Description must be at least 10 characters long" })
+          .max(500, { message: "Description cannot exceed 500 characters" })
+          .optional(),
+
+        published: z.boolean().default(false),
+      });
+
+      const body = postSchema.parse(req.body);
+      console.log(body);
+      const post = new PostModel({ ...body, author: req.user?._id, type: "Article" });
+
+      if (req.file) {
+        const { public_id, url } = await uploadFile(req.file, "heroImageFolder");
+        post.heroImage = {
+          id: public_id,
+          storage: "cloud",
+          url,
+        };
+      }
+
+      const savedPost = await (await post.save()).populate("author", fields);
+      res.status(200).json({
+        message: "successfully created post",
+        post: savedPost,
+      });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+);
 
 router.post("/update/content", ensureAuthenticated, async function (req, res, next) {
   try {
@@ -142,11 +177,11 @@ router.post(
       return next(errorMessage(400, "Failed to hero image"));
     }
 
-    const { public_id, url } = await uploadFile(req.file);
+    const { public_id, secure_url } = await uploadFile(req.file, "heroImageFolder");
 
     post.heroImage = {
       storage: "cloud",
-      url: url,
+      url: secure_url,
       id: public_id,
     };
 
