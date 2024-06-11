@@ -61,10 +61,10 @@ export default function EditorPage() {
     }
   }, [editor]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     const abortController = new AbortController();
     serverAxios
-      .get(`/posts/fetch/user`, {
+      .get(`/posts/fetch/editable/${id}`, {
         signal: abortController.signal,
       })
       .then((response) => {
@@ -81,7 +81,7 @@ export default function EditorPage() {
     return () => {
       abortController.abort();
     };
-  }, []); */
+  }, []);
 
   // Return early if editor is not available yet
   if (!editor) return null;
