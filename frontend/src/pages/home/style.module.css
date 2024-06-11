@@ -25,8 +25,7 @@
   height: fit-content;
   flex-direction: column;
   border-radius: 10px;
-  background-color: var(--accent);
-  width: 60%;
+  width: 100%;
 }
 
 .title {

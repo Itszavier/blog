@@ -85,7 +85,7 @@ export default function Profile() {
       <div className={style.profile_card}>
         <div className={style.profile_info_container}>
           <div className={`${style.data_wrapper} ${style.profile_info}`}>
-            <img src={member.profileImage} width={50} height={50} />
+            <img className={style.profileImage}src={member.profileImage} width={50} height={50} />
             <span>{member.name}</span>
           </div>
           <div className={style.data_wrapper}>
@@ -115,10 +115,13 @@ export default function Profile() {
             </p>
           </div>
           <div className={style.button_container}>
+            <button className={style.button}>Share</button>
             <button className={style.button}>Follow</button>
-            <button className={style.button}>
-              <IoSettings size={15} />
-            </button>
+            {member._id == id && (
+              <button className={style.button}>
+                <IoSettings size={15} />
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -129,12 +132,29 @@ export default function Profile() {
             <div key={index} className={style.post_card}>
               <div className={style.post_card_header}>
                 <img src={post.author.profileImage} width={20} height={20} />
-                <span>{post.author.name}</span>
+
+                <span>
+                  <Link className={style.link} to={`/profile/${post.author._id}`}>
+                    {post.author.name}
+                  </Link>
+                </span>
+                <BsDot />
+
+                {post.published ? (
+                  <span className={style.status_text}>Published</span>
+                ) : (
+                  <span className={style.status_text}>Draft</span>
+                )}
+
                 <PostMenuDropdown post={post} />
               </div>
               <div className={style.post_card_body}>
                 <div className={style.post_data_wrapper}>
-                  <p className={style.title}>{post.title}</p>
+                  <p className={style.title}>
+                    <Link className={style.link} to={`/article/${post._id}`}>
+                      {post.title}
+                    </Link>
+                  </p>
                   <p className={style.sub_title}>
                     {post.subtitle || "subtitle from content"}
                   </p>
