@@ -102,9 +102,6 @@ export default function EditorPage() {
             <span>Narrate</span>
           </button>
           <div className={style.left_container}>
-            <button className={`${style.control_btn} ${style.setting_btn}`}>
-              <IoMdSettings />
-            </button>
             <button className={style.control_btn}>Save</button>
             <button className={`${style.control_btn} ${style.publish_btn}`}>
               Publish

@@ -12,7 +12,7 @@ import { IUser } from "./model/user";
 import session from "express-session";
 import "./stratetgies/google";
 import errorHandler from "./middleware/error";
-import tunnal from "localtunnel";
+import mongoStore from "connect-mongo";
 
 import localtunnel from "localtunnel";
 
@@ -38,6 +38,13 @@ app.use(
     resave: false,
     saveUninitialized: true,
     name: "auth",
+    store: mongoStore.create({
+      mongoUrl: process.env.DB_URI,
+      collectionName: "sessions",
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
   })
 );
 
@@ -62,28 +69,8 @@ app.get("/", (req, res, next) => {
   );
 });
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 app.listen(port, async () => {
-  /* try {
-    const data = await localtunnel({ port: port, subdomain: "narrate-server" });
-
-    const tunnel = await localtunnel({
-      port: 3000,
-      subdomain: "narrate-frontend",
-    }); // Change port to your frontend port
-    console.log("Localtunnel URL:", tunnel.url);
-
-    console.log(data.url);
-  } catch (error) {
-    console.log(error);
-  }
-
-  const startLocaltunnel = async () => {
-    try {
-    } catch (error) {
-      console.error("Error starting Localtunnel:", error);
-    }
-  }; */
   console.log(`http://localhost:${port}/`);
 });

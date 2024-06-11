@@ -16,11 +16,11 @@
   --secondary: #313030; /*nav, */
   --tertiary: #3f3f3f;
   --primaryFontColor: rgb(206, 205, 205); /* font */
-  --secondaryFontColor: rgb(175, 175, 175);
+  --secondaryFontColor: lightgrey;
   --accent: #161616;
   --borderColor: rgb(205, 206, 207);
 
-  --primaryButtonColor: #1E90FF;
+  --primaryButtonColor: #1e90ff;
   --secondaryButtonColor: #3f3f3f;
 }
 

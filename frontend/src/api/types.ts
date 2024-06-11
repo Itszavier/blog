@@ -7,7 +7,12 @@ export interface IPost {
   subtitle: string;
   description?: string;
   tags: string[];
-  author: string;
+  author: {
+    _id: string;
+    username: string;
+    profileImage: string;
+    name: string;
+  };
   content: {
     html: string;
     text: string;

@@ -3,11 +3,16 @@
 import style from "./style.module.css";
 import { useEffect, useState } from "react";
 import { serverAxios } from "../../api/axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Loading from "../../components/loading";
 import { useAuth } from "../../context/auth";
 import banner from "../../assets/landing.jpg";
-
+import { IoSettings } from "react-icons/io5";
+import { IPost } from "../../api/types";
+import moment from "moment";
+import { BsDot, BsThreeDots } from "react-icons/bs";
+import { FaComment, FaCommentAlt, FaHeart } from "react-icons/fa";
+import PostMenuDropdown from "../../components/Postmenudropdown";
 interface IMember {
   _id: string;
   name: string;
@@ -23,10 +28,12 @@ export default function Profile() {
   const auth = useAuth();
   const [member, setMember] = useState<IMember | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [posts, setPosts] = useState<IPost[]>([]);
 
   useEffect(() => {
+    const abortController = new AbortController();
     serverAxios
-      .get(`/user/${id}`)
+      .get(`/user/${id}`, { signal: abortController.signal })
       .then(function (response) {
         console.log(response.data.user);
         setMember(response.data.user);
@@ -37,6 +44,29 @@ export default function Profile() {
       .finally(() => {
         setLoading(false);
       });
+
+    serverAxios
+      .get(`/posts/fetch/user`, {
+        signal: abortController.signal,
+      })
+      .then((response) => {
+        console.log(response.data);
+        setPosts(response.data.posts);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
+    return () => {
+      abortController.abort();
+    };
+
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   if (loading || auth.loading) {
@@ -53,50 +83,93 @@ export default function Profile() {
   return (
     <div className={style.container}>
       <div className={style.profile_card}>
-        <div className={style.profile_card_header}>
-          <img
-            src={member.profileImage}
-            alt=""
-            className={style.profile_img}
-            width={90}
-            height={90}
-          />
-          {banner ? (
-            <img className={style.banner} src={banner} alt="" />
-          ) : (
-            <div className={style.default_banner}></div>
-          )}
+        <div className={style.profile_info_container}>
+          <div className={`${style.data_wrapper} ${style.profile_info}`}>
+            <img src={member.profileImage} width={50} height={50} />
+            <span>{member.name}</span>
+          </div>
+          <div className={style.data_wrapper}>
+            <p>0</p>
+            <span>posts</span>
+          </div>
+          <div className={style.data_wrapper}>
+            <p>0</p>
+            <span>followers</span>
+          </div>
+          <div className={style.data_wrapper}>
+            <p>0</p>
+            <span>following</span>
+          </div>
+
+          {/* <div className={style.data_wrapper}>
+              <button>follow</button>
+              <button>
+                <IoSettings />
+              </button>
+            </div> */}
         </div>
-
-        <div className={style.profile_card_body}>
-          <p className={`${style.profile_user_text} ${style.profile_username} `}>
-            {member.name}
-          </p>
-          <p className={`${style.profile_user_text} ${style.profile_user_bio} `}>
-            {member.bio || "I am a avid writer"}
-          </p>
-          <div className={style.info_container}>
-            <div className={style.profile_info_wrapper}>
-              <span>
-                <span className={style.highlighted_number}>200</span> Followers
-              </span>
-              <span>
-                <span className={style.highlighted_number}>5</span> Posts
-              </span>
-            </div>
-            <div className={style.profile_buttons}>
-              <button className={style.follow_button}>follow</button>
-
-              {auth.user && member._id === auth.user?._id ? (
-                <button onClick={e => navigate('/settings/profile')} className={style.settings_button}>
-                  <span className="material-icons">settings</span>
-                </button>
-              ) : (
-                ""
-              )}
-            </div>
+        <div className={style.body}>
+          <div>
+            <p className={style.bio}>
+              {member.bio} I am a programmer writer and ddddadasdasd
+            </p>
+          </div>
+          <div className={style.button_container}>
+            <button className={style.button}>Follow</button>
+            <button className={style.button}>
+              <IoSettings size={15} />
+            </button>
           </div>
         </div>
+      </div>
+
+      <div className={style.posts}>
+        {posts.map((post, index) => {
+          return (
+            <div key={index} className={style.post_card}>
+              <div className={style.post_card_header}>
+                <img src={post.author.profileImage} width={20} height={20} />
+                <span>{post.author.name}</span>
+                <PostMenuDropdown post={post} />
+              </div>
+              <div className={style.post_card_body}>
+                <div className={style.post_data_wrapper}>
+                  <p className={style.title}>{post.title}</p>
+                  <p className={style.sub_title}>
+                    {post.subtitle || "subtitle from content"}
+                  </p>
+                  <div className={style.profile_card_date}>
+                    <span>{moment(post.createdAt).format("MMM DD YYYY")}</span>
+                    {post.createdAt !== post.updatedAt && <BsDot />}
+                    {post.createdAt !== post.updatedAt && (
+                      <p>
+                        <span>Updated</span> {moment(post.updatedAt).fromNow()}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {post.heroImage?.url && (
+                  <img
+                    className={style.heroImage}
+                    src={post.heroImage?.url}
+                    alt=" "
+                    width={120}
+                    height={90}
+                  />
+                )}
+              </div>
+              <div className={style.footer}>
+                <button className={style.card_footer_button}>
+                  <FaHeart /> <span>0</span>
+                </button>
+
+                <button className={style.card_footer_button}>
+                  <FaCommentAlt />
+                </button>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

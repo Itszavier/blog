@@ -40,13 +40,44 @@ router.get("/fetch/unpublished/:id", ensureAuthenticated, async (req, res, next)
         errorMessage(401, "You can only access unpublished post if it's yours")
       );
     }
-    
+
     await post.populate("author", getAuthorFields());
 
     res.status(200).json({
       message: `${req.user?.name} here is your unpublished post`,
       post: post,
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// user does not need to be logged in to view this these
+
+router.get("/fetch/published/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const posts = await PostModel.find({ author: id, published: true })
+      .populate("author", getAuthorFields())
+      .exec();
+
+    res.status(200).json({
+      message: "",
+      posts,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/fetch/user/", ensureAuthenticated, async (req, res, next) => {
+  try {
+    const posts = await PostModel.find({ author: req.user?._id })
+      .populate("author", getAuthorFields())
+      .exec();
+
+    res.status(200).json({ message: "", posts });
   } catch (error) {
     next(error);
   }

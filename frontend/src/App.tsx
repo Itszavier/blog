@@ -8,7 +8,6 @@ import Settings from "./pages/settings";
 import AuthModal from "./components/authmodal";
 import EditorPage from "./pages/editor";
 import CreatePostModal from "./components/createPostModal";
-import localtunnel from "localtunnel";
 import { useEffect } from "react";
 
 function App() {
@@ -22,7 +21,7 @@ function App() {
 
   return (
     <>
-      {hideNavbar && <Navbar />}
+      {!hideNavbar && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Home />} />
