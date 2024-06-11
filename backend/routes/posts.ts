@@ -87,19 +87,19 @@ router.get("/fetch/editable/:id", ensureAuthenticated, async (req, res, next) =>
   try {
     const { id } = req.params;
 
-    const post = await PostModel.findOne({ _id: id })
-      .populate("author", getAuthorFields())
-      .exec();
+    const post = await PostModel.findOne({ _id: id });
 
     if (!post) return next(errorMessage(404, "Failed to find a post with that id"));
 
     const userId: any = req.user?._id;
 
-    if (post.author._id !== userId) {
+    if (!post.author.equals(userId)) {
       return next(
         errorMessage(401, "Unauthorized, you don't have permission to edit this post")
       );
     }
+    await post.populate("author", getAuthorFields());
+
     res.status(200).json({
       message: "",
       post,

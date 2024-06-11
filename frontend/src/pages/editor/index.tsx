@@ -13,6 +13,7 @@ import { serverAxios } from "../../api/axios";
 import { IPost } from "../../api/types";
 import { useAuth } from "../../context/auth";
 import ProfileDropdown from "../../components/profileDropdown";
+import SubmitModal from "../../components/submitModal";
 const placeholder: string =
   "Start writing your article here. Use the toolbar above for formatting and paste your content if needed...";
 
@@ -38,28 +39,29 @@ export default function EditorPage() {
       }),
     ],
     autofocus: true,
+
+    onUpdate(updatedEditor) {
+      if (
+        contentRef.current &&
+        contentRef.current.scrollHeight > contentRef.current.clientHeight
+      ) {
+        contentRef.current.scrollIntoView();
+      }
+
+      const html = updatedEditor.editor.getHTML();
+      const text = updatedEditor.editor.getText();
+
+      setPost((prev) => {
+        return {
+          ...prev!,
+          content: {
+            html,
+            text,
+          },
+        };
+      });
+    },
   });
-
-  useEffect(() => {
-    // Ensure editor is available before setting up event listener
-    if (editor) {
-      const handleContentChange = () => {
-        // Scroll to the bottom of the editor only if there's a scrollbar
-        if (
-          contentRef.current &&
-          contentRef.current.scrollHeight > contentRef.current.clientHeight
-        ) {
-          contentRef.current.scrollTop = contentRef.current.scrollHeight;
-        }
-      };
-
-      editor.on("update", handleContentChange);
-
-      return () => {
-        editor.off("update", handleContentChange);
-      };
-    }
-  }, [editor]);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -69,7 +71,7 @@ export default function EditorPage() {
       })
       .then((response) => {
         console.log(response.data);
-        setPost(response.data.posts);
+        setPost(response.data.post);
       })
       .catch((error) => {
         console.log(error);
@@ -78,10 +80,22 @@ export default function EditorPage() {
         setLoading(false);
       });
 
+    console.log(post);
+
     return () => {
       abortController.abort();
     };
   }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPost((prev) => {
+      return { ...prev!, [e.target.name]: e.target.value };
+    });
+  };
+
+  const handleSave = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {};
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {};
 
   // Return early if editor is not available yet
   if (!editor) return null;
@@ -102,6 +116,21 @@ export default function EditorPage() {
       </div>
     );
   }
+  if (!post)
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "red",
+        }}
+      >
+        Failed to load post
+      </div>
+    );
   return (
     <div className={style.container}>
       <div className={style.header}>
@@ -110,8 +139,16 @@ export default function EditorPage() {
             <span>Narrate</span>
           </button>
           <div className={style.left_container}>
-            <button className={`${style.control_btn} ${style.save_btn}`}>Save</button>
-            <button className={`${style.control_btn} ${style.publish_btn}`}>
+            <button
+              onClick={handleSave}
+              className={`${style.control_btn} ${style.save_btn}`}
+            >
+              Save
+            </button>
+            <button
+              onClick={handleSubmit}
+              className={`${style.control_btn} ${style.publish_btn}`}
+            >
               Publish
             </button>
             <ProfileDropdown />
@@ -126,12 +163,18 @@ export default function EditorPage() {
               <input
                 type="text"
                 placeholder="Title"
+                value={post.title}
                 className={`${style.input} ${style.title_input}`}
+                onChange={handleChange}
+                name={"title"}
               />
             </div>
             <div className={style.input_wrapper}>
               <input
                 placeholder="Subtitle"
+                value={post.subtitle}
+                onChange={handleChange}
+                name="subtitle"
                 className={`${style.input} ${style.subtitle_input}`}
               />
             </div>
@@ -139,6 +182,8 @@ export default function EditorPage() {
           <TiptapEditor editor={editor} />
         </div>
       </div>
+
+      <SubmitModal post={post} isOpen={true} handleClose={() => {}} />
     </div>
   );
 }
