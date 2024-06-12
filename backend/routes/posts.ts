@@ -26,10 +26,10 @@ router.get("/", async function (req, res, next) {
   }
 });
 
-router.get("/fetch/unpublished/:id", ensureAuthenticated, async (req, res, next) => {
+router.get("/fetch/one/:id", async (req, res, next) => {
   try {
     const postId = req.params.id;
-    const post = await PostModel.findOne({ _id: postId, published: false });
+    const post = await PostModel.findOne({ _id: postId });
 
     if (!post) return next(errorMessage(404, "There isn't any unpublished post with id"));
 
@@ -48,6 +48,25 @@ router.get("/fetch/unpublished/:id", ensureAuthenticated, async (req, res, next)
       post: post,
     });
   } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/fetch/unpublished/:id", ensureAuthenticated, async (req, res, next) => {
+  try {
+    const postId = req.params.id;
+    const post = await PostModel.findOne({ _id: postId, published: false });
+
+    if (!post) return next(errorMessage(404, "There isn't any post with id"));
+
+    await post.populate("author", getAuthorFields());
+
+    res.status(200).json({
+      message: `${req.user?.name} here is your unpublished post`,
+      post: post,
+    });
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 });

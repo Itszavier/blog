@@ -43,7 +43,7 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <Link to={"/Browse"} className={style.link}>
+            <Link to={"/browse"} className={style.link}>
               Browse
             </Link>{" "}
             <button

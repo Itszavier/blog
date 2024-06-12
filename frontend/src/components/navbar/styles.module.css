@@ -54,13 +54,14 @@
 }
 
 .nav_btn {
-  width: 90px;
+  width: 70px;
+  font-size: 15px;
   height: 34px;
-  background-color: var(--tertiary);
   color: var(---primaryFontColor);
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  background: transparent;
 }
 
 .nav_notification_btn {

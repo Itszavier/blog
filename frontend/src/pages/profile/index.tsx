@@ -85,7 +85,12 @@ export default function Profile() {
       <div className={style.profile_card}>
         <div className={style.profile_info_container}>
           <div className={`${style.data_wrapper} ${style.profile_info}`}>
-            <img className={style.profileImage}src={member.profileImage} width={50} height={50} />
+            <img
+              className={style.profileImage}
+              src={member.profileImage}
+              width={50}
+              height={50}
+            />
             <span>{member.name}</span>
           </div>
           <div className={style.data_wrapper}>
@@ -151,7 +156,7 @@ export default function Profile() {
               <div className={style.post_card_body}>
                 <div className={style.post_data_wrapper}>
                   <p className={style.title}>
-                    <Link className={style.link} to={`/article/${post._id}`}>
+                    <Link className={style.link} to={`/browse/${post._id}`}>
                       {post.title}
                     </Link>
                   </p>
