@@ -14,6 +14,7 @@ import { IPost } from "../../api/types";
 import { useAuth } from "../../context/auth";
 import ProfileDropdown from "../../components/profileDropdown";
 import SubmitModal from "../../components/submitModal";
+import { useModal } from "../../context/modalContext";
 const placeholder: string =
   "Start writing your article here. Use the toolbar above for formatting and paste your content if needed...";
 
@@ -21,8 +22,9 @@ export default function EditorPage() {
   const { id } = useParams();
   const auth = useAuth();
   const navigate = useNavigate();
+  const { closeModal, isOpen, openModal } = useModal("publish");
   const [post, setPost] = useState<IPost | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const contentRef = useRef<HTMLDivElement>(null);
@@ -93,13 +95,24 @@ export default function EditorPage() {
     });
   };
 
-  const handleSave = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {};
-
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {};
-
   // Return early if editor is not available yet
   if (!editor) return null;
 
+  if (loading) {
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        Failed to load post
+      </div>
+    );
+  }
   if (error) {
     return (
       <div
@@ -116,6 +129,7 @@ export default function EditorPage() {
       </div>
     );
   }
+
   if (!post)
     return (
       <div
@@ -131,26 +145,22 @@ export default function EditorPage() {
         Failed to load post
       </div>
     );
+
   return (
     <div className={style.container}>
       <div className={style.header}>
         <div className={style.control}>
-          <button className={style.back_btn}>
-            <span>Narrate</span>
+          <button className={style.back_btn} onClick={() => navigate(-1)}>
+            <span className={style.back_btn_text}>Narrate</span>
           </button>
           <div className={style.left_container}>
             <button
-              onClick={handleSave}
-              className={`${style.control_btn} ${style.save_btn}`}
-            >
-              Save
-            </button>
-            <button
-              onClick={handleSubmit}
+              onClick={() => openModal()}
               className={`${style.control_btn} ${style.publish_btn}`}
             >
-              Publish
+              Publish settings
             </button>
+
             <ProfileDropdown />
           </div>
         </div>
@@ -183,7 +193,14 @@ export default function EditorPage() {
         </div>
       </div>
 
-      <SubmitModal post={post} isOpen={true} handleClose={() => {}} />
+      <SubmitModal
+        post={post}
+        setPost={setPost}
+        isOpen={isOpen}
+        handleClose={() => {
+          closeModal();
+        }}
+      />
     </div>
   );
 }

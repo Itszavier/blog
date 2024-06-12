@@ -2,12 +2,13 @@
 
 .container {
   width: 100%;
+  padding: 0;
   height: 100%;
 }
 .form {
   display: flex;
   margin-top: 20px;
-  width: 50%;
+  width: 60%;
   flex-direction: column;
   padding: 10px;
   height: fit-content;
@@ -70,6 +71,7 @@
 .input_group {
   display: flex;
   flex-direction: column;
+  border-radius: 8px;
   background-color: var(--accent);
   padding: 10px 19px;
 }
@@ -113,13 +115,19 @@
 .subtitle_input::placeholder {
   font-size: 1rem;
 }
+.button_container {
+  display: flex;
+  margin-top: 14px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
 
 .create_btn {
   width: 100px;
   height: 38px;
   border: none;
   border-radius: 8px;
-  margin-left: auto;
   margin-right: 16px;
   font-size: 0.87rem;
   cursor: pointer;
@@ -135,4 +143,25 @@
   background-color: var(--primaryButtonColor);
   transition: 200ms ease-in-out;
   color: black;
+}
+
+.save_btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  width: 120px;
+  background-color: var(--tertiary);
+  color: var(--primaryFontColor);
+  cursor: pointer;
+}
+
+.published_text {
+  color: var(--primaryButtonColor);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+}
+
+.publish_icon {
 }

@@ -18,7 +18,9 @@ export default function Navbar() {
   return (
     <div className={style.container}>
       <div className={style.logo_wrapper}>
-        <h2 className={style.logo}>Narrate</h2>
+        <Link className={style.logo_link} to={user ? "/browse" : "/"}>
+          <h2 className={style.logo}>Narrate</h2>
+        </Link>
       </div>
 
       <div className={style.link_container}>

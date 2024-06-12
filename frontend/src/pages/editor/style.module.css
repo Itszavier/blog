@@ -5,7 +5,7 @@
   width: 100%;
   height: 100vh;
   flex-direction: column;
-  background-color: var(--primary);
+  background-color: var(--accent);
 }
 
 .header {
@@ -15,8 +15,9 @@
   width: 100%;
   background-color: #eee;
   z-index: 1;
-  height: 97px;
   background-color: var(--accent);
+  display: flex;
+  flex-direction: column;
 }
 
 .content {
@@ -28,7 +29,7 @@
 
 .control {
   width: 100%;
-  height: fit-content;
+  height: 50%;
   padding: 0px 9px;
   display: flex;
   align-items: center;
@@ -68,12 +69,12 @@
   width: 50px;
   background-color: transparent;
   cursor: pointer;
-  color: white;
 }
 
 .back_btn span {
   font-weight: bold;
   font-size: 25px;
+  color: var(--primaryFontColor);
 }
 
 .back_icon {
@@ -97,6 +98,7 @@
   flex-direction: row;
   align-items: center;
   gap: 15px;
+  padding: 8px;
 }
 
 .meta_container {
@@ -113,6 +115,7 @@
   width: 100%;
   height: 50px;
   border: none;
+  text-align: center;
   outline: none;
   background-color: transparent;
 }

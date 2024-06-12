@@ -1,88 +1,52 @@
 /** @format */
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IPost } from "../../api/types";
 import Modal from "../modal";
 import style from "./style.module.css";
 import { IoMdCloudDownload } from "react-icons/io";
 import { serverAxios } from "../../api/axios";
-import { GroupBase } from "react-select";
 import CreatableSelect from "react-select/creatable";
-import { StylesConfig } from "react-select";
+import selectStyles from "./select.style";
+import z from "zod";
+import { useModal } from "../../context/modalContext";
+import { PiChecks } from "react-icons/pi";
 interface ISubmitModal {
   post: IPost;
+  setPost: React.Dispatch<React.SetStateAction<IPost | null>>;
   isOpen: boolean;
   handleClose: () => void;
 }
 
-// Custom styles for react-select component
-const customStyles: StylesConfig<unknown, true, GroupBase<unknown>> = {
-  control: (base, state) => ({
-    ...base,
-    backgroundColor: "#161616", // Set the background color of the control
-    borderColor: state.isFocused ? "#333" : "#161616", // Adjust the border color based on focus state
-    boxShadow: state.isFocused ? undefined : undefined, // Remove the box-shadow
-    outline: "none", // Remove the outline
-  }),
-  input: (base) => ({
-    ...base,
-    color: "#cecdcd", // Set the text color to white
-    outline: "none", // Remove the outline
-    // Set the background color
-  }),
-  singleValue: (base) => ({
-    ...base,
-    color: "#cecdcd", // Set the text color for a single selected value
-  }),
-  placeholder: (base) => ({
-    ...base,
-    color: "#cecdcd", // Set the text color for the placeholder
-  }),
-  menu: (base) => ({
-    ...base,
-    backgroundColor: "#161616", // Set the background color of the dropdown menu
-  }),
-  option: (base, state) => ({
-    ...base,
-    backgroundColor: state.isFocused ? "#333" : "#161616", // Change background color on hover
-    color: "#cecdcd", // Set the text color
-    "&:active": {
-      backgroundColor: "#444", // Change background color when an option is selected
-    },
-  }),
-  multiValue: (base) => ({
-    ...base,
-    backgroundColor: "#333", // Set the background color for multi-value selected tags
-  }),
-  multiValueLabel: (base) => ({
-    ...base,
-    color: "#cecdcd", // Set the text color for multi-value labels
-  }),
-  multiValueRemove: (base) => ({
-    ...base,
-    color: "#cecdcd", // Set the color for the remove icon
-    "&:hover": {
-      // backgroundColor:"#444", Change background color on hover for the remove icon
-      color: "#cecdcd",
-    },
-  }),
-};
+interface Option {
+  label: string;
+  value: string;
+}
 
-export default function SubmitModal({ post, isOpen, handleClose }: ISubmitModal) {
+export default function SubmitModal({
+  post,
+  setPost,
+  isOpen,
+  handleClose,
+}: ISubmitModal) {
+  const { closeModal } = useModal("publish");
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [isCreateButtonEnabled, setIsCreateButtonEnabled] = useState<boolean>(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [options, setOptions] = useState([
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ]);
+  const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
 
-  /*useEffect(() => {
-    setIsCreateButtonEnabled(title.trim().length > 0);
-  }, []);*/
+  //const [message, setMessage] = useState<string | null>(null);
+
+  const options: Option[] = [
+    { value: "information", label: "infomation" },
+    { value: "news", label: "news" },
+  ];
+
+  useEffect(() => {
+    setIsCreateButtonEnabled(post.title.trim().length > 0);
+  }, [post]);
 
   useEffect(() => {
     if (file) {
@@ -104,48 +68,112 @@ export default function SubmitModal({ post, isOpen, handleClose }: ISubmitModal)
   };
 
   const handleCreate = (inputValue: string) => {
-    const newOption = { value: inputValue, label: inputValue };
-    setOptions((prevOptions) => [...prevOptions, newOption]);
+    const newOption: Option = { label: inputValue, value: inputValue };
+    setSelectedOptions((prev) => [...prev, newOption]);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPost((prev) => {
+      return { ...prev!, [e.target.name]: e.target.value };
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    setLoading(true);
-    // Validate form data
-    //  const result = postSchema.safeParse({ title, subtitle });
-
-    /*if (!result.success) {
-      // Handle validation errors
-      const formattedErrors: string[] = result.error.errors.map((error) => error.message);
-      setErrors(formattedErrors);
-      console.log(formattedErrors);
-      return;
-    }
-
-    // Clear previous errors
-    setErrors([]);
-
-    // Prepare form data
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("subtitle", subtitle);
-
-    if (file) {
-      formData.append("heroImage", file);
-    }
-
     try {
-      const response = await serverAxios.post("/posts/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      e.preventDefault();
+
+      const data = {
+        title: post.title,
+        subtitle: post.subtitle,
+        tags: selectedOptions.map((tag) => {
+          return tag.value;
+        }),
+      };
+
+      const postSchema = z.object({
+        title: z
+          .string()
+          .min(5, { message: "Title must be at least 5 characters long" })
+          .max(100, { message: "Title cannot exceed 100 characters" }),
+        subtitle: z
+          .string()
+          .min(2, { message: "Subtitle must be at least 5 characters long" })
+          .max(150, { message: "Subtitle cannot exceed 150 characters" }),
+        tags: z.array(z.string()).default([]),
       });
-      setLoading(false);
-    } catch (error) {
-      console.error("Post submission error:", error);
-      setLoading(false);
-    }*/
+
+      const parseData = postSchema.safeParse(data);
+
+      if (!parseData.success) {
+        const errors = parseData.error.errors.map((error) => {
+          return error.message;
+        });
+
+        setErrors(errors);
+        return;
+      }
+      setErrors([]);
+      const formData = new FormData();
+
+      formData.append("title", parseData.data.title);
+      formData.append("subtitle", parseData.data.subtitle);
+      formData.append("tags", JSON.stringify(parseData.data.tags));
+      if (file) {
+        formData.append("heroImage", file);
+      }
+
+      const response = await serverAxios.post(`/posts/publish/${post._id}`, formData);
+      console.log(response);
+
+      closeModal();
+    } catch (error: any) {
+      console.log(error);
+      setErrors((prev) => {
+        const array = prev;
+        array.push(error.response.data.message);
+        return array;
+      });
+    }
+  };
+
+  const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      const formData = new FormData();
+
+      if (post.title.length > 0) {
+        formData.append("title", post.title);
+      }
+
+      if (post.subtitle.length > 0) {
+        formData.append("subtitle", post.subtitle);
+      }
+
+      if (post.tags.length > 0) {
+        const array = selectedOptions.map((option) => {
+          return option.value;
+        });
+        formData.append("tags", JSON.stringify(array));
+      }
+
+      if (post.content.html.length > 0) {
+        const content = JSON.stringify(post.content);
+        formData.append("content", content);
+      }
+      if (file) {
+        formData.append("heroImage", file);
+      }
+
+      const response = await serverAxios.post(`/posts/save/${post._id}`, formData);
+      console.log(response.data, "save");
+      closeModal();
+    } catch (error: any) {
+      console.log(error);
+      setErrors((prev) => {
+        const array = prev;
+        array.push(error.response.data.message);
+        return array;
+      });
+    }
   };
 
   return (
@@ -158,9 +186,9 @@ export default function SubmitModal({ post, isOpen, handleClose }: ISubmitModal)
       <div className={style.content}>
         <form className={style.form} onSubmit={handleSubmit}>
           <div className={style.image_upload_container}>
-            {filePreview && (
+            {(filePreview || post.heroImage?.url) && (
               <img
-                src={filePreview}
+                src={filePreview || post.heroImage?.url}
                 alt="Image Preview"
                 className={style.image_preview}
               />
@@ -186,34 +214,62 @@ export default function SubmitModal({ post, isOpen, handleClose }: ISubmitModal)
               <input
                 className={`${style.input} ${style.title_input}`}
                 placeholder="Title"
+                name="title"
+                value={post.title}
+                onChange={handleChange}
               />
             </div>
-
             <div className={style.input_wrapper}>
               {/*<span className={style.label}>Subtitle</span> */}
               <input
                 className={`${style.input} ${style.subtitle_input} `}
                 placeholder="Subtitle"
+                name={"subtitle"}
+                value={post.subtitle}
+                onChange={handleChange}
               />
             </div>
+            <div className={style.input_wrapper}>
+              <CreatableSelect
+                options={options}
+                isMulti
+                placeholder="tags"
+                styles={selectStyles}
+                onCreateOption={handleCreate}
+                onChange={(newValue) => {
+                  setPost((prev: any) => {
+                    return { ...prev, tags: newValue.map((tag: any) => tag.value) };
+                  });
 
-            <CreatableSelect
-              options={options}
-              isMulti
-              placeholder="tags"
-              styles={customStyles}
-              onCreateOption={handleCreate}
-            />
+                  setSelectedOptions(newValue as Option[]);
+                }}
+                defaultValue={post.tags.map((value: string) => {
+                  return { value: value, label: value } as Option;
+                })}
+              />
+            </div>
+            <div className={style.button_container}>
+              {post.published && (
+                <p className={style.published_text}>
+                  <PiChecks className={style.publish_icon} /> Published
+                </p>
+              )}
+              <button type="button" className={style.save_btn} onClick={handleSave}>
+                save
+              </button>
+
+              {!post.published && (
+                <button
+                  type="submit"
+                  className={`${style.create_btn} ${
+                    isCreateButtonEnabled ? style.create_btn_active : ""
+                  } `}
+                >
+                  Publish {loading && "..."}
+                </button>
+              )}
+            </div>
           </div>
-
-          <button
-            type="submit"
-            className={`${style.create_btn} ${
-              isCreateButtonEnabled ? style.create_btn_active : ""
-            } `}
-          >
-            Create {loading && "..."}
-          </button>
 
           {errors.length > 0
             ? errors.map((error) => <p className={style.error_display}>{error}</p>)

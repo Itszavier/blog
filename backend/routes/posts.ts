@@ -1,10 +1,10 @@
 /** @format */
 
-import { Router } from "express";
+import { json, Router } from "express";
 import ensureAuthenticated from "../middleware/checkauth";
 import UserModel from "../model/user";
 import PostModel, { IPost } from "../model/post";
-import { z } from "zod";
+import { string, z } from "zod";
 import unqineId from "generate-unique-id";
 import mongoose from "mongoose";
 import generateUniqueId from "generate-unique-id";
@@ -110,6 +110,132 @@ router.get("/fetch/editable/:id", ensureAuthenticated, async (req, res, next) =>
 });
 
 router.post(
+  "/publish/:id",
+  ensureAuthenticated,
+  heroImageUpload.single("heroImage"),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const parsedBody = { ...req.body, tags: JSON.parse(req.body.tags!) };
+
+      const post = await PostModel.findOne({ _id: id });
+
+      if (!post) return next(errorMessage(404, "Could not find a post with that id"));
+      const userId: any = req.user?._id;
+
+      if (!post.author.equals(userId)) {
+        return next(
+          errorMessage(
+            401,
+            "You don't have permisions o publish this post, your not the author"
+          )
+        );
+      }
+
+      const postSchema = z.object({
+        title: z
+          .string()
+          .min(5, { message: "Title must be at least 5 characters long" })
+          .max(100, { message: "Title cannot exceed 100 characters" }),
+        subtitle: z
+          .string()
+          .min(2, { message: "Subtitle must be at least 5 characters long" })
+          .max(150, { message: "Subtitle cannot exceed 150 characters" }),
+        tags: z.array(z.string()).default([]),
+      });
+      console.log(req.body);
+      const body = postSchema.parse(parsedBody);
+
+      if (req.file) {
+        const { public_id, secure_url } = await uploadFile(req.file, "heroImageFolder");
+        post.heroImage = {
+          id: public_id,
+          storage: "cloud",
+          url: secure_url,
+        };
+      }
+      post.title = body.title;
+      post.subtitle = body.subtitle;
+      post.tags = body.tags;
+
+      if (!post.published) {
+        post.published = true;
+      }
+      const savedPost = await post.save();
+
+      await savedPost.populate("author", getAuthorFields());
+
+      res.status(200).json({ message: "successfuly published post", post: savedPost });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post("/save/:id", heroImageUpload.single("heroImage"), async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const body: {
+      title: string;
+      subtitle: string;
+      tags: string;
+      content: string;
+    } = req.body;
+
+    console.log("save", body);
+
+    const post = await PostModel.findOne({ _id: id });
+
+    if (!post) return next(errorMessage(404, "Could not find a post with that id"));
+    const userId: any = req.user?._id;
+
+    if (!post.author.equals(userId)) {
+      return next(
+        errorMessage(
+          401,
+          "You don't have permisions o publish this post, your not the author"
+        )
+      );
+    }
+
+    if (body.title && body.title.length > 0) {
+      post.title = req.body.title;
+    }
+
+    if (body.subtitle && body.subtitle.length > 0) {
+      post.subtitle = body.subtitle;
+    }
+
+    if (body.tags) {
+      post.tags = JSON.parse(body.tags);
+    }
+
+    if (body.content) {
+      post.content = JSON.parse(body.content);
+    }
+
+    if (req.file) {
+      const { public_id, secure_url } = await uploadFile(req.file, "heroImageFolder");
+      post.heroImage = {
+        id: public_id,
+        storage: "cloud",
+        url: secure_url,
+      };
+    }
+
+    const savedPost = await post.save();
+
+    await savedPost.populate("author", getAuthorFields());
+
+    res.status(200).json({ message: "succesfuly saved post", post: savedPost });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+router.post(
   "/create",
   ensureAuthenticated,
   heroImageUpload.single("heroImage"),
@@ -144,7 +270,7 @@ router.post(
       });
 
       const body = postSchema.parse(req.body);
-      console.log(body);
+
       const post = new PostModel({ ...body, author: req.user?._id, type: "Article" });
 
       if (req.file) {

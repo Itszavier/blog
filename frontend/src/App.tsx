@@ -9,9 +9,13 @@ import AuthModal from "./components/authmodal";
 import EditorPage from "./pages/editor";
 import CreatePostModal from "./components/createPostModal";
 import { useEffect } from "react";
+import { useAuth } from "./context/auth";
+import PostView from "./pages/post";
+import Browse from "./pages/browse";
 
 function App() {
   const location = useLocation();
+  const auth = useAuth();
   const path = location.pathname;
   // Define the paths where the Navbar should be hidden
   const pathsWithoutNavbar = ["/editor"];
@@ -24,10 +28,12 @@ function App() {
       {!hideNavbar && <Navbar />}
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path={"/"} element={<Home />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/editor/:id" element={<EditorPage />} />
+          <Route path="/browse/:id" element={<PostView />} />
+          <Route path="/browse" element={<Browse />} />
           <Route element={<Settings />} path="/settings/*" />
         </Route>
       </Routes>

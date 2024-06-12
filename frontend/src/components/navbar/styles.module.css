@@ -49,10 +49,6 @@
   background-color: rgb(29, 31, 39);
 }
 
-.logo_text h2 {
-  color: var(--primaryFontColor);
-}
-
 .logo {
   color: var(--primaryFontColor);
 }

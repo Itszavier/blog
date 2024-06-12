@@ -60,6 +60,5 @@ body {
   float: left;
   height: 0;
   pointer-events: none;
-  font-style: italic;
   color: var(--secondaryFontColor);
 }
