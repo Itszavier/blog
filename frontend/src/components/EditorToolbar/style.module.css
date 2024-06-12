@@ -20,12 +20,6 @@
   font-size: 1.2rem;
 }
 
-.history_container {
-}
-
-.tool_container:nth-child(odd) {
-}
-
 .button {
   border: none;
   width: fit-content;

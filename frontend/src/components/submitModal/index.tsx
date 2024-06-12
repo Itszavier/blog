@@ -136,7 +136,7 @@ export default function SubmitModal({
     }
   };
 
-  const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSave = async () => {
     try {
       const formData = new FormData();
 

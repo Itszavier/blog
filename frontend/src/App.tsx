@@ -8,14 +8,11 @@ import Settings from "./pages/settings";
 import AuthModal from "./components/authmodal";
 import EditorPage from "./pages/editor";
 import CreatePostModal from "./components/createPostModal";
-import { useEffect } from "react";
-import { useAuth } from "./context/auth";
 import PostView from "./pages/post";
 import Browse from "./pages/browse";
 
 function App() {
   const location = useLocation();
-  const auth = useAuth();
   const path = location.pathname;
   // Define the paths where the Navbar should be hidden
   const pathsWithoutNavbar = ["/editor"];

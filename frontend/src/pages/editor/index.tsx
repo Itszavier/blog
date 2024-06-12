@@ -6,12 +6,10 @@ import { StarterKit } from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
 import Toolbar from "../../components/EditorToolbar";
-import { IoMdSettings } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { serverAxios } from "../../api/axios";
 import { IPost } from "../../api/types";
-import { useAuth } from "../../context/auth";
 import ProfileDropdown from "../../components/profileDropdown";
 import SubmitModal from "../../components/submitModal";
 import { useModal } from "../../context/modalContext";
@@ -20,7 +18,6 @@ const placeholder: string =
 
 export default function EditorPage() {
   const { id } = useParams();
-  const auth = useAuth();
   const navigate = useNavigate();
   const { closeModal, isOpen, openModal } = useModal("publish");
   const [post, setPost] = useState<IPost | null>(null);
@@ -76,6 +73,7 @@ export default function EditorPage() {
         setPost(response.data.post);
       })
       .catch((error) => {
+        setError(error.response.data.message);
         console.log(error);
       })
       .finally(() => {
