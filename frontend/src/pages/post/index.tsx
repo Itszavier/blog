@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/auth";
 import Loading from "../../components/loading";
 import moment from "moment";
+import { BsDot } from "react-icons/bs";
 
 export default function PostView() {
   const { id } = useParams();
@@ -47,24 +48,34 @@ export default function PostView() {
             </div>
 
             <div className={style.dates}>
-              <span>{moment(post.createdAt).fromNow()}</span>
+              <span>
+                <strong>0</strong> views
+              </span>
+              <BsDot className={style.seprator} />
+              <span>{moment(post.createdAt).format("MMM DD YYYY")}</span>
             </div>
           </div>
-          <div className={style.heroImage_container}>
-            <img
-              className={style.heroImage}
-              src={post.heroImage?.url}
-              alt=""
-              width={"100%"}
-              height={300}
-            />
-          </div>
+          {post.heroImage && (
+            <div className={style.heroImage_container}>
+              <img
+                className={style.heroImage}
+                src={post.heroImage?.url}
+                alt=""
+                width={"100%"}
+                height={300}
+              />
+            </div>
+          )}
           <div className={style.post_info_container}>
-            <div>
-              <h2>{post.title}</h2>
-              <p>{post.subtitle}</p>
-            </div>
+            <h2 className={style.title}>{post.title}</h2>
+            <p className={style.subtitle}>{post.subtitle}</p>
           </div>
+        </div>
+        <div className={style.body}>
+          <div
+            className={style.post_content}
+            dangerouslySetInnerHTML={{ __html: post.content.html }}
+          />
         </div>
       </div>
     </div>

@@ -13,6 +13,10 @@ import { IPost } from "../../api/types";
 import ProfileDropdown from "../../components/profileDropdown";
 import SubmitModal from "../../components/submitModal";
 import { useModal } from "../../context/modalContext";
+import Loading from "../../components/loading";
+import useAutosave from "../../hooks/useAutoSave";
+import moment from "moment";
+
 const placeholder: string =
   "Start writing your article here. Use the toolbar above for formatting and paste your content if needed...";
 
@@ -92,25 +96,47 @@ export default function EditorPage() {
       return { ...prev!, [e.target.name]: e.target.value };
     });
   };
+  /*
+  const handleSave = async (updatedPost: IPost) => {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        const formData = new FormData();
+        // Title is required so we will not save it if empty.
+        if (updatedPost.title.length > 0) {
+          formData.append("title", updatedPost.title);
+        }
+
+        formData.append("subtitle", updatedPost.subtitle);
+
+        formData.append("tags", JSON.stringify(updatedPost.tags));
+
+        formData.append("content", JSON.stringify(updatedPost.content));
+
+        const response = await serverAxios.put(`/posts/save/${post?._id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log(response.data);
+        resolve();
+      } catch (error: any) {
+        console.log("save error", error.response);
+        reject(error);
+      }
+    });
+  };
+
+  const { isSaving, lastSaved } = useAutosave(post, {
+    onSave: handleSave,
+    debounceDelay: 4000,
+  });
+  */
 
   // Return early if editor is not available yet
   if (!editor) return null;
 
-  if (loading) {
-    return (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        Failed to load post
-      </div>
-    );
-  }
+  if (loading) return <Loading />;
+
   if (error) {
     return (
       <div
@@ -152,6 +178,9 @@ export default function EditorPage() {
             <span className={style.back_btn_text}>Narrate</span>
           </button>
           <div className={style.left_container}>
+            <span>
+              {/* {isSaving ? "saving" : `lasted saved ${moment(lastSaved).fromNow()}`}}*/}
+            </span>
             <button
               onClick={() => openModal()}
               className={`${style.control_btn} ${style.publish_btn}`}

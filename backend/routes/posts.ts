@@ -191,50 +191,39 @@ router.post(
   }
 );
 
-router.post("/save/:id", heroImageUpload.single("heroImage"), async (req, res, next) => {
+router.put("/save/:id", heroImageUpload.single("heroImage"), async (req, res, next) => {
   try {
     const { id } = req.params;
+    const allowedFields: Array<keyof IPost> = ["title", "subtitle", "tags", "content"];
 
-    const body: {
-      title: string;
-      subtitle: string;
-      tags: string;
-      content: string;
-    } = req.body;
-
-    console.log("save", body);
+    const changes = req.body; // Changes received from the frontend
 
     const post = await PostModel.findOne({ _id: id });
 
-    if (!post) return next(errorMessage(404, "Could not find a post with that id"));
-    const userId: any = req.user?._id;
-
-    if (!post.author.equals(userId)) {
-      return next(
-        errorMessage(
-          401,
-          "You don't have permisions o publish this post, your not the author"
-        )
-      );
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
     }
 
-    if (body.title && body.title.length > 0) {
-      post.title = req.body.title;
+    if (!post.author.equals(req.user?._id as any)) {
+      return next(errorMessage(401, "Unauthorized"));
     }
 
-    if (body.subtitle && body.subtitle.length > 0) {
-      post.subtitle = body.subtitle;
+    // Update specific fields only if they exist in changes
+    if ("title" in changes && changes.title.length > 0) {
+      post.title = changes.title;
     }
-
-    if (body.tags) {
-      post.tags = JSON.parse(body.tags);
+    if ("subtitle" in changes && changes.title.length > 0) {
+      post.subtitle = changes.subtitle;
     }
-
-    if (body.content) {
-      post.content = JSON.parse(body.content);
+    if ("tags" in changes && changes.tags.length > 0) {
+      post.tags = JSON.parse(changes.tags as string);
+    }
+    if ("content" in changes && changes.content.html > 0) {
+      post.content = JSON.parse(changes.content as string);
     }
 
     if (req.file) {
+      // Handle hero image upload if a file was uploaded
       const { public_id, secure_url } = await uploadFile(req.file, "heroImageFolder");
       post.heroImage = {
         id: public_id,
@@ -247,9 +236,9 @@ router.post("/save/:id", heroImageUpload.single("heroImage"), async (req, res, n
 
     await savedPost.populate("author", getAuthorFields());
 
-    res.status(200).json({ message: "succesfuly saved post", post: savedPost });
+    res.status(200).json({ message: "Successfully saved post", post: savedPost });
   } catch (error) {
-    console.log(error);
+    console.error("Error saving post:", error);
     next(error);
   }
 });
