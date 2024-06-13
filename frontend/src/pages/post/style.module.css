@@ -3,4 +3,61 @@
 .container {
   padding-top: 60px;
   color: var(--primaryFontColor);
+  height: 100vh;
+  width: 100%;
+  background-color: var(--accent);
+  display: flex;
+  justify-content: center;
+}
+
+.style.middle {
+  width: 65%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.meta_header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.heroImage_container {
+  width: 100%;
+  height: 300px;
+}
+
+.heroImage {
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+}
+
+.publish_info {
+  padding: 8px;
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
+  align-items: center;
+  color: grey;
+}
+
+.dates {
+  margin-left: auto;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap:4px;
+}
+
+.author_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.author_container img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50px;
 }
