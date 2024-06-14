@@ -16,9 +16,9 @@ interface PostProps {
   height?: string;
 }
 
-export default function Post({ post, ...props }: PostProps) {
+export default function PostCard({ post, width, height, statusText }: PostProps) {
   const DisplayStatusText = () => {
-    if (!props.statusText) return null;
+    if (!statusText) return null;
 
     if (post.published) {
       return <span className={style.status_text}>Published</span>;
@@ -27,28 +27,29 @@ export default function Post({ post, ...props }: PostProps) {
     }
   };
 
+
   return (
     <div
       style={{
-        width: props.width ? props.width : "70%",
-        minHeight: props.height ? props.height : "260px",
+        width: width ? width : "70%",
+        minHeight: height ? height : "260px",
       }}
       className={`${style.post_card}`}
     >
       <div className={style.post_card_header}>
         <img
           className={style.profile_image}
-          src={post.author.profileImage}
+          src={"https://avatar.iran.liara.run/public/boy?username=Ash"}
           width={20}
           height={20}
         />
 
         <span>
-          <Link className={style.link} to={`/profile/${post.author._id}`}>
+          <Link className={style.link} to={`/profile/${post.author.username}`}>
             {post.author.name}
           </Link>
         </span>
-        {props.statusText && <BsDot />}
+        {statusText && <BsDot />}
         <DisplayStatusText />
 
         <PostMenuDropdown post={post} />

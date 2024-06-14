@@ -3,13 +3,15 @@ import React, { useContext } from "react";
 import { createContext, useEffect, useState } from "react";
 import { serverAxios } from "../api/axios";
 
-interface IUser {
+export interface IUser {
   _id: string;
   email: string;
   name: string;
   username: string;
   bio: string;
   profileImage: string;
+  followers: string[];
+  following: string[];
 }
 
 interface IAuthContext {

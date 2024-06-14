@@ -26,7 +26,7 @@ function App() {
 
       <Routes>
         <Route path={"/"} element={<Home />} />
-        <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/profile/:username" element={<Profile />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/editor/:id" element={<EditorPage />} />
           <Route path="/browse/:id" element={<PostView />} />

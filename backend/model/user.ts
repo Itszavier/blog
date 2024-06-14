@@ -12,6 +12,8 @@ export interface IUser extends Document {
   bannerUrl?: string;
   profileImage: string;
   email: string;
+  followers: Schema.Types.ObjectId[] | string[];
+  following: Schema.Types.ObjectId[] | string[];
 }
 
 const userSchema = new Schema<IUser>({
@@ -32,6 +34,18 @@ const userSchema = new Schema<IUser>({
 
   bannerUrl: {
     type: SchemaTypes.String,
+  },
+
+  following: {
+    type: [SchemaTypes.ObjectId],
+    ref: "User",
+    default: [],
+  },
+
+  followers: {
+    type: [SchemaTypes.ObjectId],
+    ref: "User",
+    default: [],
   },
 });
 

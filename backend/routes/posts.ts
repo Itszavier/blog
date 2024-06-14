@@ -90,9 +90,9 @@ router.get("/fetch/published/:id", async (req, res, next) => {
   }
 });
 
-router.get("/fetch/user/", ensureAuthenticated, async (req, res, next) => {
+router.get("/fetch/user/:id", ensureAuthenticated, async (req, res, next) => {
   try {
-    const posts = await PostModel.find({ author: req.user?._id })
+    const posts = await PostModel.find({ author: req.params.id})
       .populate("author", getAuthorFields())
       .exec();
 

@@ -27,3 +27,22 @@ export interface IPost {
   updatedAt: Date;
   published: boolean;
 }
+
+export interface IFollowersAndFollowing {
+  _id: string;
+  name: string;
+  username: string;
+  bio?: string;
+  profileImage: string;
+}
+
+export interface IMember {
+  _id: string;
+  name: string;
+  username: string;
+  profileImage: string;
+  bio?: string;
+  bannerUrl?: string;
+  followers: IFollowersAndFollowing[];
+  following: IFollowersAndFollowing[];
+}

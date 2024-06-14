@@ -4,7 +4,7 @@ import style from "./style.module.css";
 import { IPost } from "../../api/types";
 import { serverAxios } from "../../api/axios";
 import Loading from "../../components/loading";
-import Post from "../../components/post";
+import PostCard from "../../components/post";
 
 export default function Browse() {
   const [loading, setLoading] = useState(true);
@@ -14,10 +14,12 @@ export default function Browse() {
   useEffect(() => {
     fetchPosts()
       .then((posts) => {
+        console.log(posts);
         setPosts(posts);
       })
       .catch((error) => {
         setError(error.response.data);
+        console.log(error);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -36,7 +38,9 @@ export default function Browse() {
         </div>
         {posts.length > 0
           ? posts.map((post) => {
-              return <Post statusText={false} width="90%" key={post._id} post={post} />;
+              return (
+                <PostCard statusText={false} width="90%" key={post._id} post={post} />
+              );
             })
           : ""}
       </div>

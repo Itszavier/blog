@@ -15,9 +15,13 @@ const router = Router();
 
 router.get("/login/google", passport.authenticate("google"));
 
-router.get("/google/redirect", passport.authenticate("google", {failureMessage: "failed"}), (req, res, next) => {
-  res.redirect(`https://narrate-client.loca.lt/profile/${req.user?._id}`);
-});
+router.get(
+  "/google/redirect",
+  passport.authenticate("google", { failureMessage: "failed" }),
+  (req, res, next) => {
+    res.redirect(`https://narrate-client.loca.lt/profile/${req.user?._id}`);
+  }
+);
 
 router.get("/logout", ensureAuthenticated, async (req, res, next) => {
   req.logout({ keepSessionInfo: false }, (err) => {
@@ -39,6 +43,8 @@ router.get("/check", ensureAuthenticated, (req, res, next) => {
       profileImage: req.user?.profileImage,
       bio: req.user?.bio,
       bannerUrl: req.user?.bannerUrl,
+      followers: req.user?.followers,
+      following: req.user?.following,
     },
   });
 });

@@ -53,7 +53,7 @@ export default function ProfileDropdown() {
 
       {toggle && (
         <div id={"dropdown"} className={style.body}>
-          <Link id={"dropdown"} onClick={hideMenu} to={`/profile/${user._id}`}>
+          <Link id={"dropdown"} onClick={hideMenu} to={`/profile/${user.username}`}>
             profile
           </Link>
           <Link id={"dropdown"} onClick={hideMenu} to="/settings">
