@@ -192,8 +192,8 @@ export default function UserProfile({
           {member.following.map((following) => {
             return (
               <div>
-                <img src={member.profileImage} alt="" width={20} height={20} />
-                <span>{member.name}</span>
+                <img src={following.profileImage} alt="" width={20} height={20} />
+                <span>{following.name}</span>
               </div>
             );
           })}

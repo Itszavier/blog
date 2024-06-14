@@ -261,7 +261,7 @@ router.put("/follow", ensureAuthenticated, async (req, res, next) => {
       return next(errorMessage(400, "The user your trying to follow does not exist"));
     }
 
-    if (userToFollow._id.toString() === req.user?._id.toString()) {
+    if (userToFollow._id === req.user?._id) {
       return next(errorMessage(400, "Can't follow yourself")); // can also ignore
     }
     // handles if the user is already following the user
@@ -287,6 +287,7 @@ router.put("/follow", ensureAuthenticated, async (req, res, next) => {
 
 /// Route for unfollowing a user
 router.put("/unfollow", ensureAuthenticated, async (req, res, next) => {
+  console.log("unfollow route");
   try {
     // Define and validate request body schema
     const bodySchema = z.object({
@@ -310,7 +311,7 @@ router.put("/unfollow", ensureAuthenticated, async (req, res, next) => {
     }
 
     // Prevent users from unfollowing themselves
-    if (userToUnfollow._id.toString() === req.user?._id.toString()) {
+    if (userToUnfollow._id === req.user?._id) {
       return next(errorMessage(400, "Can't unfollow yourself"));
     }
 
@@ -321,15 +322,29 @@ router.put("/unfollow", ensureAuthenticated, async (req, res, next) => {
 
     // Remove current user from the followers of the userToUnfollow
     userToUnfollow.followers = userToUnfollow.followers.filter(
-      (followerId) => followerId.toString() !== req.user?._id.toString()
+      (followerId) => followerId !== req.user?._id
     ) as any;
     await userToUnfollow.save();
 
     // Remove userToUnfollow from the following list of the current user
     const currentUser = await UserModel.findOne({ _id: req.user?._id });
-    currentUser!.following = currentUser!.following.filter(
-      (followingId) => followingId !== userId
-    ) as any;
+
+    const filteredFollowing = currentUser!.following.filter((followingId) => {
+      console.log(
+        followingId.toString() !== userId.toString(),
+        followingId.toString(),
+        userId.toString(),
+        followingId,
+        userId
+      );
+      return followingId.toString() !== userId.toString();
+    }) as any;
+
+    console.log("filtered following", filteredFollowing);
+    currentUser!.following = filteredFollowing;
+
+    console.log(currentUser);
+
     await currentUser!.save();
 
     // Send success response
