@@ -32,9 +32,9 @@ export default function Browse() {
     <div className={style.container}>
       <div className={style.posts_container}>
         <div className={style.posts_container_header}>
-          <button className={style.filter_btn}>For you</button>
-          <button className={style.filter_btn}>Following</button>
+          <button className={style.filter_btn}>Relevant</button>
           <button className={style.filter_btn}>Trending</button>
+          <button className={style.filter_btn}>Following</button>
         </div>
         {posts.length > 0
           ? posts.map((post) => {
