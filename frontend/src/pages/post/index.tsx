@@ -42,7 +42,7 @@ export default function PostView() {
       <div className={style.middle}>
         <div className={style.meta_header}>
           <div className={style.publish_info}>
-            
+
             <div className={style.author_container}>
               <img src={post.author.profileImage} alt="" width={35} height={35} />
               <span>{post.author.name}</span>
@@ -74,7 +74,7 @@ export default function PostView() {
         </div>
         <div className={style.body}>
           <div
-            className={style.post_content}
+            className={`${style.post_content} content_preview`}
             dangerouslySetInnerHTML={{ __html: post.content.html }}
           />
         </div>

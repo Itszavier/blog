@@ -92,7 +92,7 @@ router.get("/fetch/published/:id", async (req, res, next) => {
 
 router.get("/fetch/user/:id", ensureAuthenticated, async (req, res, next) => {
   try {
-    const posts = await PostModel.find({ author: req.params.id})
+    const posts = await PostModel.find({ author: req.params.id })
       .populate("author", getAuthorFields())
       .exec();
 
@@ -197,7 +197,7 @@ router.put("/save/:id", heroImageUpload.single("heroImage"), async (req, res, ne
     const allowedFields: Array<keyof IPost> = ["title", "subtitle", "tags", "content"];
 
     const changes = req.body; // Changes received from the frontend
-
+    console.log(changes);
     const post = await PostModel.findOne({ _id: id });
 
     if (!post) {
@@ -218,8 +218,9 @@ router.put("/save/:id", heroImageUpload.single("heroImage"), async (req, res, ne
     if ("tags" in changes && changes.tags.length > 0) {
       post.tags = JSON.parse(changes.tags as string);
     }
-    if ("content" in changes && changes.content.html > 0) {
-      post.content = JSON.parse(changes.content as string);
+    if ("content" in changes) {
+      post.content = JSON.parse(changes.content);
+      console.log("after added", post.content);
     }
 
     if (req.file) {
@@ -234,6 +235,7 @@ router.put("/save/:id", heroImageUpload.single("heroImage"), async (req, res, ne
 
     const savedPost = await post.save();
 
+    console.log(savedPost.content);
     await savedPost.populate("author", getAuthorFields());
 
     res.status(200).json({ message: "Successfully saved post", post: savedPost });

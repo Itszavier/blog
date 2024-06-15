@@ -1,4 +1,6 @@
 /** @format */
+import "./css/tiptap.css";
+
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Home from "./pages/home";

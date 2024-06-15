@@ -64,6 +64,7 @@ export default function EditorPage() {
         };
       });
     },
+    content: post?.content.html,
   });
 
   useEffect(() => {

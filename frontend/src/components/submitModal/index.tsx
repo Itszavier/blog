@@ -157,7 +157,8 @@ export default function SubmitModal({
 
       if (post.content.html.length > 0) {
         const content = JSON.stringify(post.content);
-        formData.append("content", content);
+        console.log("uploading content", content);
+        formData.append("content", JSON.stringify(post.content));
       }
       if (file) {
         formData.append("heroImage", file);

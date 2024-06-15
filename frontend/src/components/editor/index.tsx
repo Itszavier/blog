@@ -8,7 +8,7 @@ export default function TiptapEditor({ editor }: { editor: Editor }) {
   return (
     <div className="editor_container">
       {" "}
-      <EditorContent editor={editor} className={style.editor} />
+      <EditorContent editor={editor} className={"tiptap-content"} />
     </div>
   );
 }
