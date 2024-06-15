@@ -98,3 +98,46 @@
   height: inherit;
   border-radius: inherit;
 }
+.button_container {
+  padding: 8px;
+  margin-top: 8px;
+}
+.button {
+  padding: 10px 12px;
+  background-color: var(--primaryButtonColor);
+  border: none;
+  width: 120px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.socials_input_wrapper {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  text-transform: capitalize;
+  font-size: 15px;
+  margin-left: 8px;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.social_container {
+  display: flex;
+}
+
+.add_social_input {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  flex: 1;
+  height: 100%;
+}
+
+.add_input_container {
+  display: flex;
+  height: 35px;
+  width: 350px;
+}
+.add_btn {
+
+}

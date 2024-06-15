@@ -28,47 +28,18 @@ interface InitialData {
 export default function ProfileTab() {
   const auth = useAuth();
 
-  const [formData, setFormData] = useState<FormData>({
-    username: "",
-    name: "",
-    bio: "",
-    profileImageFile: null,
-    imagePreview: null,
-  });
-
-  const [initialData, setInitialData] = useState<InitialData>({
-    username: "",
-    name: "",
-    bio: "",
-  });
-
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  useEffect(() => {
-    const { username, name, bio } = auth.user || {};
-    setFormData((prevState) => ({
-      ...prevState,
-      username: username || "",
-      name: name || "",
-      bio: bio || "",
-    }));
-    setInitialData({
-      username: username || "",
-      name: name || "",
-      bio: bio || "",
-    });
-  }, [auth.user]);
-
-  const handleInputChange = (
+  /* const handleInputChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
-
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+*/
+  /*const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -81,49 +52,10 @@ export default function ProfileTab() {
       };
       reader.readAsDataURL(file);
     }
-  };
+  };*/
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setSuccessMessage(null);
-
-    const updatedData = new FormData();
-    const { name, username, bio, profileImageFile } = formData;
-    if (auth.user?.name !== name) updatedData.append("name", name);
-    if (auth.user?.username !== username) updatedData.append("username", username);
-    if (auth.user?.bio !== bio) updatedData.append("bio", bio);
-    if (profileImageFile) updatedData.append("profileImage", profileImageFile);
-
-    try {
-      const response = await serverAxios.post("/user/update/profile", updatedData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      setSuccessMessage(response.data.message);
-      setTimeout(() => setSuccessMessage(null), 3000); // Clear success message after 3 seconds
-    } catch (error: any) {
-      setError(
-        error.response?.data?.message ||
-          "There was a problem updating your profile. Please try again later."
-      );
-      setTimeout(() => setError(null), 3000); // Clear error message after 3 seconds
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const isFormChanged = (): boolean => {
-    const { username, name, bio } = formData;
-    const { username: initialUsername, name: initialName, bio: initialBio } = initialData;
-    return (
-      username !== initialUsername ||
-      name !== initialName ||
-      bio !== initialBio ||
-      formData.profileImageFile !== null
-    );
   };
 
   return (
@@ -153,6 +85,8 @@ export default function ProfileTab() {
               A short description about yourself. This bio may appear on your profile.
             </span>
           </div>
+
+          <CreateSocial />
         </div>
 
         <div className={style.file_upload_container}>
@@ -163,6 +97,32 @@ export default function ProfileTab() {
           <input className={style.file_upload_input} type="file" />
         </div>
       </div>
+
+      <div className={style.button_container}>
+        <button type="submit" className={style.button}>
+          Update profile
+        </button>
+      </div>
     </form>
+  );
+}
+
+function CreateSocial() {
+  const [socials, setSocials] = useState<string[]>([]);
+
+  return (
+    <div className={style.social_container}>
+      <div className={style.socials_input_wrapper}>
+        <label htmlFor="">Add socials</label>
+        <div className={style.add_input_container}>
+          <input
+            type="text"
+            className={`${style.input} ${style.add_social_input}`}
+            placeholder="https://"
+          />
+          <button className={style.add_btn}>Add</button>
+        </div>
+      </div>
+    </div>
   );
 }
