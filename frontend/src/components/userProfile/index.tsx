@@ -7,6 +7,7 @@ import { IFollowersAndFollowing, IMember } from "../../api/types";
 import { followUser, unFollowUser } from "../../api/functions";
 import { useState } from "react";
 import { ImGift } from "react-icons/im";
+import { ButtonLoader } from "../loading";
 
 export default function UserProfile({
   member,
@@ -110,7 +111,6 @@ export default function UserProfile({
     }
     const isUserFollowingMember = auth.user.following.includes(member._id);
 
-    console.log(isUserFollowingMember);
     if (!isUserFollowingMember) {
       return (
         <button
@@ -118,7 +118,7 @@ export default function UserProfile({
           onClick={handleFollow}
           className={style.button}
         >
-          Follow {isFollowLoading && "..."}
+          {isFollowLoading ? <ButtonLoader /> : "Follow"}
         </button>
       );
     } else {
@@ -126,9 +126,11 @@ export default function UserProfile({
         <button
           disabled={isFollowLoading}
           onClick={handleUnFollow}
-          className={style.button}
+          className={`${style.button}  ${
+            isUserFollowingMember ? style.following_active : ""
+          }`}
         >
-          unFollow {isFollowLoading && "..."}
+          {isFollowLoading ? <ButtonLoader /> : "Following"}
         </button>
       );
     }
@@ -150,7 +152,7 @@ export default function UserProfile({
           <p>
             <strong>0</strong>
           </p>
-          <span>posts</span>
+          <span>Posts</span>
         </div>
         <div className={style.data_wrapper}>
           <p>
@@ -164,13 +166,6 @@ export default function UserProfile({
           </p>
           <span>following</span>
         </div>
-
-        {/* <div className={style.data_wrapper}>
-              <button>follow</button>
-              <button>
-                <IoSettings />
-              </button>
-            </div> */}
       </div>
       <div className={style.body}>
         <div>
@@ -179,12 +174,14 @@ export default function UserProfile({
           </p>
         </div>
         <div className={style.button_container}>
-          <button className={style.button}>Share</button>
           <DisplayFollowButton />
-          {member._id === userId && (
-            <button className={style.button}>
-              <IoSettings size={15} />
-            </button>
+          {member._id === auth.user?._id && (
+            <>
+              <button className={style.button}>Share</button>
+              <button className={style.button}>
+                <IoSettings size={15} />
+              </button>
+            </>
           )}
         </div>
 

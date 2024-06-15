@@ -48,6 +48,7 @@ export default function ProfileDropdown() {
         onClick={() => setToggle((prev) => !prev)}
         className={style.header}
       >
+        <span>{user.username}</span>
         <img className={style.user_profile} src={user.profileImage} alt="" />
       </div>
 

@@ -286,7 +286,7 @@ router.put("/follow", ensureAuthenticated, async (req, res, next) => {
       .select(getSelectedUserFields("user"))
       .populate("followers following", getSelectedUserFields("follow"))
       .exec();
-
+  
     return res.status(200).json({
       message: "Successfully followed the user",
       followersUpdateResults,
@@ -343,14 +343,25 @@ router.put("/unfollow", ensureAuthenticated, async (req, res, next) => {
     // remove followers id from the user the current user wants to unfollow
     const followersUpdate = await UserModel.findByIdAndUpdate(userToUnFollowId, {
       $pull: { followers: userId },
-    });
+    })
+      .select(getSelectedUserFields("user"))
+      .populate("followers following", getSelectedUserFields("follow"))
+      .exec();
 
     // remove following id from the current user
     const followingUpdate = await UserModel.findByIdAndUpdate(userId, {
       $pull: { following: userToUnFollowId },
-    });
+    })
+      .select(getSelectedUserFields("user"))
+      .populate("followers following", getSelectedUserFields("follow"))
+      .exec();
 
-    res.status(200).json({ message: "successfully unfollow the user" });
+  
+    res.status(200).json({
+      message: "successfully unfollow the user",
+      followingUpdate,
+      followersUpdate,
+    });
   } catch (error) {
     // Handle and log any errors
     console.error(error);

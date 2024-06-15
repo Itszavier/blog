@@ -163,7 +163,7 @@ export default function SubmitModal({
         formData.append("heroImage", file);
       }
 
-      const response = await serverAxios.post(`/posts/save/${post._id}`, formData);
+      const response = await serverAxios.put(`/posts/save/${post._id}`, formData);
       console.log(response.data, "save");
       closeModal();
     } catch (error: any) {

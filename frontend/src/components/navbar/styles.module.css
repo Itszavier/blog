@@ -11,8 +11,8 @@
   top: 0;
   left: 0;
   z-index: 10;
-
   background-color: var(--accent);
+  border-bottom: 1px solid var(--borderColor);
 }
 
 .logo_link {
@@ -24,7 +24,7 @@
   display: flex;
   width: fit-content;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   font-size: 14.78px;
   color: var(--secondaryFontColor);
 }
@@ -54,7 +54,7 @@
 }
 
 .nav_btn {
-  width: 70px;
+  width: fit-content;
   font-size: 15px;
   height: 34px;
   color: var(---primaryFontColor);
@@ -62,6 +62,8 @@
   border-radius: 8px;
   cursor: pointer;
   background: transparent;
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
 .nav_notification_btn {

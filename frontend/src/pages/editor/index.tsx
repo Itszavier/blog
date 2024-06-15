@@ -13,7 +13,7 @@ import { IPost } from "../../api/types";
 import ProfileDropdown from "../../components/profileDropdown";
 import SubmitModal from "../../components/submitModal";
 import { useModal } from "../../context/modalContext";
-import Loading from "../../components/loading";
+import { Loading } from "../../components/loading";
 import useAutosave from "../../hooks/useAutoSave";
 import moment from "moment";
 

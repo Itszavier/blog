@@ -4,7 +4,14 @@
   width: fit-content;
   position: relative;
   margin-right: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  gap: 5px;
+  background-color: var(--tertiary);
+  padding: 5px;
 }
+
 
 .header:hover {
   cursor: pointer;

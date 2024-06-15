@@ -81,16 +81,19 @@
 }
 
 .middle::-webkit-scrollbar {
+
   width: 12px; /* Adjust the width if necessary */
   background-color: transparent;
 }
 
 .middle::-webkit-scrollbar-track {
+ 
   background: transparent;
 }
 
 .middle::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2); /* Adjust the thumb color if needed */
+  
+  background: transparent; /* Adjust the thumb color if needed */
   border-radius: 10px; /* Optional: round the scrollbar thumb */
   background-color: transparent;
 }

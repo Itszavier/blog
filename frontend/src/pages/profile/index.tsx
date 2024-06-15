@@ -1,10 +1,9 @@
 /** @format */
-
 import style from "./style.module.css";
 import { useEffect, useState } from "react";
 import { serverAxios } from "../../api/axios";
 import { useParams } from "react-router-dom";
-import Loading from "../../components/loading";
+import { Loading } from "../../components/loading";
 import { useAuth } from "../../context/auth";
 import { IMember, IPost } from "../../api/types";
 import PostCard from "../../components/post";
@@ -14,22 +13,23 @@ export default function Profile() {
   const { username } = useParams();
   const auth = useAuth();
   const [member, setMember] = useState<IMember | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [memberLoading, setMemberLoading] = useState<boolean>(false);
   const [posts, setPosts] = useState<IPost[]>([]);
+  const [postsLoading, setPostsLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setMemberLoading(true);
     const abortController = new AbortController();
     serverAxios
       .get(`/user/fetch/username/${username}`, { signal: abortController.signal })
       .then(function (response) {
-        console.log(response.data.user);
         setMember(response.data.user);
       })
       .catch(function (error) {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
-        setLoading(false);
+        setMemberLoading(false);
       });
 
     return () => {
@@ -38,43 +38,50 @@ export default function Profile() {
   }, [username]);
 
   useEffect(() => {
-    if (!loading && member) {
+    if (member) {
+      setPostsLoading(true);
       serverAxios
-        .get(`/posts/fetch/user/${member?._id}`)
+        .get(`/posts/fetch/user/${member._id}`)
         .then((response) => {
-          console.log(response.data);
-          console.log("posts", posts);
           setPosts(response.data.posts);
-          console.log("posts", posts);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         })
         .finally(() => {
-          setLoading(false);
+          setPostsLoading(false);
         });
     }
-  }, [loading, member, username]);
+  }, [member]);
 
-  if (loading || auth.loading) {
+  if (auth.loading || memberLoading || postsLoading) {
     return <Loading />;
   }
 
   if (!member) {
-    return <div style={{ paddingTop: "60px" }}> member not found</div>;
+    return <div style={{ paddingTop: "60px" }}>Member not found</div>;
   }
-
-  // handle when the user is not found here
-  console.log(auth.user);
 
   return (
     <div className={style.container}>
       <UserProfile userId={member._id as string} member={member} setMember={setMember} />
 
       <div className={style.posts}>
-        {posts.map((post, index) => {
-          return <PostCard key={index} post={post} statusText={true} />;
-        })}
+        {posts.length > 0 ? (
+          posts.map((post, index) => (
+            <PostCard key={index} post={post} statusText={true} showMenu />
+          ))
+        ) : (
+          <div className={style.no_articles_container}>
+            <div className={style.no_articles_message}>
+              <p>You currently don't have any articles.</p>
+              <p>
+                Start sharing your thoughts and ideas by creating your first article now!
+              </p>
+              <button className={style.create_article_button}>Create Article</button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

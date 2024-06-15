@@ -30,7 +30,8 @@
   z-index: 90;
   align-items: center;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  padding: 10px;
   gap: 10px;
   background-color: var(--accent);
 }
@@ -50,9 +51,9 @@
   background-color: var(--secondaryButtonColor);
 }
 
-posts_container::-webkit-scrollbar {
-  width: 12px; /* Adjust the width if necessary */
-  background-color: transparent;
+.posts_container::-webkit-scrollbar {
+  width: 12px; /* Or any other width you prefer */
+  background: transparent;
 }
 
 .posts_container::-webkit-scrollbar-track {
@@ -60,17 +61,12 @@ posts_container::-webkit-scrollbar {
 }
 
 .posts_container::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2); /* Adjust the thumb color if needed */
-  border-radius: 10px; /* Optional: round the scrollbar thumb */
-  background-color: transparent;
+  background: transparent;
 }
 
-/* Firefox */
-.posts_container {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.2) transparent; /* thumb color and track color */
+.posts_container::-webkit-scrollbar-thumb:hover {
+  background: transparent;
 }
-
 .card {
   width: 50%;
 }

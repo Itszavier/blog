@@ -14,9 +14,16 @@ interface PostProps {
   statusText?: boolean;
   width?: string;
   height?: string;
+  showMenu?: boolean;
 }
 
-export default function PostCard({ post, width, height, statusText }: PostProps) {
+export default function PostCard({
+  post,
+  width,
+  height,
+  statusText,
+  showMenu,
+}: PostProps) {
   const DisplayStatusText = () => {
     if (!statusText) return null;
 
@@ -26,7 +33,6 @@ export default function PostCard({ post, width, height, statusText }: PostProps)
       return <span className={style.status_text}>Draft</span>;
     }
   };
-
 
   return (
     <div
@@ -52,7 +58,7 @@ export default function PostCard({ post, width, height, statusText }: PostProps)
         {statusText && <BsDot />}
         <DisplayStatusText />
 
-        <PostMenuDropdown post={post} />
+        {showMenu && <PostMenuDropdown post={post} />}
       </div>
       <div className={style.post_card_body}>
         <div className={style.post_data_wrapper}>

@@ -5,7 +5,7 @@ import { serverAxios } from "../../api/axios";
 import { IPost } from "../../api/types";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/auth";
-import Loading from "../../components/loading";
+import { Loading } from "../../components/loading";
 import moment from "moment";
 import { BsDot } from "react-icons/bs";
 
@@ -42,6 +42,7 @@ export default function PostView() {
       <div className={style.middle}>
         <div className={style.meta_header}>
           <div className={style.publish_info}>
+            
             <div className={style.author_container}>
               <img src={post.author.profileImage} alt="" width={35} height={35} />
               <span>{post.author.name}</span>
@@ -74,7 +75,7 @@ export default function PostView() {
         <div className={style.body}>
           <div
             className={style.post_content}
-            dangerouslySetInnerHTML={{ __html: post.content.html}}
+            dangerouslySetInnerHTML={{ __html: post.content.html }}
           />
         </div>
       </div>

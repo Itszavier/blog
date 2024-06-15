@@ -7,7 +7,8 @@
   flex-direction: column;
   color: var(--primaryFontColor);
   padding: 14px;
-  width: 38%;
+  width: 34%;
+  border-left: 1px solid var(--borderColor);
 }
 
 .profile_info_container {
@@ -82,11 +83,16 @@
 .following_container {
   display: flex;
   flex-direction: column;
-  margin-left: 12px;
+  margin-left: 15px;
 }
 
 .following_container div {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.following_active {
+  background-color: var(--primaryButtonColor);
+  color: black;
 }

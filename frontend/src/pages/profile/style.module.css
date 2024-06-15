@@ -2,13 +2,12 @@
 
 .container {
   padding-top: 60px;
-  background-color: var(--primary);
   height: 100vh;
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
+  align-items: center;
 }
-
 
 .posts {
   padding: 4px;
@@ -109,6 +108,42 @@
 .status_text {
   font-size: 12px;
   color: var(--secondaryFontColor);
+}
+
+.no_articles_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensure it takes full height of the container */
+}
+
+.no_articles_message {
+  font-size: 16px; /* Adjust the font size as needed */
+  color: var(--primaryFontColor); /* Adjust the color as needed */
+  text-align: center; /* Center align the text */
+  margin: 20px 0; /* Add some space above and below the message */
+  padding: 20px; /* Add some padding around the message */
+  background-color: var(--tertiary); /* Optional: Add a background color */
+  /* Optional: Add a border */
+  border-radius: 5px; /* Optional: Add rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+
+.create_article_button {
+  display: inline-block;
+  margin-top: 15px; /* Add some space above the button */
+  padding: 10px 20px; /* Add padding to the button */
+  font-size: 16px; /* Adjust the font size as needed */
+  color: #fff; /* Button text color */
+  background-color: var(--primaryButtonColor); /* Button background color */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Add rounded corners */
+  cursor: pointer; /* Change cursor to pointer */
+  text-decoration: none; /* Remove underline from text */
+}
+
+.create_article_button:hover {
+  background-color: #0056b3; /* Darker shade for hover effect */
 }
 
 @media screen and (max-width: 680px) {

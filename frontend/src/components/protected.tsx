@@ -2,7 +2,7 @@
 
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/auth";
-import Loading from "./loading";
+import { Loading } from "./loading";
 
 export default function ProtectedRoutes() {
   const { user, loading } = useAuth();
