@@ -7,9 +7,10 @@
   display: flex;
   align-items: center;
   border-radius: 10px;
-  gap: 5px;
+  gap: 8px;
   background-color: var(--tertiary);
-  padding: 5px;
+  padding: 10px;
+  height: 45px;
 }
 
 
@@ -18,8 +19,8 @@
 }
 
 .user_profile {
-  width: 45px;
-  height: 45px;
+  width: 34px;
+  height: 34px;
   border-radius: 50px;
 }
 

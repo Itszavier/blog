@@ -5,6 +5,7 @@ import { useAuth } from "../../context/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { serverAxios } from "../../api/axios";
+import { IoNotifications } from "react-icons/io5";
 
 export default function ProfileDropdown() {
   const [toggle, setToggle] = useState(false);
