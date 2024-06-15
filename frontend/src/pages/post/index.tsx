@@ -74,7 +74,7 @@ export default function PostView() {
         <div className={style.body}>
           <div
             className={style.post_content}
-            dangerouslySetInnerHTML={{ __html: post.content.html }}
+            dangerouslySetInnerHTML={{ __html: post.content.html}}
           />
         </div>
       </div>

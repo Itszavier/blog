@@ -244,18 +244,21 @@ router.post(
 );
 
 router.put("/follow", ensureAuthenticated, async (req, res, next) => {
+  const bodySchema = z.object({
+    userId: z
+      .string({
+        invalid_type_error: "There is a typo in system code, userId must be a [string]",
+      })
+      .min(1, "userId must be present"),
+  });
+
   try {
-    const bodySchema = z.object({
-      userId: z
-        .string({
-          invalid_type_error: "There is a typo in system code, userId must be a [string]",
-        })
-        .min(1, "userId must be present"),
-    });
+    const body = bodySchema.parse(req.body);
 
-    const { userId } = bodySchema.parse(req.body);
+    const userId = req.user!._id;
+    const userToFollowId = body.userId;
 
-    const userToFollow = await UserModel.findOne({ _id: userId });
+    const userToFollow = await UserModel.findOne({ _id: userToFollowId });
 
     if (!userToFollow) {
       return next(errorMessage(400, "The user your trying to follow does not exist"));
@@ -268,17 +271,27 @@ router.put("/follow", ensureAuthenticated, async (req, res, next) => {
     if (userToFollow.followers.includes(req.user?._id as any)) {
       return next(errorMessage(400, "Already following this user")); // can also ignore by returning null
     }
+    // Update current user following array
+    const followingUpdateResults = await UserModel.findByIdAndUpdate(userId, {
+      $push: { following: userToFollowId },
+    })
+      .select(getSelectedUserFields("user"))
+      .populate("followers following", getSelectedUserFields("follow"))
+      .exec();
 
-    // Add current user to the followers of the userToFollow
-    userToFollow.followers.push(req.user?.id as any);
-    await userToFollow.save();
+    // Update the followers for the user that the current user is following
+    const followersUpdateResults = await UserModel.findByIdAndUpdate(userToFollowId, {
+      $push: { followers: userId },
+    })
+      .select(getSelectedUserFields("user"))
+      .populate("followers following", getSelectedUserFields("follow"))
+      .exec();
 
-    // Add userToFollow to the following list of the current user
-    const currentUser = await UserModel.findOne({ _id: req.user?._id });
-    currentUser!.following.push(userId as any);
-    await currentUser!.save();
-
-    return res.status(200).json({ message: "Successfully followed the user" });
+    return res.status(200).json({
+      message: "Successfully followed the user",
+      followersUpdateResults,
+      followingUpdateResults,
+    });
   } catch (error) {
     console.log(error);
     next(error);
@@ -287,21 +300,23 @@ router.put("/follow", ensureAuthenticated, async (req, res, next) => {
 
 /// Route for unfollowing a user
 router.put("/unfollow", ensureAuthenticated, async (req, res, next) => {
-  console.log("unfollow route");
-  try {
-    // Define and validate request body schema
-    const bodySchema = z.object({
-      userId: z
-        .string({
-          invalid_type_error: "There is a typo in system code, userId must be a [string]",
-        })
-        .min(1, "userId must be present"),
-    });
+  // Define and validate request body schema
+  const bodySchema = z.object({
+    userId: z
+      .string({
+        invalid_type_error: "There is a typo in system code, userId must be a [string]",
+      })
+      .min(1, "userId must be present"),
+  });
 
-    const { userId } = bodySchema.parse(req.body);
+  try {
+    const body = bodySchema.parse(req.body);
 
     // Find the user to unfollow in the database
-    const userToUnfollow = await UserModel.findOne({ _id: userId });
+
+    const userId = req.user!._id;
+    const userToUnFollowId = body.userId;
+    const userToUnfollow = await UserModel.findOne({ _id: userToUnFollowId });
 
     // Check if the user to unfollow exists
     if (!userToUnfollow) {
@@ -311,44 +326,31 @@ router.put("/unfollow", ensureAuthenticated, async (req, res, next) => {
     }
 
     // Prevent users from unfollowing themselves
-    if (userToUnfollow._id === req.user?._id) {
+    if (userToUnfollow._id === userId) {
       return next(errorMessage(400, "Can't unfollow yourself"));
     }
+    const currentUser = req.user!;
+
+    const isCurrentUserFollowing = currentUser.following.some(
+      (following) => following.toString() === userToUnFollowId
+    );
 
     // Check if not following the user
-    if (!userToUnfollow.followers.includes(req.user?._id as any)) {
+    if (!isCurrentUserFollowing) {
       return next(errorMessage(400, "Not following this user"));
     }
 
-    // Remove current user from the followers of the userToUnfollow
-    userToUnfollow.followers = userToUnfollow.followers.filter(
-      (followerId) => followerId !== req.user?._id
-    ) as any;
-    await userToUnfollow.save();
+    // remove followers id from the user the current user wants to unfollow
+    const followersUpdate = await UserModel.findByIdAndUpdate(userToUnFollowId, {
+      $pull: { followers: userId },
+    });
 
-    // Remove userToUnfollow from the following list of the current user
-    const currentUser = await UserModel.findOne({ _id: req.user?._id });
+    // remove following id from the current user
+    const followingUpdate = await UserModel.findByIdAndUpdate(userId, {
+      $pull: { following: userToUnFollowId },
+    });
 
-    const filteredFollowing = currentUser!.following.filter((followingId) => {
-      console.log(
-        followingId.toString() !== userId.toString(),
-        followingId.toString(),
-        userId.toString(),
-        followingId,
-        userId
-      );
-      return followingId.toString() !== userId.toString();
-    }) as any;
-
-    console.log("filtered following", filteredFollowing);
-    currentUser!.following = filteredFollowing;
-
-    console.log(currentUser);
-
-    await currentUser!.save();
-
-    // Send success response
-    return res.status(200).json({ message: "Successfully unfollowed the user" });
+    res.status(200).json({ message: "successfully unfollow the user" });
   } catch (error) {
     // Handle and log any errors
     console.error(error);

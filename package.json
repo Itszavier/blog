@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tiptap/extension-placeholder": "^2.4.0"
+    "@tiptap/extension-placeholder": "^2.4.0",
+    "react-spinners": "^0.13.8"
   }
 }
