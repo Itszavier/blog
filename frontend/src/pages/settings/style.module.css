@@ -1,6 +1,6 @@
 /** @format */
 .container {
-  /*padding-top: 58px;*/
+  padding-top: 60px;
   display: flex;
   height: 100vh;
 }
@@ -9,19 +9,18 @@
   height: 50px;
   position: relative;
   width: 300px;
-  padding: 8px;
-  padding-top: 69px;
-  background-color: #eee;
+  padding: 20px 18px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   height: 100%;
   gap: 5px;
   background-color: var(--accent);
+  border-right: 1px solid var(--borderColor);
 }
 
 .nav_btn {
-  padding: 8px;
+  padding: 5px;
   text-transform: capitalize;
   border: none;
   display: flex;
@@ -32,10 +31,11 @@
   cursor: pointer;
   text-decoration: none;
   color: var(--primaryFontColor);
+  font-size: 14px;
 }
 
 .active_btn {
-  background-color: var(--accent);
+  background-color: var(--tertiary);
   color: white;
   border-radius: 4px;
 }
@@ -43,12 +43,13 @@
 .body {
   width: 100%;
   padding: 10px;
-  padding-top: 68px;
   padding-left: 34px;
   border-radius: 2px;
   height: 100%;
   overflow-y: auto;
   flex-direction: column;
+  background-color: var(--accent);
+  color: var(--primaryFontColor);
 }
 
 .logout_btn {

@@ -128,94 +128,40 @@ export default function ProfileTab() {
 
   return (
     <form onSubmit={handleSubmit} className={style.form}>
-      {error && (
-        <p className={style.error_message}>
-          <span className="material-icons">error</span> {error}
-        </p>
-      )}
-      {successMessage && (
-        <p className={style.success_message}>
-          <span className="material-icons">check_circle</span> {successMessage}
-        </p>
-      )}
-      <div className={style.form_body}>
-        <div className={`${style.input_group} ${style.profile_image_group}`}>
-          <div className={style.profile_image_container}>
-            {formData.imagePreview ? (
-              <img
-                src={formData.imagePreview}
-                className={style.profile_image_preview}
-                alt="Profile preview"
-              />
-            ) : (
-              <img
-                src={auth.user?.profileImage || defaultUrl}
-                className={style.profile_image_preview}
-                alt="Default profile"
-              />
-            )}
-            <input
-              accept="image/*"
-              type="file"
-              className={style.profile_image_input}
-              onChange={handleImageChange}
-            />
+      <div className={style.header}>
+        <div className={style.input_group}>
+          <div className={style.input_wrapper}>
+            <label>Name</label>
+            <input className={style.input} type="text" placeholder="Name" />
+            <span>
+              {" "}
+              This name may appear on your posts. You can turn it off in settings,
+            </span>
           </div>
-          <span className={style.input_description}>
-            <span className="material-icons">mail</span>
-            {auth.user?.email}
-          </span>
-        </div>
-        <div className={style.input_group}>
-          <span className={style.input_label}>Name:</span>
-          <span className={style.input_description}>Update your full name.</span>
-          <input
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            className={style.input}
-            type="text"
-            placeholder="Full name"
-          />
-        </div>
 
-        <div className={style.input_group}>
-          <span className={style.input_label}>Username:</span>
-          <span className={style.input_description}>Change your username (unique).</span>
-          <input
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-            className={style.input}
-            type="text"
-            placeholder="Username"
-          />
+          <div className={style.input_wrapper}>
+            <label>Username</label>
+            <input className={style.input} type="text" placeholder="username" />
+            <span> This username will appear in the URL of your profile.</span>
+          </div>
+
+          <div className={style.input_wrapper}>
+            <label>Bio</label>
+            <textarea className={`${style.input} ${style.bio_input}`} placeholder="bio" />
+            <span>
+              {" "}
+              A short description about yourself. This bio may appear on your profile.
+            </span>
+          </div>
         </div>
 
-        <div className={style.input_group}>
-          <span className={style.input_label}>Bio:</span>
-          <span className={style.input_description}>
-            Edit your bio (max 150 characters).
-          </span>
-          <textarea
-            name="bio"
-            className={`${style.input} ${style.bio_input}`}
-            placeholder="Bio"
-            maxLength={150}
-            value={formData.bio}
-            onChange={handleInputChange}
-          />
+        <div className={style.file_upload_container}>
+          <div className={style.preview_wrapper}>
+            <img className={style.preview_image} src={defaultUrl} alt="" />
+          </div>
+
+          <input className={style.file_upload_input} type="file" />
         </div>
-      </div>
-
-      <div className={style.form_footer}>
-        <button type="submit" disabled={loading || !isFormChanged()}>
-          Save changes {loading && <span>....</span>}
-        </button>
-
-        <Link to={`/profile/${auth.user?._id}`} className={style.view_profile_link}>
-          <span className="material-icons">person</span> View profile
-        </Link>
       </div>
     </form>
   );

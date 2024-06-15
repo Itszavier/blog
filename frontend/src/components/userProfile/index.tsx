@@ -9,23 +9,26 @@ import { useState } from "react";
 import { ImGift } from "react-icons/im";
 import { ButtonLoader } from "../loading";
 
-export default function UserProfile({
-  member,
-  userId,
-  setMember,
-}: {
+interface IUserProfileProps {
   userId: string;
   member: IMember;
   setMember: React.Dispatch<React.SetStateAction<IMember | null>>;
-}) {
+}
+
+export default function UserProfile(props: IUserProfileProps) {
   const auth = useAuth();
   const [isFollowLoading, setIsFollowLoading] = useState<boolean>(false);
+  const [member, setMember] = useState(() => props.member);
   //const [followError, setFollowError] = useState<string | undefined>();
 
   const handleFollow = async (e: any) => {
-    if (!auth.user) return console.log("user is not authencated");
+    if (!auth.user) {
+      return;
+    }
 
-    if (!member) return console.log("member is null", member);
+    if (!member) {
+      return;
+    }
 
     if (member.followers.some((follower) => follower._id === member._id)) {
       return;
@@ -185,7 +188,7 @@ export default function UserProfile({
           )}
         </div>
 
-        <div className={style.following_container}>
+        {/* <div className={style.following_container}>
           {member.following.map((following) => {
             return (
               <div>
@@ -194,7 +197,7 @@ export default function UserProfile({
               </div>
             );
           })}
-        </div>
+        </div>*/}
       </div>
     </div>
   );
