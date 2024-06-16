@@ -56,9 +56,9 @@ export default function UsernameInput(props: usernameInputProps) {
       return <ButtonLoader size={18} />;
     }
     if (isAvailable) {
-      return <FaCheck />;
+      return <FaCheck className={style.available_input/>;
     }
-    return <GoAlertFill className={style.unavaible_input} />;
+    return <GoAlertFill className={style.unavailable_alert} />;
   };
 
   return (
