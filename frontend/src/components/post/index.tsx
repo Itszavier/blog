@@ -7,6 +7,8 @@ import moment from "moment";
 import { BsDot } from "react-icons/bs";
 import { IPost } from "../../api/types";
 import { FaCommentAlt, FaHeart } from "react-icons/fa";
+import { useEffect } from "react";
+import { decodeTitle, encodeTitle } from "../../utils";
 
 interface PostProps {
   post: IPost;
@@ -33,6 +35,12 @@ export default function PostCard({
       return <span className={style.status_text}>Draft</span>;
     }
   };
+
+  useEffect(() => {
+    const title = encodeTitle(post.title);
+    const decodedTitle = decodeTitle(title);
+    console.log(title, decodedTitle);
+  }, []);
 
   return (
     <div
@@ -63,7 +71,10 @@ export default function PostCard({
       <div className={style.post_card_body}>
         <div className={style.post_data_wrapper}>
           <p className={style.title}>
-            <Link className={style.link} to={`/browse/${post._id}`}>
+            <Link
+              className={style.link}
+              to={`/article/${encodeTitle(post.title)}/${post.handle}`}
+            >
               {post.title}
             </Link>
           </p>

@@ -15,7 +15,7 @@ export default function Profile() {
   const [member, setMember] = useState<IMember | null>(null);
   const [memberLoading, setMemberLoading] = useState<boolean>(false);
   const [posts, setPosts] = useState<IPost[]>([]);
-  const [postsLoading, setPostsLoading] = useState<boolean>(false);
+  const [postsLoading, setPostsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setMemberLoading(true);

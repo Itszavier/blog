@@ -72,6 +72,29 @@ router.get("/fetch/unpublished/:id", ensureAuthenticated, async (req, res, next)
   }
 });
 
+router.get("/fetch/publicView/:encodedTitle/:handle", async (req, res, next) => {
+  try {
+    const { encodedTitle, handle } = req.params;
+    const decodedTitle = decodeURIComponent(encodedTitle.replace(/-/g, " "));
+    const post = await PostModel.findOne({
+      handle,
+      title: { $regex: new RegExp(`^${decodedTitle}$`, "i") },
+    });
+
+    if (!post) return next(errorMessage(404, "There isn't any post with id"));
+
+    await post.populate("author", getAuthorFields());
+
+    res.status(200).json({
+      message: `${req.user?.name} here is ${post.title}`,
+      post: post,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 // user does not need to be logged in to view this these
 
 router.get("/fetch/published/:id", async (req, res, next) => {
@@ -256,69 +279,32 @@ router.put("/save/:id", heroImageUpload.single("heroImage"), async (req, res, ne
   }
 });
 
-router.post(
-  "/create",
-  ensureAuthenticated,
-  heroImageUpload.single("heroImage"),
-  async function (req, res, next) {
-    try {
-      const fields = getAuthorFields();
+router.post("/create", ensureAuthenticated, async function (req, res, next) {
+  try {
+    const fields = getAuthorFields();
 
-      console.log(req.body);
-      const defaultTitle = `draft-${generateUniqueId({
-        length: 9,
-        useNumbers: false,
-        useLetters: true,
-      })}`;
+    const postSchema = z.object({
+      title: z
+        .string()
+        .min(5, { message: "Title must be at least 5 characters long" })
+        .max(120, { message: "Title cannot exceed 100 characters" }),
+    });
 
-      const postSchema = z.object({
-        title: z
-          .string()
-          .min(5, { message: "Title must be at least 5 characters long" })
-          .max(100, { message: "Title cannot exceed 100 characters" })
-          .default(defaultTitle),
-        subtitle: z
-          .string()
-          .min(0, { message: "Subtitle must be at least 5 characters long" })
-          .max(150, { message: "Subtitle cannot exceed 150 characters" }),
-        description: z
-          .string()
-          .min(10, { message: "Description must be at least 10 characters long" })
-          .max(500, { message: "Description cannot exceed 500 characters" })
-          .optional(),
+    const body = postSchema.parse(req.body);
 
-        published: z.boolean().default(false),
-      });
+    const post = await PostModel.create({ title: body.title, author: req.user!._id });
 
-      const body = postSchema.parse(req.body);
+    await post.populate("author", getAuthorFields());
 
-      const post = new PostModel({ ...body, author: req.user?._id, type: "Article" });
-
-      if (req.file) {
-        const { public_id, secure_url } = await uploadImageFile({
-          file: req.file,
-          previous: post.heroImage,
-          folder: "heroImages",
-        });
-
-        post.heroImage = {
-          id: public_id,
-          storage: "cloud",
-          url: secure_url,
-        };
-      }
-
-      const savedPost = await (await post.save()).populate("author", fields);
-      res.status(200).json({
-        message: "successfully created post",
-        post: savedPost,
-      });
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
+    res.status(200).json({
+      message: "successfully created post",
+      post: post,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
   }
-);
+});
 
 router.post("/update/content", ensureAuthenticated, async function (req, res, next) {
   try {

@@ -1,6 +1,8 @@
 /** @format */
 
+import generateUniqueId from "generate-unique-id";
 import mongoose, { Schema, SchemaTypes, Document } from "mongoose";
+import { unsupportedSymbols } from "../utils";
 
 // TypeScript interface for the Post document
 export interface IPost {
@@ -20,6 +22,7 @@ export interface IPost {
     url: string;
     id: string;
   };
+  handle: string;
   createdAt: Date;
   updatedAt: Date;
   published: boolean;
@@ -31,7 +34,6 @@ export interface IPostSchema extends IPost, Document {}
 const postSchema = new Schema<IPostSchema>({
   type: {
     type: SchemaTypes.String,
-    required: true,
     defualt: "Article",
   },
   title: {
@@ -94,8 +96,13 @@ const postSchema = new Schema<IPostSchema>({
 
   published: {
     type: SchemaTypes.Boolean,
-    required: true,
     default: false,
+  },
+
+  handle: {
+    type: SchemaTypes.String,
+    immutable: true,
+    default: () => generateUniqueId({ excludeSymbols: unsupportedSymbols, length: 7 }),
   },
 
   /* likes: {

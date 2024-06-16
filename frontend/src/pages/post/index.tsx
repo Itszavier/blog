@@ -14,14 +14,15 @@ import { FaBookBookmark } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 
 export default function PostView() {
-  const { id } = useParams();
+  const { title, handle } = useParams();
+  console.log("Title:", title);
   const auth = useAuth();
   const [post, setPost] = useState<IPost | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState();
 
   useEffect(() => {
-    fetchPost(id as string)
+    fetchPost(title!, handle!)
       .then((data) => {
         console.log(data);
         setPost(data);
@@ -33,7 +34,7 @@ export default function PostView() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [title, handle]);
 
   if (loading) {
     return <Loading />;
@@ -116,10 +117,10 @@ function Menu({ post }: { post: IPost }) {
   );
 }
 
-async function fetchPost(id: string) {
+async function fetchPost(title: string, handle: string) {
   return new Promise<IPost>(async (resolve, reject) => {
     try {
-      const response = await serverAxios.get(`/posts/fetch/one/${id}`);
+      const response = await serverAxios.get(`/posts/fetch/publicView/${title}/${handle}`);
       const data: IPost = response.data.post;
       resolve(data);
     } catch (error) {

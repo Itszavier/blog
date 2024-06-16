@@ -27,6 +27,7 @@ export interface IPost {
     url: string;
     id: string;
   };
+  handle: string;
   createdAt: Date;
   updatedAt: Date;
   published: boolean;

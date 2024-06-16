@@ -3,6 +3,34 @@
 import { UploadApiResponse } from "cloudinary";
 import cloudinary from "../cloudinaryConfig";
 import generateUniqueId from "generate-unique-id";
+export const unsupportedSymbols = [
+  " ",
+  "<",
+  ">",
+  "#",
+  "%",
+  '"',
+  "{",
+  "}",
+  "|",
+  "\\",
+  "^",
+  "[",
+  "]",
+  "`",
+  ";",
+  "/",
+  "?",
+  ":",
+  "@",
+  "=",
+  "&",
+  "$",
+  "+",
+  ",",
+  "'",
+];
+
 
 interface IImageUpload {
   file: Express.Multer.File;

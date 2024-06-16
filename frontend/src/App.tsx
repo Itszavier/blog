@@ -33,7 +33,7 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route path="/create" element={<Create />} />
           <Route path="/editor/:id" element={<EditorPage />} />
-          <Route path="/browse/:id" element={<PostView />} />
+          <Route path="/article/:title/:handle" element={<PostView />} />
           <Route path="/browse" element={<Browse />} />
           <Route element={<Settings />} path="/settings/*" />
         </Route>
