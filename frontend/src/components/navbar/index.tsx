@@ -46,12 +46,9 @@ export default function Navbar() {
             <Link to={"/browse"} className={style.link}>
               Browse
             </Link>{" "}
-            <button
-              onClick={() => postModal.openModal()}
-              className={`${style.link} ${style.nav_btn}`}
-            >
-              Write
-            </button>
+            <Link to={"/create"} className={style.link}>
+              Create
+            </Link>
             <button
               className={`${style.link} ${style.nav_btn} ${style.nav_notification_btn}`}
             >

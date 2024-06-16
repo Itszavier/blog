@@ -1,0 +1,48 @@
+/** @format */
+
+.container {
+  background-color: var(--accent);
+  height: 100vh;
+  padding-top: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: var(--primaryFontColor);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 19px;
+}
+
+.createForm {
+  padding: 10px;
+  width: 540px;
+  height: 380px;
+}
+
+.input {
+  width: 340px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--tertiary);
+}
+
+input:focus {
+  outline: 1px solid var(--primaryButtonColor);
+}
+
+.button {
+  padding: 10px;
+  background-color: var(--primaryButtonColor);
+  border-radius: 12px;
+  border: none;
+  width: 130px;
+}
+
+.text_container {
+  margin-bottom: 10px;
+}

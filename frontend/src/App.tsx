@@ -12,6 +12,7 @@ import EditorPage from "./pages/editor";
 import CreatePostModal from "./components/createPostModal";
 import PostView from "./pages/post";
 import Browse from "./pages/browse";
+import Create from "./pages/create";
 
 function App() {
   const location = useLocation();
@@ -30,6 +31,7 @@ function App() {
         <Route path={"/"} element={<Home />} />
         <Route path="/profile/:username" element={<Profile />} />
         <Route element={<ProtectedRoutes />}>
+          <Route path="/create" element={<Create />} />
           <Route path="/editor/:id" element={<EditorPage />} />
           <Route path="/browse/:id" element={<PostView />} />
           <Route path="/browse" element={<Browse />} />
