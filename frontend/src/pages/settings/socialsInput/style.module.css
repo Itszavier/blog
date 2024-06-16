@@ -1,0 +1,100 @@
+/** @format */
+.input {
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  background-color: var(--secondary);
+  border-radius: 8px;
+  width: 100%;
+  color: var(--primaryFontColor);
+}
+.socials_input_wrapper {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  text-transform: capitalize;
+  font-size: 15px;
+  margin-left: 8px;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.social_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.add_social_input {
+  height: 100%;
+  gap: 8px;
+}
+
+.add_input_container {
+  display: flex;
+  height: 35px;
+  width: 390px;
+  gap: 8px;
+}
+.add_btn {
+  padding: 12px;
+  border: #6b6b6b;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: var(--secondaryButtonColor);
+  color: var(--primaryFontColor);
+}
+
+.error_message {
+  font-weight: normal;
+  font-size: 14px;
+  color: #a84a4a;
+  display: flex;
+  align-items: center;
+}
+
+.error_message svg {
+  margin-left: 5px;
+}
+
+.socials {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 8px;
+  gap: 5px;
+}
+
+.social {
+  padding: 8px;
+  font-size: 15px;
+  border-radius: 8px;
+  width: 100%;
+  background-color: var(--tertiary);
+  width: 100%;
+  color: var(--primaryFontColor);
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensure spacing between text and button */
+}
+
+.social p {
+  flex: 1; /* Take up available space */
+  margin: 0; /* Remove default margin */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Show ellipsis (...) for overflowing text */
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+}
+
+.remove_btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--primaryFontColor);
+}
