@@ -11,6 +11,7 @@ import { BsDot } from "react-icons/bs";
 import { MdComment, MdModeComment } from "react-icons/md";
 import { IoBookmark, IoHeart, IoHeartDislike } from "react-icons/io5";
 import { FaBookBookmark } from "react-icons/fa6";
+import { FaEdit } from "react-icons/fa";
 
 export default function PostView() {
   const { id } = useParams();
@@ -42,7 +43,7 @@ export default function PostView() {
 
   return (
     <div className={style.container}>
-      <Menu />
+      <Menu post={post} />
       <div className={style.middle}>
         <div className={style.meta_header}>
           <div className={style.publish_info}>
@@ -86,7 +87,8 @@ export default function PostView() {
   );
 }
 
-function Menu() {
+function Menu({ post }: { post: IPost }) {
+  const auth = useAuth();
   return (
     <div className={style.menu}>
       <button className={style.menu_btn}>
@@ -98,12 +100,18 @@ function Menu() {
       </button>
 
       <button className={style.menu_btn}>
-        <MdComment/>
+        <MdComment />
       </button>
 
       <button className={style.menu_btn}>
         <IoBookmark />
       </button>
+
+      {auth.user?._id == post.author._id && (
+        <button className={`${style.menu_btn} ${style.menu_edit}`}>
+          <FaEdit />
+        </button>
+      )}
     </div>
   );
 }
