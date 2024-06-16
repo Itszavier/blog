@@ -106,10 +106,14 @@
   padding: 10px 12px;
   background-color: var(--secondaryButtonColor);
   border: none;
-  width: 120px;
+  width: 140px;
   border-radius: 10px;
   cursor: pointer;
-  color: var(--primaryFontColor);
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .btn_active {
@@ -126,4 +130,20 @@
 
 .error_message svg {
   margin-left: 5px;
+}
+
+.error {
+  width: 100%;
+  background-color: #a84a4a;
+  padding: 5px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.success {
+  width: 100%;
+  background-color: #007022;
+  padding: 5px;
+  border-radius: 8px;
+  text-align: center;
 }

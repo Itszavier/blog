@@ -15,8 +15,8 @@ export interface IPost {
     text: string;
   };
 
-  heroImage?: {
-    storage: string; // ("cloud" us)| "google" ...
+  heroImage: {
+    storage: "cloud" | "url";
     url: string;
     id: string;
   };
@@ -68,13 +68,16 @@ const postSchema = new Schema<IPostSchema>({
     storage: {
       type: SchemaTypes.String,
       defualt: "cloud",
+      enum: ["cloud", "url"],
     },
     url: {
       type: SchemaTypes.String,
+      default: "",
     },
 
     id: {
       type: SchemaTypes.String,
+      default: "",
     },
   },
 
@@ -83,15 +86,21 @@ const postSchema = new Schema<IPostSchema>({
     immutable: true,
     default: () => new Date(),
   },
+
   updatedAt: {
     type: Date,
     default: () => new Date(),
   },
+
   published: {
     type: SchemaTypes.Boolean,
     required: true,
     default: false,
   },
+
+  /* likes: {
+    type: [schemaTypes.ObjectId],
+  }*/
 });
 
 // Creating the Mongoose model

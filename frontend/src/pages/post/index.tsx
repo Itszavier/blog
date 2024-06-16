@@ -8,6 +8,9 @@ import { useAuth } from "../../context/auth";
 import { Loading } from "../../components/loading";
 import moment from "moment";
 import { BsDot } from "react-icons/bs";
+import { MdComment, MdModeComment } from "react-icons/md";
+import { IoBookmark, IoHeart, IoHeartDislike } from "react-icons/io5";
+import { FaBookBookmark } from "react-icons/fa6";
 
 export default function PostView() {
   const { id } = useParams();
@@ -39,12 +42,12 @@ export default function PostView() {
 
   return (
     <div className={style.container}>
+      <Menu />
       <div className={style.middle}>
         <div className={style.meta_header}>
           <div className={style.publish_info}>
-
             <div className={style.author_container}>
-              <img src={post.author.profileImage} alt="" width={35} height={35} />
+              <img src={post.author.profileImage.url} alt="" width={35} height={35} />
               <span>{post.author.name}</span>
             </div>
 
@@ -79,6 +82,28 @@ export default function PostView() {
           />
         </div>
       </div>
+    </div>
+  );
+}
+
+function Menu() {
+  return (
+    <div className={style.menu}>
+      <button className={style.menu_btn}>
+        <IoHeart /> <span>0</span>
+      </button>
+
+      <button className={style.menu_btn}>
+        <IoHeartDislike /> <span>0</span>
+      </button>
+
+      <button className={style.menu_btn}>
+        <MdComment/>
+      </button>
+
+      <button className={style.menu_btn}>
+        <IoBookmark />
+      </button>
     </div>
   );
 }

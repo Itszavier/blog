@@ -49,14 +49,18 @@ export default function UsernameInput(props: usernameInputProps) {
   };
 
   const renderIcon = () => {
+    if (username.length == 0) return null;
     if (initialUsername == username) {
       return null;
     }
     if (loading) {
       return <ButtonLoader size={18} />;
     }
+    if (props.error) {
+      return <GoAlertFill className={style.warning} />;
+    }
     if (isAvailable) {
-      return <FaCheck className={style.available_input/>;
+      return <FaCheck className={style.available_input} />;
     }
     return <GoAlertFill className={style.unavailable_alert} />;
   };

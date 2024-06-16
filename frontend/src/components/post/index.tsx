@@ -45,7 +45,7 @@ export default function PostCard({
       <div className={style.post_card_header}>
         <img
           className={style.profile_image}
-          src={"https://avatar.iran.liara.run/public/boy?username=Ash"}
+          src={post.author.profileImage.url}
           width={20}
           height={20}
         />

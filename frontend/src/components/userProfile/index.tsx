@@ -43,7 +43,7 @@ export default function UserProfile(props: IUserProfileProps) {
         _id: member._id,
         name: member.name,
         bio: member.bio,
-        profileImage: member.profileImage,
+        profileImage: member.profileImage.url,
         username: member.username,
       };
 
@@ -145,7 +145,7 @@ export default function UserProfile(props: IUserProfileProps) {
         <div className={`${style.data_wrapper} ${style.profile_info}`}>
           <img
             className={style.profileImage}
-            src={member.profileImage}
+            src={member.profileImage.url}
             width={50}
             height={50}
           />

@@ -2,27 +2,19 @@
 
 //** @format */
 import style from "./style.module.css";
-import { IUser, useAuth } from "../../../context/auth";
+import { useAuth } from "../../../context/auth";
 import { serverAxios } from "../../../api/axios";
-import React, { useEffect, useState, FormEvent, useRef, ChangeEvent } from "react";
+import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import SocialInput from "../socialsInput";
 import { ButtonLoader } from "../../../components/loading";
 import UsernameInput from "../usernameInput";
 import { z } from "zod";
-import { VscMail } from "react-icons/vsc";
+
 import { GoAlertFill } from "react-icons/go";
+import { isAxiosError } from "axios";
 
 const defaultUrl =
   "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250";
-
-// Define types for form data and initial data
-interface FormData {
-  username: string;
-  name: string;
-  bio: string;
-  profileImageFile: File | null;
-  imagePreview: string | null;
-}
 
 export const ProfileSchema = z.object({
   username: z
@@ -32,31 +24,36 @@ export const ProfileSchema = z.object({
     .regex(
       /^[a-zA-Z0-9_]+$/,
       "Username must only contain letters, numbers, and underscores"
-    )
-    .optional(),
-  name: z.string().max(50, "Name must not exceed 50 characters").optional(),
+    ),
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .max(50, "Name must not exceed 50 characters"),
   bio: z.string().max(160, "Bio must not exceed 160 characters").optional(),
 });
-
+interface UserState {
+  name: string;
+  username: string;
+  bio: string;
+  socials: string[];
+}
 export default function ProfileTab() {
   const auth = useAuth();
-  const userRef = useRef<IUser | null>(null);
-  const [IsUserDataChanged, setIsUserDataChanged] = useState<boolean>(false);
-  const [user, setUser] = useState<IUser>(auth.user!);
-  const [socials, setSocials] = useState<string[]>([]);
+
+  const [user, setUser] = useState<UserState>({
+    name: auth.user?.name || "",
+    username: auth.user?.username || "",
+    bio: auth.user?.bio || "",
+    socials: auth.user?.socials || [],
+  });
   const [file, setFile] = useState<File | null>(null);
   const [validationsErrors, setValidationErrors] = useState<{ [key: string]: string }>(
     {}
   );
-
-  /// const [loading, setLoading] = useState<boolean>(false);
-  ///const [error, setError] = useState<string | null>(null);
-  // const [successMessage, setSuccessMessage] = useState<string | null>(null);
-
-  useEffect(() => {
-    userRef.current = auth.user;
-    setIsUserDataChanged(!isEqual(userRef.current, user)); // Check if user data has changed
-  }, [auth.user, user]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>();
+  const [successMessage, setSuccessMessage] = useState<string | null>();
+  const [filePreview, setFilePreview] = useState<string | null>(null);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0]; // Access the selected file from the event
@@ -66,27 +63,24 @@ export default function ProfileTab() {
     }
   };
 
-  useEffect(() => {
-    console.log(isFormValid());
-  }, [user]);
-
   const handleSocialCreate = (createdValue: string) => {
-    setSocials((prev) => [...prev, createdValue]);
+    setUser((prev) => {
+      return { ...prev, socials: [createdValue, ...prev.socials] };
+    });
   };
 
   const handleSocialRemove = (removedValue: string) => {
-    setSocials((prev) => {
-      return prev.filter((value) => {
-        return value != removedValue;
-      });
+    setUser((prev) => {
+      return { ...prev, socials: prev.socials.filter((value) => value != removedValue) };
     });
   };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    const updatedUser: any = { [e.target.name]: e.target.value };
-    setUser((...prev) => ({ ...prev, ...updatedUser }));
+    const name = e.target.name;
+    const value = e.target.value;
+    setUser((prev) => ({ ...prev, [name]: value }));
   };
 
   const isFormValid = (): boolean => {
@@ -111,16 +105,80 @@ export default function ProfileTab() {
     return true;
   };
 
+  useEffect(() => {
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      setFilePreview(previewUrl);
+
+      // Cleanup URL object
+      return () => URL.revokeObjectURL(previewUrl);
+    } else {
+      setFilePreview(null);
+    }
+  }, [file]);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    setLoading(true);
     if (!isFormValid()) {
-      return;
+      return setLoading(false);
     }
+
+    try {
+      const formData = new FormData();
+
+      formData.append("name", user.name);
+      formData.append("username", user.username);
+      formData.append("bio", user.bio);
+      formData.append("socials", JSON.stringify(user.socials));
+
+      if (file) {
+        formData.append("profileImage", file);
+      }
+
+      const response = await serverAxios.post(
+        "/user/update/profile",
+
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setError(null);
+      setValidationErrors({});
+
+      setSuccessMessage(response.data.message);
+      const id = setTimeout(() => {
+        setSuccessMessage(null);
+      }, 3000);
+    } catch (error) {
+      if (isAxiosError(error)) {
+        setError(error.response?.data.message);
+      }
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getUrl = () => {
+    if (filePreview) {
+      return filePreview;
+    }
+
+    if (auth.user!.profileImage.url.length > 0) {
+      return auth.user!.profileImage.url;
+    }
+
+    return defaultUrl;
   };
 
   return (
     <form onSubmit={handleSubmit} className={style.form}>
+      {error && <div className={style.error}>{error}</div>}
+      {successMessage && <div className={style.success}>{successMessage}</div>}
       <div className={style.header}>
         <div className={style.input_group}>
           <div className={style.input_wrapper}>
@@ -154,6 +212,7 @@ export default function ProfileTab() {
             <label>Bio</label>
             <textarea
               value={user.bio}
+              name="bio"
               onChange={handleChange}
               className={`${style.input} ${style.bio_input}`}
               placeholder="bio"
@@ -173,6 +232,7 @@ export default function ProfileTab() {
           </div>
 
           <SocialInput
+            socialList={user.socials}
             onSocialCreate={handleSocialCreate}
             onSocialRemove={handleSocialRemove}
           />
@@ -180,7 +240,7 @@ export default function ProfileTab() {
 
         <div className={style.file_upload_container}>
           <div className={style.preview_wrapper}>
-            <img className={style.preview_image} src={defaultUrl} alt="" />
+            <img className={style.preview_image} src={getUrl()} alt="" />
           </div>
 
           <input
@@ -192,18 +252,10 @@ export default function ProfileTab() {
       </div>
 
       <div className={style.button_container}>
-        <button
-          disabled={IsUserDataChanged}
-          type="submit"
-          className={`${style.button} ${IsUserDataChanged && style.btn_active}`}
-        >
-          Update profile
+        <button type="submit" className={`${style.button} ${style.btn_active}`}>
+          Update profile {loading && <ButtonLoader />}
         </button>
       </div>
     </form>
   );
-}
-
-function isEqual(obj1: any, obj2: any) {
-  return JSON.stringify(obj1) === JSON.stringify(obj2);
 }

@@ -50,7 +50,7 @@ export default function ProfileDropdown() {
         className={style.header}
       >
         <span>{user.username}</span>
-        <img className={style.user_profile} src={user.profileImage} alt="" />
+        <img className={style.user_profile} src={user.profileImage.url} alt="" />
       </div>
 
       {toggle && (

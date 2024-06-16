@@ -9,9 +9,14 @@ export interface IUser {
   name: string;
   username: string;
   bio: string;
-  profileImage: string;
+  profileImage: {
+    id: string;
+    storage: string;
+    url: string;
+  };
   followers: string[];
   following: string[];
+  socials: string[];
 }
 
 interface IAuthContext {

@@ -10,7 +10,11 @@ export interface IPost {
   author: {
     _id: string;
     username: string;
-    profileImage: string;
+    profileImage: {
+      id: string;
+      storage: string;
+      url: string;
+    };
     name: string;
   };
   content: {
@@ -40,7 +44,11 @@ export interface IMember {
   _id: string;
   name: string;
   username: string;
-  profileImage: string;
+  profileImage: {
+    id: string;
+    storage: string;
+    url: string;
+  };
   bio?: string;
   bannerUrl?: string;
   followers: IFollowersAndFollowing[];

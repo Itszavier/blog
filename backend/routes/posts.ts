@@ -10,7 +10,8 @@ import mongoose from "mongoose";
 import generateUniqueId from "generate-unique-id";
 import { heroImageUpload } from "../multer/file";
 import { errorMessage } from "../middleware/error";
-import uploadFile from "../utils";
+import uploadImageFile from "../utils";
+
 const router = Router();
 
 export const getAuthorFields = (custom?: string) => {
@@ -166,7 +167,13 @@ router.post(
       const body = postSchema.parse(parsedBody);
 
       if (req.file) {
-        const { public_id, secure_url } = await uploadFile(req.file, "heroImageFolder");
+        // Handle hero image upload if a file was uploaded
+        const { public_id, secure_url } = await uploadImageFile({
+          file: req.file,
+          previous: post.heroImage,
+          folder: "heroImages",
+        });
+
         post.heroImage = {
           id: public_id,
           storage: "cloud",
@@ -225,7 +232,11 @@ router.put("/save/:id", heroImageUpload.single("heroImage"), async (req, res, ne
 
     if (req.file) {
       // Handle hero image upload if a file was uploaded
-      const { public_id, secure_url } = await uploadFile(req.file, "heroImageFolder");
+      const { public_id, secure_url } = await uploadImageFile({
+        file: req.file,
+        previous: post.heroImage,
+        folder: "heroImages",
+      });
       post.heroImage = {
         id: public_id,
         storage: "cloud",
@@ -284,11 +295,16 @@ router.post(
       const post = new PostModel({ ...body, author: req.user?._id, type: "Article" });
 
       if (req.file) {
-        const { public_id, url } = await uploadFile(req.file, "heroImageFolder");
+        const { public_id, secure_url } = await uploadImageFile({
+          file: req.file,
+          previous: post.heroImage,
+          folder: "heroImages",
+        });
+
         post.heroImage = {
           id: public_id,
           storage: "cloud",
-          url,
+          url: secure_url,
         };
       }
 
@@ -370,12 +386,16 @@ router.post(
       return next(errorMessage(400, "Failed to hero image"));
     }
 
-    const { public_id, secure_url } = await uploadFile(req.file, "heroImageFolder");
+    const { public_id, secure_url } = await uploadImageFile({
+      file: req.file,
+      previous: post.heroImage,
+      folder: "heroImages",
+    });
 
     post.heroImage = {
+      id: public_id,
       storage: "cloud",
       url: secure_url,
-      id: public_id,
     };
 
     const saved = (await post.save()).populate("author", getAuthorFields());

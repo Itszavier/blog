@@ -9,14 +9,16 @@
   height: 50px;
   position: relative;
   width: 300px;
-  padding: 20px 18px;
+  padding: 20px 100px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   height: 100%;
   gap: 5px;
   background-color: var(--accent);
-  border-right: 1px solid var(--borderColor);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+ 
 }
 
 .nav_btn {
@@ -48,15 +50,16 @@
   height: 100%;
   overflow-y: auto;
   flex-direction: column;
-  background-color: var(--accent);
+  background-color: var(--primary);
   color: var(--primaryFontColor);
+  scroll-behavior: smooth;
 }
 
 .logout_btn {
   margin-top: auto;
   padding: 5px;
   position: absolute;
-  font-size: 17px;
+  font-size: 15px;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -66,4 +69,20 @@
   display: flex;
   gap: 10px;
   cursor: pointer;
+  background-color: var(--accent);
+}
+
+.body::-webkit-scrollbar {
+  width: 12px; /* Adjust the width if necessary */
+  background-color: transparent;
+}
+
+.body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.body::-webkit-scrollbar-thumb {
+  background: transparent; /* Adjust the thumb color if needed */
+  border-radius: 10px; /* Optional: round the scrollbar thumb */
+  background-color: transparent;
 }

@@ -11,6 +11,7 @@ import generateUniqueId from "generate-unique-id";
 import { UploadApiResponse, UploadResponseCallback } from "cloudinary";
 import ensureAuthenticated from "../middleware/checkauth";
 import user from "../model/user";
+import uploadImageFile from "../utils";
 
 const router = Router();
 
@@ -107,7 +108,7 @@ const profileUpload = multer();
 
 // update user profile
 
-router.post(
+router.put(
   "/profileImage",
   ensureAuthenticated,
   profileUpload.single("avatar"),
@@ -122,54 +123,34 @@ router.post(
         return next(errorMessage(400, "No file uploaded"));
       }
 
-      cloudinary.uploader
-        .upload_stream(
-          {
-            public_id: `${generateUniqueId({ length: 9 })}-${file.originalname}-`,
-            resource_type: "auto",
-            folder: "profiles",
-          },
-          async function (err, result) {
-            if (err) {
-              console.log(err);
-              return next(errorMessage(400, "failed to upload file"));
-            }
-            try {
-              user.profileImage = result?.url as string;
-              await user.save();
+      const { secure_url, public_id } = await uploadImageFile({
+        file,
+        folder: "profile",
+        previous: user.profileImage,
+      });
 
-              res.status(200).json({ message: "file uploaded successfully", result });
-            } catch (error) {
-              next(error);
-            }
-          }
-        )
-        .end(file.buffer as Buffer);
+      user.profileImage = {
+        id: public_id,
+        storage: "cloud",
+        url: secure_url,
+      };
+
+      const savedUser = await user.save();
+
+      (await savedUser.populate("author", getSelectedUserFields("user"))).populate(
+        "following followers",
+        getSelectedUserFields("follow")
+      );
+
+      res.json({
+        url: secure_url,
+        user: savedUser,
+      });
     } catch (error) {
       next(error);
     }
   }
 );
-function uploadFile(file: Express.Multer.File): Promise<UploadApiResponse> {
-  return new Promise((resolve, reject) => {
-    cloudinary.uploader
-      .upload_stream(
-        {
-          public_id: `${generateUniqueId({ length: 9 })}`,
-          resource_type: "auto",
-          folder: "profiles",
-        },
-        function (error, results) {
-          if (error) {
-            return reject(error);
-          }
-          console.log("done uploading", results);
-          resolve(results as UploadApiResponse);
-        }
-      )
-      .end(file.buffer);
-  });
-}
 
 router.post(
   "/update/profile",
@@ -177,67 +158,75 @@ router.post(
   profileUpload.single("profileImage"),
   async (req, res, next) => {
     try {
-      const user = await UserModel.findOne({ _id: req.user?._id as string });
+      // Find the user
+      const user = await UserModel.findById(req.user?._id);
 
       if (!user) {
-        return next(errorMessage(401, "UnAuthorized"));
+        return res.status(401).json({ message: "Unauthorized" });
       }
-
       const bodySchema = z.object({
-        name: z.string().min(1, "name cannot be an empty string").nullish(),
+        name: z.string().min(1, "Name is required"),
         username: z
           .string()
-          .min(4, "Username must be atleast 4 charactors are more")
-          .nullish(),
-        bio: z.string().max(150, "Bio can only be up to 250 characters long ").nullish(),
+          .min(4, "Username must be at least 4 characters long")
+          .max(20, "Username must not exceed 20 characters")
+          .regex(
+            /^[a-zA-Z0-9_]+$/,
+            "Username must only contain letters, numbers, and underscores"
+          )
+          .optional(),
+        bio: z.string().max(150, "Bio can only be up to 150 characters long").optional(),
+        socials: z.string().optional(),
       });
 
-      const valid = bodySchema.safeParse(req.body);
+      // Validate the request body
+      const body = bodySchema.parse(req.body);
 
-      if (!valid.success) {
-        return next(valid.error);
-      }
-
-      console.log(req.file);
+      // Handle profile image upload if a file is provided
       if (req.file) {
-        const file = req.file;
-        const results = await uploadFile(file);
-        user.profileImage = results.url;
+        const { public_id, secure_url } = await uploadImageFile({
+          file: req.file,
+          folder: "profile",
+          previous: user.profileImage,
+        });
+        user.profileImage = { id: public_id, storage: "cloud", url: secure_url };
       }
 
-      if (req.body.name) {
-        user.name = req.body.name;
-      }
-      // TODO: Make sure username does not cotain duplcate in the database
-      if (req.body.username) {
-        const existingUser = await UserModel.findOne({ username: req.body.username });
+      // Check for username uniqueness if it's being updated
+      if (body.username && body.username !== user.username) {
+        const existingUser = await UserModel.findOne({ username: body.username });
         if (existingUser && existingUser._id.toString() !== user._id.toString()) {
-          return next(
-            errorMessage(
-              400,
-              "The username you entered is already in use. Please choose a different one"
-            )
-          );
+          return res.status(400).json({
+            message:
+              "The username you entered is already in use. Please choose a different one.",
+          });
         }
-        user.username = req.body.username;
+        user.username = body.username;
       }
+      if (body.socials) {
+        user.socials = JSON.parse(body.socials);
+      }
+      // Update user profile details
+      user.name = body.name;
+      if (body.bio) user.bio = body.bio;
 
-      if (req.body.bio) {
-        user.bio = req.body.bio;
-      }
-      const updated = await user.save();
+      const updatedUser = await user.save();
 
       res.status(200).json({
-        message: "successfully updated profile",
+        message: "Profile updated successfully",
         updated: {
-          name: updated.name,
-          username: updated.username,
-          bio: updated.bio,
-          profileImage: updated.profileImage,
-          email: updated.email,
+          name: updatedUser.name,
+          username: updatedUser.username,
+          bio: updatedUser.bio,
+          profileImage: updatedUser.profileImage,
+          email: updatedUser.email,
+          socials: updatedUser.socials,
         },
       });
     } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: error.errors[0].message });
+      }
       next(error);
     }
   }
@@ -389,3 +378,6 @@ router.get("/username/isAvailable/:username", async (req, res, next) => {
 });
 
 export default router;
+function uploadFile(file: Express.Multer.File) {
+  throw new Error("Function not implemented.");
+}

@@ -32,20 +32,10 @@ router.get("/logout", ensureAuthenticated, async (req, res, next) => {
   });
 });
 
-router.get("/check", ensureAuthenticated, (req, res, next) => {
+router.get("/check", ensureAuthenticated, async (req, res, next) => {
   res.status(201).json({
     message: `Hi, ${req.user?.name}`,
-    user: {
-      _id: req.user?._id,
-      name: req.user?.name,
-      username: req.user?.username,
-      email: req.user?.email,
-      profileImage: req.user?.profileImage,
-      bio: req.user?.bio,
-      bannerUrl: req.user?.bannerUrl,
-      followers: req.user?.followers,
-      following: req.user?.following,
-    },
+    user: req.user,
   });
 });
 export default router;

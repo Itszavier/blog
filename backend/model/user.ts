@@ -2,7 +2,7 @@
 
 import { Schema, SchemaTypes, model, Document } from "mongoose";
 import generateUniqueId from "generate-unique-id";
-import { generateUsername } from "unique-username-generator";
+import { generateUsername, generateFromEmail } from "unique-username-generator";
 
 export interface IUser extends Document {
   _id: Schema.Types.ObjectId | string;
@@ -10,8 +10,13 @@ export interface IUser extends Document {
   username?: string;
   bio?: string;
   bannerUrl?: string;
-  profileImage: string;
+  profileImage: {
+    id: string;
+    storage: "url" | "cloud";
+    url: string;
+  };
   email: string;
+  socials: string[];
   followers: Schema.Types.ObjectId[] | string[];
   following: Schema.Types.ObjectId[] | string[];
 }
@@ -22,9 +27,21 @@ const userSchema = new Schema<IUser>({
   username: { type: SchemaTypes.String, unique: true },
 
   profileImage: {
-    type: SchemaTypes.String,
-    default: "https://avatar.iran.liara.run/public/boy?username=Ash",
-    required: true,
+    url: {
+      type: SchemaTypes.String,
+      default: "https://avatar.iran.liara.run/public/boy?username=Ash",
+    },
+
+    id: {
+      type: SchemaTypes.String,
+      default: "",
+    },
+
+    storage: {
+      type: SchemaTypes.String,
+      enum: ["cloud", "url"],
+      defualt: "url",
+    },
   },
   email: { type: SchemaTypes.String, required: true, unique: true },
 
@@ -34,6 +51,11 @@ const userSchema = new Schema<IUser>({
 
   bannerUrl: {
     type: SchemaTypes.String,
+  },
+  
+  socials: {
+    type: [SchemaTypes.String],
+    default: [],
   },
 
   following: {
@@ -49,11 +71,23 @@ const userSchema = new Schema<IUser>({
   },
 });
 
-userSchema.pre("save", function (next) {
+userSchema.pre("save", async function (next) {
   if (this.username) {
     next();
   } else {
-    this.username = generateUsername("_", 3, 8);
+    const generateUniqueUsername = async (): Promise<string> => {
+      let username = generateFromEmail(this.email, 6);
+      let user = await UserModel.findOne({ username });
+
+      while (user) {
+        username = generateUsername("_", 3, 8);
+        user = await UserModel.findOne({ username });
+      }
+
+      return username;
+    };
+
+    this.username = await generateUniqueUsername();
     next();
   }
 });

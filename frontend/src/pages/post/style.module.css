@@ -8,6 +8,7 @@
   background-color: var(--accent);
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .middle {
@@ -81,19 +82,55 @@
 }
 
 .middle::-webkit-scrollbar {
-
   width: 12px; /* Adjust the width if necessary */
   background-color: transparent;
 }
 
 .middle::-webkit-scrollbar-track {
- 
   background: transparent;
 }
 
 .middle::-webkit-scrollbar-thumb {
-  
   background: transparent; /* Adjust the thumb color if needed */
   border-radius: 10px; /* Optional: round the scrollbar thumb */
   background-color: transparent;
+}
+
+.middle::-webkit-scrollbar:hover { /* Adjust the width if necessary */
+  background-color: transparent;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 12%;
+  gap: 20px;
+  font-size: 40px;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  background-color: black;
+  height: 90%;
+  padding: 18px;
+}
+
+.menu_btn {
+  width: 100%;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  border: none;
+  color: var(--primaryFontColor);
+  background: transparent;
+  flex-direction: column;
+  gap: 1px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.menu_btn span {
+  font-size: 15px;
 }

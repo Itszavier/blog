@@ -10,17 +10,20 @@ const error_message =
   "Invalid URL format. Please enter a URL from Instagram, YouTube, or TikTok.";
 
 interface SocialInputProps {
+  socialList: string[];
   onSocialCreate?: (url: string) => void;
   onSocialRemove?: (url: string) => void;
 }
 export default function SocialInput({
+  socialList,
   onSocialCreate,
   onSocialRemove,
 }: SocialInputProps) {
-  const [socials, setSocials] = useState<string[]>([]);
+  const [socials, setSocials] = useState<string[]>(socialList || []);
   const [url, setUrl] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [count, setCount] = useState<number>(0);
+  const [count, setCount] = useState<number>(socials.length);
+  const [profilePreview, setProfilePreview] = useState<string>('')
 
   useEffect(() => {
     console.log("removed", socials);
@@ -29,6 +32,9 @@ export default function SocialInput({
   const handleAdd = () => {
     if (errorMessage) {
       return;
+    }
+    if (socials.includes(url)) {
+      return setErrorMessage("Url already added");
     }
     if (count >= 3) {
       setErrorMessage("Socials cannot exceed the maximum limit of 3");

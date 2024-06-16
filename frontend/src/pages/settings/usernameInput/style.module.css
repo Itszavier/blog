@@ -79,3 +79,14 @@
 .error_message svg {
   margin-left: 5px;
 }
+.available_input {
+  color: var(--primaryButtonColor);
+}
+
+.warning {
+  color: rgb(235, 74, 0);
+}
+
+.unavailable_alert {
+  color: rgb(228, 45, 45);
+}
