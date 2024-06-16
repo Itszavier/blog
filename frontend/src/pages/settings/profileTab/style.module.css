@@ -104,41 +104,26 @@
 }
 .button {
   padding: 10px 12px;
-  background-color: var(--primaryButtonColor);
+  background-color: var(--secondaryButtonColor);
   border: none;
   width: 120px;
   border-radius: 10px;
   cursor: pointer;
+  color: var(--primaryFontColor);
 }
 
-.username_input_wrapper {
-  display: flex;
-  align-items: center;
-  width: 340px; /* Adjust as needed */
-  font-size: 18.19px;
-  background-color: var(--secondary);
-  border-radius: 8px;
+.btn_active {
+  background-color: var(--primaryButtonColor);
 }
 
-.username_input_wrapper span {
-  margin-right: 4px;
-}
-
-.username_input_url {
-  padding: 5px;
-  flex: 1;
+.error_message {
+  font-weight: normal;
+  font-size: 14px;
+  color: #a84a4a;
   display: flex;
   align-items: center;
 }
 
-.username_input {
-  flex: 1;
-}
-
-.username_input:focus {
-  outline: none;
-}
-
-.username_input_wrapper:focus-within {
-  outline: 1px solid var(--primaryButtonColor);
+.error_message svg {
+  margin-left: 5px;
 }

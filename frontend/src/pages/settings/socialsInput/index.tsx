@@ -1,6 +1,6 @@
 /** @format */
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import style from "./style.module.css";
 import { GoAlertFill } from "react-icons/go";
 import { IoAddCircle } from "react-icons/io5";
@@ -21,6 +21,10 @@ export default function SocialInput({
   const [url, setUrl] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [count, setCount] = useState<number>(0);
+
+  useEffect(() => {
+    console.log("removed", socials);
+  }, [socials]);
 
   const handleAdd = () => {
     if (errorMessage) {
@@ -49,10 +53,12 @@ export default function SocialInput({
     setErrorMessage(error);
   };
 
-  const handleRemove = (socialIndex: number) => {
+  const handleRemove = (removedValue: string) => {
     setCount((prev) => prev - 1);
-    if (onSocialRemove) return onSocialRemove(socials[socialIndex]);
-    setSocials((prev) => prev.filter((_, index) => index !== socialIndex));
+    if (onSocialRemove) onSocialRemove(removedValue);
+    setSocials((prev) => {
+      return prev.filter((value) => value !== removedValue);
+    });
   };
 
   return (
@@ -86,7 +92,7 @@ export default function SocialInput({
 
       <div className={style.socials}>
         {socials.map((social, index) => (
-          <Social key={index} social={social} handleRemove={() => handleRemove(index)} />
+          <Social key={index} social={social} handleRemove={() => handleRemove(social)} />
         ))}
       </div>
     </div>
