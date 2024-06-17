@@ -40,7 +40,7 @@ export default function PostMenuDropdown({ post }: IPostMenuDropdownProps) {
           <Link
             onClick={() => setShowMenu(false)}
             className={style.link}
-            to={`/editor/${post._id}`}
+            to={`/dashboard/editor/${post._id}`}
           >
             visit
           </Link>

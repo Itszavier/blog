@@ -3,25 +3,22 @@
 .container {
   display: flex;
   width: 100%;
-  height: 100vh;
   flex-direction: column;
-  background-color: var(--accent);
+  position: relative;
+  background-color: var(--primary);
 }
 
 .header {
-  position: fixed;
+  position: sticky;
   top: 0;
   right: 0;
   width: 100%;
-  background-color: #eee;
   z-index: 1;
-  background-color: var(--accent);
   display: flex;
   flex-direction: column;
 }
 
 .content {
-  margin-top: 97px;
   width: 100%;
   height: 100%;
   overflow-y: auto;
@@ -30,11 +27,9 @@
 .control {
   width: 100%;
   height: 50%;
-  padding: 0px 9px;
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 0px 35px;
   justify-content: flex-end;
   /*border-bottom: 1px solid var(--borderColor); */
 }
@@ -51,12 +46,6 @@
 .save_btn {
   background-color: var(--tertiary);
   width: 80px;
-}
-
-.wrapper {
-  width: 55%;
-  height: 400px;
-  margin: auto;
 }
 
 .back_btn {
@@ -104,8 +93,6 @@
 .meta_container {
   flex-direction: column;
   display: flex;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
   background-color: var(--tertiary);
   padding: 10px;
 }
@@ -136,9 +123,8 @@
 }
 
 .middle_content {
+  width: 60%;
   margin: auto;
-  margin-top: 25px;
-  width: 65%;
 }
 
 @media screen and (min-width: 100px) and (max-width: 600px) {

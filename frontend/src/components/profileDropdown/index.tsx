@@ -58,7 +58,7 @@ export default function ProfileDropdown() {
           <Link id={"dropdown"} onClick={hideMenu} to={`/profile/${user.username}`}>
             profile
           </Link>
-          <Link id={"dropdown"} onClick={hideMenu} to="/settings">
+          <Link id={"dropdown"} onClick={hideMenu} to="/dashboard">
             settings
           </Link>
           <button onClick={handleLogout} className={style.logout_btn}>

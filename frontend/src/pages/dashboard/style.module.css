@@ -1,0 +1,31 @@
+/** @format */
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.body {
+  width: 100%;
+  border-radius: 2px;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  background-color: var(--primary);
+  color: var(--primaryFontColor);
+  scroll-behavior: smooth;
+}
+
+.body::-webkit-scrollbar {
+  width: 12px; /* Adjust the width if necessary */
+  background-color: transparent;
+}
+
+.body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.body::-webkit-scrollbar-thumb {
+  background: transparent; /* Adjust the thumb color if needed */
+  border-radius: 10px; /* Optional: round the scrollbar thumb */
+  background-color: transparent;
+}

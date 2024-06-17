@@ -1,21 +1,16 @@
 /** @format */
 import { EditorContent, useEditor } from "@tiptap/react";
 import style from "./style.module.css";
-import { StarterKit } from "@tiptap/starter-kit";
-import TextAlign from "@tiptap/extension-text-align";
-import Placeholder from "@tiptap/extension-placeholder";
-import Toolbar from "../../components/EditorToolbar";
-import { useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { serverAxios } from "../../api/axios";
-import { IPost } from "../../api/types";
-import ProfileDropdown from "../../components/profileDropdown";
-import SubmitModal from "../../components/submitModal";
-import { useModal } from "../../context/modalContext";
-import { Loading } from "../../components/loading";
+import Toolbar from "../../../components/EditorToolbar";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import ProfileDropdown from "../../../components/profileDropdown";
+import { Loading } from "../../../components/loading";
 import "./prosemirror.css";
-const placeholder: string =
-  "Start writing your article here. Use the toolbar above for formatting and paste your content if needed...";
+import useFetch from "../../../hooks/useFetch";
+import { extenions } from "../../../tipTap.config";
+import { IPost } from "../../../api/types";
+import useAutoSave from "../../../hooks/useAutoSave";
 
 interface IPostInitailData {
   title: string;
@@ -26,61 +21,42 @@ interface IPostInitailData {
   };
 }
 
+async function handleAutoSave(unSavedData: IPostInitailData) {
+  console.log("save", unSavedData);
+}
+
 export default function EditorPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [post, setPost] = useState<IPostInitailData>({
+  // Use state with an initial function
+  const [post, setPost] = useState<IPostInitailData>(() => ({
     title: "",
     subtitle: "",
     content: {
       html: "",
       text: "",
     },
+  }));
+
+  // Use the fetch hook
+  const { isPending } = useFetch<IPost>(`/posts/fetch/editable/${id}`, {
+    key: "post",
+    onfetch: (data) => {
+      console.log("saved handle save function", data);
+      setPost({ title: data.title, subtitle: data.subtitle, content: data.content });
+    },
   });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    serverAxios
-      .get(`/posts/fetch/editable/${id}`, {
-        signal: abortController.signal,
-      })
-      .then((response) => {
-        console.log(response.data);
-        setPost(response.data.post);
-      })
-      .catch((error) => {
-        setError(error.response);
-        console.log("error log", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-
-    console.log(post);
-
-    return () => {
-      abortController.abort();
-    };
-  }, []);
+  const { isSaving } = useAutoSave<IPostInitailData>(post, {
+    onSave: handleAutoSave,
+    debounceDelay: 600,
+  });
 
   const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Placeholder.configure({
-        placeholder,
-      }),
-      TextAlign.configure({
-        types: ["heading", "paragraph"],
-        alignments: ["left", "center", "right"],
-      }),
-    ],
+    extensions: extenions,
     autofocus: true,
-
     onUpdate(updatedEditor) {
       const html = updatedEditor.editor.getHTML();
-
       setPost((prev) => {
         return {
           ...prev!,
@@ -95,10 +71,10 @@ export default function EditorPage() {
   });
 
   useEffect(() => {
-    if (editor) {
-      editor.commands.setContent(post!.content.html);
+    if (!isPending) {
+      editor?.commands.setContent(post.content.html, false);
     }
-  }, [post?.content.html, editor]);
+  }, [isPending]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPost((prev) => {
@@ -106,22 +82,18 @@ export default function EditorPage() {
     });
   };
 
-  // Return early if editor is not available yet
-  if (!editor) return null;
+  if (isPending) return <Loading />;
 
-  if (loading) return <Loading />;
+  if (!editor) return null;
 
   return (
     <div className={style.container}>
       <div className={style.header}>
         <div className={style.control}>
           <button className={style.back_btn} onClick={() => navigate(-1)}>
-            <span className={style.back_btn_text}>Narrate</span>
           </button>
           <div className={style.left_container}>
-            <span>
-              {/* {isSaving ? "saving" : `lasted saved ${moment(lastSaved).fromNow()}`}}*/}
-            </span>
+            <span>{isSaving ? "saving" : `done`}</span>
             <button
               onClick={(e) => navigate("/publish", { state: post })}
               className={`${style.control_btn} ${style.publish_btn}`}

@@ -6,7 +6,7 @@ import { ClipLoader, HashLoader } from "react-spinners";
 export function Loading() {
   return (
     <div className={style.container}>
-      <HashLoader loading size={"100"} color="#1e90ff" />
+      <HashLoader loading size={"100px"} color="#1e90ff" />
     </div>
   );
 }
