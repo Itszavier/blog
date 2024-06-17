@@ -1,34 +1,69 @@
 /** @format */
-import { useEditor } from "@tiptap/react";
-import TiptapEditor from "../../components/editor";
+import { EditorContent, useEditor } from "@tiptap/react";
 import style from "./style.module.css";
 import { StarterKit } from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
 import Toolbar from "../../components/EditorToolbar";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { serverAxios } from "../../api/axios";
 import { IPost } from "../../api/types";
 import ProfileDropdown from "../../components/profileDropdown";
 import SubmitModal from "../../components/submitModal";
 import { useModal } from "../../context/modalContext";
 import { Loading } from "../../components/loading";
-import useAutosave from "../../hooks/useAutoSave";
-import moment from "moment";
-
+import "./prosemirror.css";
 const placeholder: string =
   "Start writing your article here. Use the toolbar above for formatting and paste your content if needed...";
+
+interface IPostInitailData {
+  title: string;
+  subtitle: string;
+  content: {
+    html: string;
+    text: string;
+  };
+}
 
 export default function EditorPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { closeModal, isOpen, openModal } = useModal("publish");
-  const [post, setPost] = useState<IPost | null>(null);
+  const [post, setPost] = useState<IPostInitailData>({
+    title: "",
+    subtitle: "",
+    content: {
+      html: "",
+      text: "",
+    },
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const contentRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const abortController = new AbortController();
+    serverAxios
+      .get(`/posts/fetch/editable/${id}`, {
+        signal: abortController.signal,
+      })
+      .then((response) => {
+        console.log(response.data);
+        setPost(response.data.post);
+      })
+      .catch((error) => {
+        setError(error.response);
+        console.log("error log", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
+    console.log(post);
+
+    return () => {
+      abortController.abort();
+    };
+  }, []);
 
   const editor = useEditor({
     extensions: [
@@ -44,132 +79,37 @@ export default function EditorPage() {
     autofocus: true,
 
     onUpdate(updatedEditor) {
-      if (
-        contentRef.current &&
-        contentRef.current.scrollHeight > contentRef.current.clientHeight
-      ) {
-        contentRef.current.scrollIntoView();
-      }
-
       const html = updatedEditor.editor.getHTML();
-      const text = updatedEditor.editor.getText();
 
       setPost((prev) => {
         return {
           ...prev!,
           content: {
+            text: prev.content.text,
             html,
-            text,
           },
         };
       });
     },
-    content: post?.content.html,
+    content: post.content.html,
   });
 
   useEffect(() => {
-    const abortController = new AbortController();
-    serverAxios
-      .get(`/posts/fetch/editable/${id}`, {
-        signal: abortController.signal,
-      })
-      .then((response) => {
-        console.log(response.data);
-        setPost(response.data.post);
-      })
-      .catch((error) => {
-        setError(error.response.data.message);
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-
-    console.log(post);
-
-    return () => {
-      abortController.abort();
-    };
-  }, []);
+    if (editor) {
+      editor.commands.setContent(post!.content.html);
+    }
+  }, [post?.content.html, editor]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPost((prev) => {
       return { ...prev!, [e.target.name]: e.target.value };
     });
   };
-  /*
-  const handleSave = async (updatedPost: IPost) => {
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        const formData = new FormData();
-        // Title is required so we will not save it if empty.
-        if (updatedPost.title.length > 0) {
-          formData.append("title", updatedPost.title);
-        }
-
-        formData.append("subtitle", updatedPost.subtitle);
-
-        formData.append("tags", JSON.stringify(updatedPost.tags));
-
-        formData.append("content", JSON.stringify(updatedPost.content));
-
-        const response = await serverAxios.put(`/posts/save/${post?._id}`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        console.log(response.data);
-        resolve();
-      } catch (error: any) {
-        console.log("save error", error.response);
-        reject(error);
-      }
-    });
-  };
-
-  const { isSaving, lastSaved } = useAutosave(post, {
-    onSave: handleSave,
-    debounceDelay: 4000,
-  });
-  */
 
   // Return early if editor is not available yet
   if (!editor) return null;
 
   if (loading) return <Loading />;
-
-  if (error) {
-    return (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "red",
-        }}
-      >
-        {error}
-      </div>
-    );
-  }
-
-  if (!post)
-    return (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "red",
-        }}
-      >
-        Failed to load post
-      </div>
-    );
 
   return (
     <div className={style.container}>
@@ -183,10 +123,10 @@ export default function EditorPage() {
               {/* {isSaving ? "saving" : `lasted saved ${moment(lastSaved).fromNow()}`}}*/}
             </span>
             <button
-              onClick={() => openModal()}
+              onClick={(e) => navigate("/publish", { state: post })}
               className={`${style.control_btn} ${style.publish_btn}`}
             >
-              Publish settings
+              Publish Article
             </button>
 
             <ProfileDropdown />
@@ -194,7 +134,7 @@ export default function EditorPage() {
         </div>
         <Toolbar editor={editor} />
       </div>
-      <div ref={contentRef} className={style.content}>
+      <div className={style.content}>
         <div className={style.middle_content}>
           <div className={style.meta_container}>
             <div className={style.input_wrapper}>
@@ -217,18 +157,16 @@ export default function EditorPage() {
               />
             </div>
           </div>
-          <TiptapEditor editor={editor} />
+          <div className="editor_container">
+            <EditorContent
+              value={"fwdfdfasfa"}
+              placeholder="this is the placholder"
+              editor={editor}
+              className={"tiptap-content"}
+            />
+          </div>
         </div>
       </div>
-
-      <SubmitModal
-        post={post}
-        setPost={setPost}
-        isOpen={isOpen}
-        handleClose={() => {
-          closeModal();
-        }}
-      />
     </div>
   );
 }
