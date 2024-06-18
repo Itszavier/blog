@@ -6,6 +6,7 @@ import ProfileTab from "./profileTab";
 import style from "./style.module.css";
 import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import SideNav from "./sideNav";
+import Overview from "./overview";
 
 export default function Settings() {
   const { setUser } = useAuth();
@@ -25,7 +26,7 @@ export default function Settings() {
       <SideNav />
       <div className={style.body}>
         <Routes>
-          <Route path="/" element={<Navigate to="profile" />} />
+          <Route path="/" element={<Overview />} />
           <Route path="profile" element={<ProfileTab />} />
           <Route path="privacy" element={<h3>Privacy settings, Is in develop m</h3>} />
           <Route path="/editor/:postId" element={<Editor />} />

@@ -13,12 +13,12 @@ type NavigationLink = {
 
 const navigationLinks = [
   {
-    path: "/",
-    label: "overview",
+    path: "/dashboard",
+    label: "Overview",
     icon: "list",
   },
   {
-    path: "/privacy",
+    path: "/dashboard/privacy",
     label: "Privacy",
     icon: "security",
   },
@@ -26,30 +26,26 @@ const navigationLinks = [
     label: "Account",
     icon: "account_circle", // Icon for Account category
     subLinks: [
-      { path: "/membership", label: "Membership" },
-      { path: "/billing", label: "Billing" },
-      { path: "/settings", label: "Settings" },
+      { path: "/dashboard/membership", label: "Membership" },
+      { path: "/dashboard/billing", label: "Billing" },
+      { path: "/dashboard/settings", label: "Settings" },
     ],
   },
-  { path: "/logout", label: "Logout", icon: "logout", className: "logout_btn" },
 ];
 
 export default function SideNav() {
   return (
     <div className={styles.sidebar}>
-      <div className={styles.logo}>Narrate</div>
+      <div className={styles.logo}>
+        <h3 className={styles.logo_text}>Narrate</h3>
+      </div>
 
       <nav className={styles.nav}>
         {navigationLinks.map((link) => (
           <div key={link.path || link.label}>
-            {" "}
-            {/* Use path or label for key */}
             {link.subLinks ? (
               <>
-                <NavLink
-                  to="#" // Prevent default anchor behavior for categories
-                  className={styles.navLink}
-                >
+                <NavLink to="#" className={styles.navLink}>
                   <span className="material-icons">{link.icon}</span>
                   {link.label}
                 </NavLink>
@@ -57,18 +53,26 @@ export default function SideNav() {
                   {link.subLinks.map((subLink) => (
                     <li key={subLink.path}>
                       <NavLink
-                        style={{ marginLeft: "30px" }}
                         to={subLink.path}
-                        className={styles.subLink}
+                        className={({ isActive }) =>
+                          isActive
+                            ? `${styles.subLink} ${styles.activeNavLink}`
+                            : styles.subLink
+                        }
                       >
-                        {subLink.label}
+                        <span style={{ marginLeft: "30px" }}>{subLink.label}</span>
                       </NavLink>
                     </li>
                   ))}
                 </ul>
               </>
             ) : (
-              <NavLink to={link.path} className={styles.navLink}>
+              <NavLink
+                to={link.path}
+                className={({ isActive }) =>
+                  isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink
+                }
+              >
                 <span className="material-icons">{link.icon}</span>
                 {link.label}
               </NavLink>

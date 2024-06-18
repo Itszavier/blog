@@ -9,13 +9,13 @@
 }
 
 .header {
-  position: sticky;
   top: 0;
   right: 0;
   width: 100%;
   z-index: 1;
   display: flex;
   flex-direction: column;
+  margin-bottom: 9px;
 }
 
 .content {
@@ -95,6 +95,7 @@
   display: flex;
   background-color: var(--tertiary);
   padding: 10px;
+   background-color: var(--blue-100);
 }
 
 .input {
@@ -104,6 +105,7 @@
   border: none;
   outline: none;
   background-color: transparent;
+  outline: none;
 }
 .title_input {
   font-size: 1.6rem;
@@ -123,7 +125,7 @@
 }
 
 .middle_content {
-  width: 60%;
+  width: 65%;
   margin: auto;
 }
 
