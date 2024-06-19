@@ -2,11 +2,14 @@
 import { serverAxios } from "../../api/axios";
 import Editor from "../editor";
 import { useAuth } from "../../context/auth";
-import ProfileTab from "./profileTab";
+import ProfileTab from "./settings";
 import style from "./style.module.css";
 import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import SideNav from "./sideNav";
 import Overview from "./overview";
+import Notifcations from "./notifcations";
+
+
 
 export default function Settings() {
   const { setUser } = useAuth();
@@ -27,8 +30,9 @@ export default function Settings() {
       <div className={style.body}>
         <Routes>
           <Route path="/" element={<Overview />} />
+          <Route path="/notifcations" element={<Notifcations />} />
           <Route path="/settings" element={<ProfileTab />} />
-          <Route path="privacy" element={<h3>Privacy settings, Is in develop m</h3>} />
+
           <Route
             path="membership"
             element={<h3>Membership Settings, Is in development</h3>}

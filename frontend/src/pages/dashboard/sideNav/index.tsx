@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import style from "./style.module.css";
 import google from "../../../assets/google.png";
 import { create } from "lodash";
+import { useAuth } from "../../../context/auth";
 type NavigationLink = {
   path: string;
   label: string;
@@ -35,14 +36,15 @@ const navigationLinks = [
 ];
 
 export default function SideNav() {
+  const auth = useAuth();
   return (
     <div className={style.sidebar}>
       <header className={style.logo}>
         <span className={style.image}>
-          <img src={google} alt="" />
+          <img src={auth.user?.profileImage.url} alt="" />
         </span>
         <div className={`${style.text} ${style.logo_text}`}>
-          <span className={style.name}>Codinglab</span>
+          <span className={style.name}>{auth.user?.name}</span>
           <span className={style.profession}>Web developer</span>
         </div>
       </header>
@@ -56,7 +58,7 @@ export default function SideNav() {
           </li>
 
           <li className={style.navlist_item}>
-            <NavLink to="#" className={style.navlink}>
+            <NavLink to="/dashboard/notifcations" className={style.navlink}>
               <i className="bx bxs-bell"></i>
               <span className="">notifications</span>
             </NavLink>
