@@ -1,6 +1,6 @@
 /** @format */
 import { serverAxios } from "../../api/axios";
-import Editor from "./editor";
+import Editor from "../editor";
 import { useAuth } from "../../context/auth";
 import ProfileTab from "./profileTab";
 import style from "./style.module.css";
@@ -27,16 +27,19 @@ export default function Settings() {
       <div className={style.body}>
         <Routes>
           <Route path="/" element={<Overview />} />
-          <Route path="profile" element={<ProfileTab />} />
+          <Route path="/settings" element={<ProfileTab />} />
           <Route path="privacy" element={<h3>Privacy settings, Is in develop m</h3>} />
-          <Route path="/editor/:postId" element={<Editor />} />
           <Route
             path="membership"
             element={<h3>Membership Settings, Is in development</h3>}
           />
-          {/* Add more routes here as needed */}
         </Routes>
       </div>
     </div>
   );
 }
+
+/*
+
+
+*/

@@ -1,23 +1,22 @@
 /** @format */
 import { EditorContent, useEditor } from "@tiptap/react";
 import style from "./style.module.css";
-import Toolbar from "../../../components/EditorToolbar";
+import Toolbar from "../../components/EditorToolbar";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ProfileDropdown from "../../../components/profileDropdown";
-import { Loading } from "../../../components/loading";
+import ProfileDropdown from "../../components/profileDropdown";
+import { Loading } from "../../components/loading";
 import "./prosemirror.css";
-import useFetch from "../../../hooks/useFetch";
-import { extenions } from "../../../tipTap.config";
-import { IPost } from "../../../api/types";
-import useAutoSave from "../../../hooks/useAutoSave";
+import useFetch from "../../hooks/useFetch";
+import { extenions } from "../../tipTap.config";
+import { IPost } from "../../api/types";
+import useAutoSave from "../../hooks/useAutoSave";
 
 interface IPostInitailData {
   title: string;
   subtitle: string;
   content: {
     html: string;
-    text: string;
   };
 }
 
@@ -26,7 +25,7 @@ async function handleAutoSave(unSavedData: IPostInitailData) {
 }
 
 export default function EditorPage() {
-  const { id } = useParams();
+  const { postId } = useParams();
   const navigate = useNavigate();
   // Use state with an initial function
   const [post, setPost] = useState<IPostInitailData>(() => ({
@@ -34,12 +33,11 @@ export default function EditorPage() {
     subtitle: "",
     content: {
       html: "",
-      text: "",
     },
   }));
 
   // Use the fetch hook
-  const { isPending } = useFetch<IPost>(`/posts/fetch/editable/${id}`, {
+  const { isPending } = useFetch<IPost>(`/posts/fetch/editable/${postId}`, {
     key: "post",
     onfetch: (data) => {
       console.log("saved handle save function", data);
@@ -61,7 +59,6 @@ export default function EditorPage() {
         return {
           ...prev!,
           content: {
-            text: prev.content.text,
             html,
           },
         };
@@ -72,7 +69,7 @@ export default function EditorPage() {
 
   useEffect(() => {
     if (!isPending) {
-      editor?.commands.setContent(post.content.html, false);
+      editor?.commands.setContent(post.content.html);
     }
   }, [isPending]);
 
@@ -90,8 +87,7 @@ export default function EditorPage() {
     <div className={style.container}>
       <div className={style.header}>
         <div className={style.control}>
-          <button className={style.back_btn} onClick={() => navigate(-1)}>
-          </button>
+          <button className={style.back_btn} onClick={() => navigate(-1)}></button>
           <div className={style.left_container}>
             <span>{isSaving ? "saving" : `done`}</span>
             <button
@@ -130,12 +126,7 @@ export default function EditorPage() {
             </div>
           </div>
           <div className="editor_container">
-            <EditorContent
-              value={"fwdfdfasfa"}
-              placeholder="this is the placholder"
-              editor={editor}
-              className={"tiptap-content"}
-            />
+            <EditorContent editor={editor} className={"tiptap-content"} />
           </div>
         </div>
       </div>

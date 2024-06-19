@@ -14,7 +14,6 @@ export interface IPost {
   author: mongoose.Types.ObjectId;
   content: {
     html: string;
-    text: string;
   };
 
   heroImage: {
@@ -22,6 +21,8 @@ export interface IPost {
     url: string;
     id: string;
   };
+  likes: Schema.Types.ObjectId[];
+  dislikes: Schema.Types.ObjectId[];
   handle: string;
   createdAt: Date;
   updatedAt: Date;
@@ -41,9 +42,6 @@ const postSchema = new Schema<IPostSchema>({
     required: true,
   },
   subtitle: {
-    type: SchemaTypes.String,
-  },
-  description: {
     type: SchemaTypes.String,
   },
   tags: {
@@ -105,9 +103,15 @@ const postSchema = new Schema<IPostSchema>({
     default: () => generateUniqueId({ excludeSymbols: unsupportedSymbols, length: 7 }),
   },
 
-  /* likes: {
-    type: [schemaTypes.ObjectId],
-  }*/
+  likes: {
+    type: [SchemaTypes.ObjectId],
+    default: [],
+  },
+
+  dislikes: {
+    type: [SchemaTypes.ObjectId],
+    default: [],
+  },
 });
 
 // Creating the Mongoose model

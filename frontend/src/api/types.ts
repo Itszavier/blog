@@ -19,7 +19,6 @@ export interface IPost {
   };
   content: {
     html: string;
-    text: string;
   };
 
   heroImage?: {
@@ -27,6 +26,8 @@ export interface IPost {
     url: string;
     id: string;
   };
+  likes: string[];
+  dislikes: string[];
   handle: string;
   createdAt: Date;
   updatedAt: Date;

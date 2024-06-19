@@ -5,7 +5,8 @@
   width: 100%;
   flex-direction: column;
   position: relative;
-  background-color: var(--primary);
+  background-color: var(--secondary-color-light);
+  border-radius: 10px;
 }
 
 .header {
@@ -93,9 +94,8 @@
 .meta_container {
   flex-direction: column;
   display: flex;
-  background-color: var(--tertiary);
+  background-color: var(--secondary-color-light);
   padding: 10px;
-   background-color: var(--blue-100);
 }
 
 .input {
@@ -125,8 +125,6 @@
 }
 
 .middle_content {
-  width: 65%;
-  margin: auto;
 }
 
 @media screen and (min-width: 100px) and (max-width: 600px) {

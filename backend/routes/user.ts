@@ -35,7 +35,7 @@ const userSelectedFields = [
 
 type SelectedUserFields = "follow" | "user";
 
-const getSelectedUserFields = (type: SelectedUserFields) => {
+export const getSelectedUserFields = (type: SelectedUserFields) => {
   if (type === "follow") {
     return userSelectedFields
       .filter((field) => field !== "followers" && field !== "following")
@@ -100,6 +100,7 @@ router.get("/", async (req, res, next) => {
 
     res.status(200).json({ users });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 });

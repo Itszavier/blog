@@ -11,6 +11,7 @@ import generateUniqueId from "generate-unique-id";
 import { heroImageUpload } from "../multer/file";
 import { errorMessage } from "../middleware/error";
 import uploadImageFile from "../utils";
+import { getSelectedUserFields } from "./user";
 
 const router = Router();
 
@@ -122,6 +123,7 @@ router.get("/fetch/user/:id", ensureAuthenticated, async (req, res, next) => {
 
     res.status(200).json({ message: "", posts });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 });
@@ -147,6 +149,17 @@ router.get("/fetch/editable/:id", ensureAuthenticated, async (req, res, next) =>
       message: "",
       post,
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/posts/drafts", ensureAuthenticated, async (req, res, next) => {
+  try {
+    const drafts = await PostModel.find({ author: req.user?._id, published: false })
+      .populate("author", getAuthorFields())
+      .exec();
+    res.status(200).json({ message: "Here are your drafts", drafts });
   } catch (error) {
     next(error);
   }
@@ -388,5 +401,84 @@ router.post(
     res.status(200).json({ message: "updated post hero image", updated: saved });
   }
 );
+
+router.put("/like/:postId", ensureAuthenticated, async (req, res, next) => {
+  try {
+    const { postId } = req.params;
+
+    const post = await PostModel.findOne({ _id: postId });
+
+    if (!post) {
+      console.log("post was not found");
+      return next(errorMessage(404, "Could not find a post with this Id"));
+    }
+
+    if (post.likes.includes(req.user?._id as any)) {
+      console.log("User already like this post");
+      return next(errorMessage(404, "You already like This post"));
+    }
+
+    if (post.dislikes.includes(req.user?._id as any)) {
+      // remove dislike
+      await PostModel.findByIdAndUpdate(postId, {
+        $pull: { dislikes: req.user?._id },
+      });
+    }
+
+    const updatedPost = await PostModel.findByIdAndUpdate(postId, {
+      $push: { likes: req.user?._id },
+    });
+
+    await updatedPost!.populate("author", getAuthorFields());
+
+    res.status(200).json({
+      message: "successfuly updated post",
+      post: updatedPost,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+router.put("/dislike/:postId", ensureAuthenticated, async (req, res, next) => {
+  try {
+    const { postId } = req.params;
+
+    const post = await PostModel.findOne({ _id: postId });
+
+    if (!post) {
+      console.log("post was not found");
+      return next(errorMessage(404, "Could not find a post with this Id"));
+    }
+
+    if (post.dislikes.includes(req.user?._id as any)) {
+      console.log("User already like this post");
+      return next(errorMessage(404, "You already dislikes This post"));
+    }
+
+    if (post.likes.includes(req.user?._id as any)) {
+      // remove like
+      console.log("removing like");
+      await PostModel.findByIdAndUpdate(postId, {
+        $pull: { likes: req.user?._id },
+      });
+    }
+
+    const updatedPost = await PostModel.findByIdAndUpdate(postId, {
+      $push: { dislike: req.user?._id },
+    });
+
+    await updatedPost!.populate("author", getAuthorFields());
+
+    res.status(200).json({
+      message: "successfuly updated post",
+      post: updatedPost,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
 
 export default router;

@@ -1,8 +1,9 @@
 /** @format */
 
 import { NavLink } from "react-router-dom";
-import styles from "./style.module.css";
-
+import style from "./style.module.css";
+import google from "../../../assets/google.png";
+import { create } from "lodash";
 type NavigationLink = {
   path: string;
   label: string;
@@ -14,7 +15,7 @@ type NavigationLink = {
 const navigationLinks = [
   {
     path: "/dashboard",
-    label: "Overview",
+    label: "Dashboard",
     icon: "list",
   },
   {
@@ -35,56 +36,59 @@ const navigationLinks = [
 
 export default function SideNav() {
   return (
-    <div className={styles.sidebar}>
-      <div className={styles.logo}>
-        <h3 className={styles.logo_text}>Narrate</h3>
+    <div className={style.sidebar}>
+      <header className={style.logo}>
+        <span className={style.image}>
+          <img src={google} alt="" />
+        </span>
+        <div className={`${style.text} ${style.logo_text}`}>
+          <span className={style.name}>Codinglab</span>
+          <span className={style.profession}>Web developer</span>
+        </div>
+      </header>
+      <div className={style.list_container}>
+        <ul className={style.navlist}>
+          <li className={style.navlist_item}>
+            <NavLink to="/dashboard" className={style.navlink}>
+              <i className="bx bxs-dashboard"></i>
+              <span className="">Dashboard</span>
+            </NavLink>
+          </li>
+
+          <li className={style.navlist_item}>
+            <NavLink to="#" className={style.navlink}>
+              <i className="bx bxs-bell"></i>
+              <span className="">notifications</span>
+            </NavLink>
+          </li>
+          <li className={style.navlist_item}>
+            <NavLink to="/dashboard/settings" className={style.navlink}>
+              <i className="bx bxs-cog"></i>
+              <span className="">settings</span>
+            </NavLink>
+          </li>
+          <li className={style.navlist_item}>
+            <NavLink to="#" className={style.navlink}>
+              <i className="bx bxs-bar-chart-alt-2"></i>
+              <span className="">income</span>
+            </NavLink>
+          </li>
+        </ul>
       </div>
-
-      <nav className={styles.nav}>
-        {navigationLinks.map((link) => (
-          <div key={link.path || link.label}>
-            {link.subLinks ? (
-              <>
-                <NavLink to="#" className={styles.navLink}>
-                  <span className="material-icons">{link.icon}</span>
-                  {link.label}
-                </NavLink>
-                <ul className={styles.subLinkList}>
-                  {link.subLinks.map((subLink) => (
-                    <li key={subLink.path}>
-                      <NavLink
-                        to={subLink.path}
-                        className={({ isActive }) =>
-                          isActive
-                            ? `${styles.subLink} ${styles.activeNavLink}`
-                            : styles.subLink
-                        }
-                      >
-                        <span style={{ marginLeft: "30px" }}>{subLink.label}</span>
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            ) : (
-              <NavLink
-                to={link.path}
-                className={({ isActive }) =>
-                  isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink
-                }
-              >
-                <span className="material-icons">{link.icon}</span>
-                {link.label}
-              </NavLink>
-            )}
-          </div>
-        ))}
-      </nav>
-
-      <button className={styles.logoutBtn}>
-        logout
-        <span className="material-icons"></span>
-      </button>
+      <div className={style.footer}>
+        <button className={`${style.logoutBtn} ${style.exit_btn}`}>
+          <i className="bx bxs-exit"></i>
+          Exit Dashboard
+        </button>
+        <button className={`${style.logoutBtn} ${style.create_btn}`}>
+          <i className="bx bxs-plus-circle"></i>
+          Create
+        </button>
+        <button className={`${style.logoutBtn}`}>
+          <i className={`bx bx-log-out  ${style.icon}`}></i>
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

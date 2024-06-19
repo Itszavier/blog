@@ -15,7 +15,7 @@
 .welcome_section {
   padding: 20px;
   font-size: 1.3rem;
-  background-color: var(--secondary);
+  background-color: var(--secondary-color-light);
   border-radius: 8px;
   justify-content: center;
   min-height: 250px;
@@ -32,15 +32,15 @@ p {
 .activity_summary {
   display: flex;
   justify-content: space-around;
-  padding: 20px;
+
   border-radius: 8px;
-  color: #333;
+  color: var(--text-color-primary-light);
   gap: 80px;
 }
 
 .summary_item {
   /* styles for each summary item */
-  background-color: var(--tertiary);
+  background-color: var(--secondary-color-light);
   border-radius: 10px;
   color: var(--primaryFontColor);
   padding: 10px;
@@ -108,11 +108,16 @@ p {
   margin: 5px;
 }
 .recent_post_item {
-  background-color: #333;
+  background-color: var(--secondary-color-light);
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   width: 310px;
+  cursor: pointer;
+}
+
+.recent_post_item:hover {
+  scale: 2px;
 }
 
 .recent_post_item button {
@@ -122,6 +127,7 @@ p {
   border-radius: 8px;
   width: 120px;
   cursor: pointer;
+  background-color: var(--primaryButtonColor);
 }
 
 .button_wrapper {
@@ -146,4 +152,15 @@ p {
 .recent_posts img {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+}
+
+.recent_post_footer {
+  display: flex;
+  padding: 10px;
+  gap: 8px;
+}
+.recent_post_footer p {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }

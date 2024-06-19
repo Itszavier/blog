@@ -1,12 +1,34 @@
 /** @format */
 
+import { useNavigate } from "react-router-dom";
+import { IPost } from "../../../api/types";
+import { Loading } from "../../../components/loading";
+import { useAuth } from "../../../context/auth";
+import useFetch from "../../../hooks/useFetch";
 import style from "./style.module.css";
+import { IoHeart, IoHeartDislike } from "react-icons/io5";
+import { MdComment } from "react-icons/md";
 
 export default function Overview() {
+  const auth = useAuth();
+
+  const { isPending, data } = useFetch<IPost[]>(`/posts/fetch/user/${auth.user!._id}`, {
+    key: "posts",
+  });
+
+  const recentPosts = data?.map((post) => ({
+    _id: post._id,
+    title: post.title,
+    excerpt: post.subtitle,
+    handle: post.handle,
+  }));
+
+  if (isPending) return <Loading />;
+
   return (
     <div className={style.container}>
       <div className={style.welcome_section}>
-        <h2>Welcome, [User's Name]!</h2>
+        <h2>Welcome, {auth.user?.name}!</h2>
         <p>Here’s a summary of your activity on the platform.</p>
       </div>
 
@@ -28,66 +50,69 @@ export default function Overview() {
           <p>0</p>
         </div>
       </div>
+      <ActivitySummary title="Drafts" posts={recentPosts!} />
 
-      <ActivitySummary />
-
-      <div className={style.shadow_bottom}></div>
     </div>
   );
 }
 
 interface Post {
-  id: number;
+  _id: string;
   title: string;
   excerpt: string;
+  handle: string;
 }
 
-interface Comment {
-  id: number;
-  excerpt: string;
-  postTitle: string;
+interface ActivitySummaryProps {
+  title: string;
+  posts: Post[];
 }
 
-const ActivitySummary: React.FC = () => {
-  const posts: Post[] = [
-    { id: 1, title: "Post Title 1", excerpt: "This is an excerpt of post 1" },
-    { id: 2, title: "Post Title 2", excerpt: "This is an excerpt of post 2" },
-    // Add more posts as needed
-  ];
-
-  const comments: Comment[] = [
-    { id: 1, excerpt: "This is an excerpt of comment 1", postTitle: "Post Title 1" },
-    { id: 2, excerpt: "This is an excerpt of comment 2", postTitle: "Post Title 2" },
-    // Add more comments as needed
-  ];
-
-  const editPost = (postId: number): void => {
+function ActivitySummary(props: ActivitySummaryProps) {
+  const navigate = useNavigate();
+  const editPost = (postId: string): void => {
+    navigate(`/dashboard/editor/${postId}`);
     console.log("Editing post", postId);
   };
 
-  const unpublishPost = (postId: number): void => {
+  const unpublishPost = (postId: string): void => {
     console.log("Unpublishing post", postId);
   };
 
   return (
     <div className={style.recent_activity}>
-      <h3>Recent Posts</h3>
+      <h3>{props.title}</h3>
       <ul className={style.recent_posts}>
-        {posts.map((post) => (
-          <li key={post.id} className={style.recent_post_item}>
+        {props.posts.map((post) => (
+          <li
+            onClick={(e) => {
+              navigate(`/dashboard/editor/${post._id}`);
+            }}
+            key={post._id}
+            className={style.recent_post_item}
+          >
             <img src="https://picsum.photos/320/120" alt="" />
             <div className={style.recent_post_text_wrapper}>
               <h4 className={style.post_title}>{post.title}</h4>
+
               <p className={style.post_excerpt}>{post.excerpt}</p>
             </div>
 
-            <div className={style.button_wrapper}>
-              <button onClick={() => editPost(post.id)}>Edit</button>
-              <button onClick={() => unpublishPost(post.id)}>Unpublish</button>
+            <div className={style.recent_post_footer}>
+              <p>
+                <IoHeart /> <span>0</span>
+              </p>
+              <p>
+                <IoHeartDislike /> <span>0</span>
+              </p>
+              <p>
+                <MdComment />
+                <span>0</span>
+              </p>
             </div>
           </li>
         ))}
       </ul>
     </div>
   );
-};
+}
