@@ -1,116 +1,243 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styles from './style.module.css';
+import React, { useState, useEffect, useRef } from "react";
+import style from "./style.module.css";
 
-export interface Option {
-  name: string;
-  value: string | number;
-  type: 'fontFamily' | 'paragraph' | 'heading'; // Added 'type' property
-}
+type Menu =
+  | { type: "PARAGRAPH"; value: string; label: string }
+  | { type: "HEADING"; depth: number; label: string; value?: string }
+  | { type: "FONTSIZE"; label: number; value: number }
+  | { type: "FONTFAMILY"; label: string; value: string };
 
 interface DropdownProps {
-  options: Option[];
-  selectedValue: string;
-  onChange?: (option: Option) => void;
+  type: "Font" | "heading/Normal" | "FontSize";
+  options: Menu[];
+  defaultValue: Menu;
+  width?: string | number;
+  onSelect: (selected: Menu) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({
-  options,
-  selectedValue,
-  onChange = () => {},
-}) => {
-  const [defaultValue, setDefaultValue] = useState(selectedValue || "Paragraph");
-  const [isOpen, setIsOpen] = useState(false);
-  const [highlightedIndex, setHighlightedIndex] = useState(0);
+export default function Dropdown(props: DropdownProps) {
+  const [selected, setSelected] = useState<Menu>(props.defaultValue);
+  const [options, setOptions] = useState<Menu[]>(props.options);
+  const [FontValue, setFontValue] = useState(props.defaultValue.label || 12);
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleOptionClick = (option: Option) => {
-    setDefaultValue(option.name)
-    onChange(option);
-    setIsOpen(false);
-    setHighlightedIndex(options.indexOf(option));
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'ArrowDown') {
-      setHighlightedIndex((prevIndex) => (prevIndex + 1) % options.length);
-    } else if (e.key === 'ArrowUp') {
-      setHighlightedIndex((prevIndex) => (prevIndex - 1 + options.length) % options.length);
-    } else if (e.key === 'Enter') {
-      onChange(options[highlightedIndex]);
-      setDefaultValue(options[highlightedIndex].name)
-      setIsOpen(false);
-    } else if (e.key === 'Escape') {
-      setIsOpen(false);
-    }
-  };
-
-  const getOptionStyle = (option: Option) => {
-    let style = '';
-
-    // Apply custom styles based on option type and value
-    if (option.type === 'heading') {
-      if (option.name === 'Heading 1') {
-        style = `${styles.heading1}`;
-      } else if (option.name === 'Heading 2') {
-        style = `${styles.heading2}`;
-      }else if (option.name === 'Heading 3'){
-        style = `${styles.heading3}`
-      }
-    } 
-
-    return style;
-  };
-
-  // Close the dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
+        setShowMenu(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
+  const handleClick = (item: Menu) => {
+    setSelected(item);
+    setShowMenu(false);
+    props.onSelect(item);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "font") {
+      setSelected((prev) => {
+        const newSelected = { ...prev, label: e.target.value, value: e.target.value } as Menu;
+        props.onSelect(newSelected);
+        return newSelected;
+      });
+      const items = options;
+    }
+
+    setSelected((prev: any) => {
+      const newSelected = {
+        ...prev,
+        label: parseInt(e.target.value),
+        value: parseInt(e.target.value),
+      } as Menu;
+      props.onSelect(newSelected);
+      return newSelected;
+    });
+  };
+
+  const RenderInput = () => {
+    if (props.type === "heading/Normal") {
+      return <span className={style.selected_text}>{selected.label}</span>;
+    }
+
+    if (props.type === "FontSize") {
+      return (
+        <input
+          className={style.dropdown_input}
+          value={FontValue}
+          placeholder="Font size"
+          onChange={(e) => {
+            setFontValue(e.target.value);
+            handleChange(e);
+          }}
+          name="fontSize"
+          min={0}
+          max={100}
+          type={"number"}
+        />
+      );
+    }
+
+    return (
+      <input
+        className={style.dropdown_input}
+        value={selected.label}
+        placeholder="Font Family"
+        onChange={handleChange}
+        name="font"
+        min={0}
+        readOnly
+        max={100}
+        type={"text"}
+      />
+    );
+  };
+
   return (
-    <div className={styles['dropdown-container']} ref={dropdownRef}>
-      <div
-        className={styles['custom-dropdown']}
-        onClick={toggleDropdown}
-        onKeyDown={handleKeyDown}
-        tabIndex={0}
-        role="button"
-        aria-haspopup="listbox"
-        aria-expanded={isOpen}
-      >
-        {defaultValue}
-        <span className={styles.arrow}>&#9662;</span>
+    <div
+      ref={dropdownRef}
+      className={style.dropdown_container}
+      style={{ width: props.width || "123px" }}
+    >
+      <div className={style.input_container}>
+        <RenderInput />
+        <button className={style.toggle_btn} onClick={() => setShowMenu((prev) => !prev)}>
+          <i className="bx bx-chevron-down"></i>
+        </button>
       </div>
-      {isOpen && (
-        <div className={`${styles['dropdown-options']} ${styles.active}`} role="listbox">
-          {options.map((option, index) => (
-            <div
-              key={index}
-              className={`${styles['dropdown-option']} ${getOptionStyle(option)} ${highlightedIndex === index ? styles.highlighted : ''}`}
-              onClick={() => handleOptionClick(option)}
-              role="option"
-              aria-selected={highlightedIndex === index}
-              tabIndex={highlightedIndex === index ? 0 : -1}
-            >
-              {option.name}
-            </div>
-          ))}
+
+      {showMenu && (
+        <div className={style.dropdown}>
+          {options.map((value) => {
+            switch (value.type) {
+              case "HEADING":
+                return (
+                  <HeadingItem
+                    key={value.label}
+                    onClick={() => handleClick(value)}
+                    item={value}
+                  />
+                );
+              case "PARAGRAPH":
+                return (
+                  <ParagraphItem
+                    key={value.label}
+                    onClick={() => handleClick(value)}
+                    item={value}
+                  />
+                );
+              case "FONTSIZE":
+                return (
+                  <FontSizeItem
+                    key={value.label}
+                    onClick={() => handleClick(value)}
+                    item={value}
+                  />
+                );
+              case "FONTFAMILY":
+                return (
+                  <FontFamilyItem
+                    key={value.label}
+                    onClick={() => handleClick(value)}
+                    item={value}
+                  />
+                );
+              default:
+                return null;
+            }
+          })}
         </div>
       )}
     </div>
   );
-};
+}
 
-export default Dropdown;
+interface ItemProps {
+  item: Menu;
+  onClick?: () => void;
+}
+
+function ParagraphItem(props: ItemProps) {
+  return (
+    <button
+      onClick={() => {
+        if (props.onClick) {
+          props.onClick();
+        }
+      }}
+      className={style.dropdown_select_btn}
+    >
+      <span className={style.paragraph}>{props.item.label}</span>
+    </button>
+  );
+}
+
+function FontFamilyItem(props: ItemProps) {
+  return (
+    <button
+      onClick={() => {
+        if (props.onClick) {
+          props.onClick();
+        }
+      }}
+      className={style.dropdown_select_btn}
+    >
+      <span
+        className={`${
+          props.item.type === "HEADING" && style[`heading-${props.item.depth}`]
+        }`}
+      >
+        {props.item.label}
+      </span>
+    </button>
+  );
+}
+
+function FontSizeItem(props: ItemProps) {
+  return (
+    <button
+      onClick={() => {
+        if (props.onClick) {
+          props.onClick();
+        }
+      }}
+      className={style.dropdown_select_btn}
+    >
+      <span
+        className={`${
+          props.item.type === "HEADING" && style[`heading-${props.item.depth}`]
+        }`}
+      >
+        {props.item.label}
+      </span>
+    </button>
+  );
+}
+
+function HeadingItem(props: ItemProps) {
+  return (
+    <button
+      onClick={() => {
+        if (props.onClick) {
+          props.onClick();
+        }
+      }}
+      className={style.dropdown_select_btn}
+    >
+      <span
+        className={`${
+          props.item.type === "HEADING" && style[`heading-${props.item.depth}`]
+        }`}
+      >
+        {props.item.label}
+      </span>
+    </button>
+  );
+}

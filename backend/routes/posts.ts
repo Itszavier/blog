@@ -128,7 +128,7 @@ router.get("/fetch/user/:id", ensureAuthenticated, async (req, res, next) => {
   }
 });
 
-router.get("/fetch/editable/:id", ensureAuthenticated, async (req, res, next) => {
+router.get("/fetch/editable/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -136,13 +136,13 @@ router.get("/fetch/editable/:id", ensureAuthenticated, async (req, res, next) =>
 
     if (!post) return next(errorMessage(404, "Failed to find a post with that id"));
 
-    const userId: any = req.user?._id;
+    //const userId: any = req.user?._id;
 
-    if (!post.author.equals(userId)) {
+    /* if (!post.author.equals(userId)) {
       return next(
         errorMessage(401, "Unauthorized, you don't have permission to edit this post")
       );
-    }
+    }*/
     await post.populate("author", getAuthorFields());
 
     res.status(200).json({

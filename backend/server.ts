@@ -51,10 +51,10 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+// "https://narrate-client.loca.lt",
 app.use(
   cors({
-    origin: "https://narrate-client.loca.lt",
+    origin: 'http://localhost:5173/',
     credentials: true,
   })
 );

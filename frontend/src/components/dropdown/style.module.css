@@ -1,75 +1,98 @@
 /** @format */
 
-.dropdown-container {
+.dropdown_container {
   position: relative;
 }
 
-.custom-dropdown {
+.input_container {
   display: flex;
   align-items: center;
-  padding: 8px 12px;
-  /*border: 1px solid #ccc;*/
-  border-radius: 4px;
-  cursor: pointer;
+  background-color: var(--input-background-light);
+  height: 35px;
+  padding: 5px;
+  border-radius: 2px;
 }
 
-.custom-dropdown:hover {
-  background-color: #000000;
+.input_container i {
+  font-size: 20px;
+  font-weight: 600;
 }
 
-.arrow {
-  margin-left: 8px;
+.dropdown_input {
+  border: none;
+  outline: none;
+  padding: 4px;
+  width: 100%;
+  background-color: transparent;
 }
 
-.dropdown-options {
+.dropdown {
   position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-  display: none;
-  min-width: 100%;
-  margin-top: 4px;
-  border-top: none;
-  border-radius: 0 0 4px 4px;
-  background-color: var(--accent);
-  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  left: -2px;
+  top: 38px;
+  background-color: #eee;
+  border-radius: 10px;
 }
 
-.dropdown-options.active {
-  display: block;
-}
-
-.dropdown-option {
-  padding: 8px 12px;
+.toggle_btn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  min-width: 20px;
   cursor: pointer;
 }
 
-.dropdown-option:hover {
-  background-color: var(--accent);
-  color: white;
+.paragraph {
+  font-size: 0.85rem; /* Smaller font size for compact display */ /* Slightly reduced line height for better fit */ /* Small vertical margins to separate paragraphs */
+  color: #333; /* Darker color for readability */
+  font-family: Arial, sans-serif; /* Common, readable font */
+}
+.dropdown_select_btn {
+  border: none;
+  outline: none;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  height: fit-content;
 }
 
-.dropdown-option.highlighted {
-  background-color: var(--accent);
-  color: white;
-}
-
-.custom-dropdown.selected {
-  background-color: var(--accent);
-  color: white;
-}
-
-.heading1 {
-  font-size: 17.86px;
+.heading-1 {
   font-weight: bold;
+  font-size: 1.2rem;
 }
 
-.heading2 {
-  font-size: 17.2px;
+.heading-2 {
   font-weight: bold;
+  font-size: 1.1rem;
 }
 
-.heading3 {
-  font-size: 16.5px;
+.heading-3 {
   font-weight: bold;
+  font-size: 1rem;
+}
+
+.heading-4 {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.selected_text {
+  padding: 5px;
+}
+
+.heading-5 {
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.heading-6 {
+  font-weight: bold;
+  font-size: 0.7rem;
 }

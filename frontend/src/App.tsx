@@ -18,7 +18,7 @@ function App() {
   const location = useLocation();
   const path = location.pathname;
   // Define the paths where the Navbar should be hidden
-  const pathsWithoutNavbar = ["/dashboard", '/editor'];
+  const pathsWithoutNavbar = ["/dashboard", "/editor"];
 
   // Check if the current path matches any of the paths where Navbar should be hidden
   const hideNavbar = pathsWithoutNavbar.some((pattern) => path.startsWith(pattern));
@@ -28,13 +28,15 @@ function App() {
       {!hideNavbar && <Navbar />}
 
       <Routes>
+        {" "}
+        <Route path="/editor/:postId" element={<EditorPage />} />
         <Route path={"/"} element={<Home />} />
         <Route path="/profile/:username" element={<Profile />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/create" element={<Create />} />
           <Route path="/article/:title/:handle" element={<PostView />} />
           <Route path="/browse" element={<Browse />} />
-          <Route path="/editor/:postId" element={<EditorPage />} />
+
           <Route element={<Settings />} path="/dashboard/*" />
         </Route>
       </Routes>
