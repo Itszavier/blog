@@ -75,7 +75,7 @@ export default function SocialInput({
           <input
             type="text"
             value={url}
-            className={`${style.input} ${style.add_social_input}`}
+            className={`${style.input}`}
             placeholder="https://www.tiktok.com/@your_profile"
             onChange={handleChange}
           />
@@ -114,7 +114,7 @@ interface SocialProps {
 function Social({ social, handleRemove }: SocialProps) {
   return (
     <div className={style.social}>
-      <p>{social}</p>
+      <p className={style.social_text}>{social}</p>
       <button onClick={handleRemove} className={style.remove_btn}>
         <CiCircleRemove />
       </button>

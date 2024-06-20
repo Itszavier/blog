@@ -56,23 +56,22 @@ export default function SideNav() {
               <span className="">Dashboard</span>
             </NavLink>
           </li>
-
           <li className={style.navlist_item}>
             <NavLink to="/dashboard/notifcations" className={style.navlink}>
               <i className="bx bxs-bell"></i>
-              <span className="">notifications</span>
-            </NavLink>
-          </li>
-          <li className={style.navlist_item}>
-            <NavLink to="/dashboard/settings" className={style.navlink}>
-              <i className="bx bxs-cog"></i>
-              <span className="">settings</span>
+              <span className="">Notifications</span>
             </NavLink>
           </li>
           <li className={style.navlist_item}>
             <NavLink to="#" className={style.navlink}>
               <i className="bx bxs-bar-chart-alt-2"></i>
-              <span className="">income</span>
+              <span className="">Analytics</span>
+            </NavLink>
+          </li>
+          <li className={style.navlist_item}>
+            <NavLink to="/dashboard/settings" className={style.navlink}>
+              <i className="bx bxs-cog"></i>
+              <span className="">Settings</span>
             </NavLink>
           </li>
         </ul>

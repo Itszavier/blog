@@ -1,20 +1,12 @@
 /** @format */
-.input {
-  padding: 8px;
-  font-size: 16px;
-  border: none;
-  background-color: var(--secondary);
-  border-radius: 8px;
-  width: 100%;
-  color: var(--primaryFontColor);
-}
 .socials_input_wrapper {
   display: flex;
   flex-direction: column;
   font-weight: bold;
   text-transform: capitalize;
   font-size: 15px;
-  margin-left: 8px;
+  margin-left: 5px;
+  margin-right: auto;
   margin-bottom: 8px;
   gap: 8px;
 }
@@ -22,37 +14,51 @@
 .social_container {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
-.add_social_input {
-  height: 100%;
-  gap: 8px;
+.input {
+  outline: none;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  border-color: #007bff;
 }
 
 .add_input_container {
   display: flex;
   height: 35px;
-  width: 390px;
-  gap: 8px;
+  width: 100%;
+  max-width: 390px;
 }
+
 .add_btn {
-  padding: 12px;
-  border: #6b6b6b;
+  padding: 0 12px;
+  border: 1px solid #6b6b6b;
   display: flex;
   align-items: center;
   gap: 3px;
-  border-radius: 8px;
   cursor: pointer;
-  background-color: var(--secondaryButtonColor);
+  background-color: var(--primary-color-light);
   color: var(--primaryFontColor);
+  transition: background-color 0.3s;
+}
+
+.add_btn:hover {
+  background-color: #0056b3;
 }
 
 .error_message {
   font-weight: normal;
-  font-size: 14px;
+  font-size: 13px;
   color: #a84a4a;
   display: flex;
   align-items: center;
+  width: 230px;
 }
 
 .error_message svg {
@@ -62,39 +68,39 @@
 .socials {
   display: flex;
   flex-direction: column;
-  width: 80%;
-  margin-left: 8px;
   gap: 5px;
+  margin-left: 8px;
 }
 
 .social {
   padding: 8px;
   font-size: 15px;
   border-radius: 8px;
-  width: 100%;
-  background-color: var(--tertiary);
-  width: 100%;
-  color: var(--primaryFontColor);
+  background-color: var(--background-color-light);
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Ensure spacing between text and button */
+  justify-content: space-between;
 }
 
-.social p {
-  flex: 1; /* Take up available space */
-  margin: 0; /* Remove default margin */
-  overflow: hidden; /* Hide overflow */
-  text-overflow: ellipsis; /* Show ellipsis (...) for overflowing text */
-  white-space: nowrap; /* Prevent text from wrapping to the next line */
+.social_text {
+  flex: 1;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .remove_btn {
-  position: relative;
   display: flex;
   align-items: center;
   font-size: 20px;
   border: none;
   cursor: pointer;
   background-color: transparent;
-  color: var(--primaryFontColor);
+  color: #a84a4a;
+  transition: color 0.3s;
+}
+
+.remove_btn:hover {
+  color: #ff0000;
 }

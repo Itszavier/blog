@@ -7,7 +7,7 @@
   gap: 10px;
 }
 
-h2 {
+.title {
   margin-top: 20px;
   margin-bottom: 8px;
 }
@@ -21,7 +21,7 @@ h2 {
   gap: 10px;
 }
 
-input {
+.input {
   flex: 2;
   height: 100%;
   padding: 10px;
@@ -75,12 +75,11 @@ select {
 .body {
 }
 
-.body h4,
-p {
+.text {
   padding-left: 20px;
 }
 
-.body h4 {
+.notifcation_item .body h4 {
   padding-left: 27px;
 }
 

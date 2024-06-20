@@ -43,9 +43,9 @@ export default function Notifcations() {
   console.log("runing notifcation page");
   return (
     <div className={style.container}>
-      <h2>Notifications</h2>
+      <h2 className={style.title}>Notifications</h2>
       <div className={style.controls}>
-        <input type="text" placeholder="Search notifications" />
+        <input className={style.input} type="text" placeholder="Search notifications" />
         <select>
           <option value="all">All</option>
           <option value="like">Likes</option>
@@ -74,8 +74,8 @@ export default function Notifcations() {
               </div>
 
               <div className={style.body}>
-                <h4>{notifcation.title}</h4>
-                <p>{notifcation.message}</p>
+                <h4 className={style.text}>{notifcation.title}</h4>
+                <p className={style.text}>{notifcation.message}</p>
 
                 <p className={style.author}>{notifcation.author}</p>
               </div>
