@@ -1,6 +1,6 @@
 /** @format */
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import style from "./style.module.css";
 import google from "../../../assets/google.png";
 import { create } from "lodash";
@@ -36,6 +36,7 @@ const navigationLinks = [
 ];
 
 export default function SideNav() {
+  const Navigate = useNavigate();
   const auth = useAuth();
   return (
     <div className={style.sidebar}>
@@ -77,7 +78,10 @@ export default function SideNav() {
         </ul>
       </div>
       <div className={style.footer}>
-        <button className={`${style.logoutBtn} ${style.exit_btn}`}>
+        <button
+          onClick={() => Navigate("/browse")}
+          className={`${style.logoutBtn} ${style.exit_btn}`}
+        >
           <i className="bx bxs-exit"></i>
           Exit Dashboard
         </button>

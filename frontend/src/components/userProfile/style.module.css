@@ -2,13 +2,12 @@
 
 .profile_card {
   display: flex;
-  background-color: var(--accent);
-  height: 100%;
+  background-color: var(--secondary-color-light);
+  min-height: 80px;
   flex-direction: column;
   color: var(--primaryFontColor);
   padding: 14px;
   width: 34%;
-  border-left: 1px solid var(--borderColor);
 }
 
 .profile_info_container {

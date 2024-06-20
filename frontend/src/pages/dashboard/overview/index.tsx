@@ -71,7 +71,7 @@ interface ActivitySummaryProps {
 function ActivitySummary(props: ActivitySummaryProps) {
   const navigate = useNavigate();
   const editPost = (postId: string): void => {
-    navigate(`/dashboard/editor/${postId}`);
+    navigate(`/editor/${postId}`);
     console.log("Editing post", postId);
   };
 
@@ -86,7 +86,7 @@ function ActivitySummary(props: ActivitySummaryProps) {
         {props.posts.map((post) => (
           <li
             onClick={(e) => {
-              navigate(`/dashboard/editor/${post._id}`);
+              navigate(`/editor/${post._id}`);
             }}
             key={post._id}
             className={style.recent_post_item}

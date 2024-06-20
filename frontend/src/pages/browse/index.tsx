@@ -42,6 +42,7 @@ export default function Browse() {
                 <PostCard
                   statusText={false}
                   width="100%"
+                  height="320px"
                   key={post._id}
                   showMenu={false}
                   post={post}

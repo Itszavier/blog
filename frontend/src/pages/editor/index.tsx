@@ -71,6 +71,10 @@ export default function EditorPage() {
     if (!isPending) {
       editor?.commands.setContent(post.content.html);
     }
+
+    if (editor && editor?.getHTML().length > 0) {
+      editor.commands.focus("end");
+    }
   }, [isPending]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

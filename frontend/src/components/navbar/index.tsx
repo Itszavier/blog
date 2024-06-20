@@ -49,11 +49,6 @@ export default function Navbar() {
             <Link to={"/create"} className={style.link}>
               Create
             </Link>
-            <button
-              className={`${style.link} ${style.nav_btn} ${style.nav_notification_btn}`}
-            >
-              <IoNotifications />
-            </button>
             <ProfileDropdown />
           </>
         )}

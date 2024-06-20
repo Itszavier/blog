@@ -55,11 +55,38 @@ export default function ProfileDropdown() {
 
       {toggle && (
         <div id={"dropdown"} className={style.body}>
-          <Link id={"dropdown"} onClick={hideMenu} to={`/profile/${user.username}`}>
+          <Link
+            className={style.link}
+            id={"dropdown"}
+            onClick={hideMenu}
+            to={`/profile/${user.username}`}
+          >
+            <i className="bx bxs-user-circle"></i>
             profile
           </Link>
-          <Link id={"dropdown"} onClick={hideMenu} to="/dashboard">
+          <Link className={style.link} id={"dropdown"} onClick={hideMenu} to="/dashboard">
+            <i className="bx bxs-dashboard"></i>
+            dashboard
+          </Link>
+
+          <Link
+            className={style.link}
+            id={"dropdown"}
+            onClick={hideMenu}
+            to="/dashboard/settings"
+          >
+            <i className="bx bxs-cog"></i>
             settings
+          </Link>
+
+          <Link
+            className={style.link}
+            id={"dropdown"}
+            onClick={hideMenu}
+            to="/dashboard/notification"
+          >
+            <i className="bx bxs-bell"></i>
+            notification
           </Link>
           <button onClick={handleLogout} className={style.logout_btn}>
             logout

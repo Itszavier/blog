@@ -1,7 +1,6 @@
 /** @format */
 
 .container {
-
   display: flex;
   flex-direction: column;
   position: relative;
@@ -32,7 +31,7 @@ p {
 .activity_summary {
   display: flex;
   justify-content: space-around;
-
+  background-color: var(--secondary-color-light);
   border-radius: 8px;
   color: var(--text-color-primary-light);
   gap: 80px;
@@ -163,4 +162,11 @@ p {
   display: flex;
   gap: 8px;
   align-items: center;
+}
+
+.shadow {
+  position: sticky;
+  bottom: 0;
+  right: 0;
+  box-shadow: 0px -100px 100px 100px rgba(0, 0, 0, 0.1);
 }

@@ -5,8 +5,7 @@
   width: 100%;
   flex-direction: column;
   position: relative;
-  background-color: var(--secondary-color-light);
-  border-radius: 10px;
+  background-color: var(--background-color-light);
 }
 
 .header {
@@ -96,6 +95,9 @@
   display: flex;
   background-color: var(--secondary-color-light);
   padding: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  text-align: center;
 }
 
 .input {
@@ -107,6 +109,7 @@
   background-color: transparent;
   outline: none;
 }
+
 .title_input {
   font-size: 1.6rem;
   font-weight: bold;
@@ -125,6 +128,8 @@
 }
 
 .middle_content {
+  width: 60%;
+  margin: auto;
 }
 
 @media screen and (min-width: 100px) and (max-width: 600px) {

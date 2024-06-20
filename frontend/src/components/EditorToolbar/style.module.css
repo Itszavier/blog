@@ -3,69 +3,79 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 8px;
   border-radius: 1px;
-  color: var(--primaryFontColor);
+  background-color: var(--secondary-color-light);
   width: 100%;
-  height: 50%;
-}
-
-.tool_container {
-  display: flex;
-  align-items: center;
+  flex-direction: row;
+  cursor: pointer;
   gap: 8px;
-}
-
-.icon {
-  font-size: 1.2rem;
+  justify-content: center;
 }
 
 .button {
-  border: none;
-  width: fit-content;
-  background-color: transparent;
-  font-size: 15.85px;
+  display: flex;
+  align-items: center;
+  margin: 4px;
   cursor: pointer;
-  font-family: "Roboto", sans-serif;
-  padding: 0px 10px;
-  border-radius: 2px;
-  color: inherit;
-  padding: 4px;
+  height: 100%;
+  background-color: transparent;
+  border: none;
 }
 
-.active {
-  background-color: var(--accent);
-  color: white;
-}
-
-.button:hover {
-  background-color: var(--accent);
-  color: white;
+.button i {
+  font-size: 25px;
 }
 
 .section {
   display: flex;
-  width: fit-content;
-  gap: 14px;
   align-items: center;
   height: 100%;
-  padding: 3px;
+  margin-left: 8px;
+  gap: 2px;
 }
 
-.text_type_dropdown {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  font-size: 16px;
-  color: #333;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml;base64,..."); /* Custom arrow icon */
-  background-repeat: no-repeat;
-  background-position: right 10px center;
+.section:nth-child(even) {
+  border-right: 2px solid #eee;
 }
-@media screen and (min-width: 100px) and (max-width: 600px) {
+
+.dropdown_container {
+  position: relative;
+}
+
+.input_container {
+  display: flex;
+  align-items: center;
+  background-color: var(--input-background-light);
+}
+
+.input_container i {
+  font-size: 20px;
+  font-weight: 600;
+}
+.dropdown_input {
+  width: 80px;
+  border: none;
+  outline: none;
+  padding: 4px;
+  flex: 1;
+  background-color: transparent;
+}
+.dropdown {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 110px;
+  left: -5px;
+  top: 30px;
+  background-color: #eee;
+  border-radius: 8px;
+}
+
+.dropdown_select_btn {
+  border: none;
+  outline: none;
+  text-align: start;
+  padding-left: 8px;
 }
