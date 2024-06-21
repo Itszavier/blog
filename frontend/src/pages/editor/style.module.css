@@ -115,6 +115,11 @@
   text-align: center;
 }
 
+.saved_text {
+  font-size: 12px;
+  color: var(--text-color-secondary-light);
+}
+
 .input {
   padding: 8px 15px;
   width: 100%;

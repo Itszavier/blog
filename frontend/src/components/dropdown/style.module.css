@@ -7,7 +7,7 @@
 .input_container {
   display: flex;
   align-items: center;
-  background-color: var(--input-background-light);
+  background-color: #dee3e6;
   height: 35px;
   padding: 5px;
   border-radius: 2px;
@@ -34,7 +34,7 @@
   width: 100%;
   left: -2px;
   top: 38px;
-  background-color: #eee;
+  background-color: #dee3e6;
   border-radius: 10px;
 }
 
@@ -44,23 +44,25 @@
   background-color: transparent;
   border: none;
   min-width: 20px;
+  height: 100%;
   cursor: pointer;
 }
 
 .paragraph {
-  font-size: 0.85rem; /* Smaller font size for compact display */ /* Slightly reduced line height for better fit */ /* Small vertical margins to separate paragraphs */
-  color: #333; /* Darker color for readability */
   font-family: Arial, sans-serif; /* Common, readable font */
 }
 .dropdown_select_btn {
   border: none;
   outline: none;
-  padding: 5px;
+  padding: 8px;
+  height: 45px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   cursor: pointer;
   width: 100%;
-  height: fit-content;
+  height: 30px;
+  background-color: transparent;
 }
 
 .heading-1 {

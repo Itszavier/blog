@@ -113,7 +113,7 @@ export default function Dropdown(props: DropdownProps) {
     <div
       ref={dropdownRef}
       className={style.dropdown_container}
-      style={{ width: props.width || "123px" }}
+      style={{ width: props.width || "130px" }}
     >
       <div className={style.input_container}>
         <RenderInput />

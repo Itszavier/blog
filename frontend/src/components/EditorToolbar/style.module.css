@@ -1,6 +1,5 @@
 /** @format */
 .toolbar {
-  width: 100%;
   display: flex;
   align-items: center;
   padding: 8px;
@@ -12,8 +11,7 @@
   gap: 8px;
   justify-content: center;
   position: -webkit-sticky; /* Required for Safari */
-  position: sticky;
-  top: 100px;
+  height: 45px;
 }
 
 .sticky {
@@ -60,4 +58,9 @@
 .input_container i {
   font-size: 20px;
   font-weight: 600;
+}
+
+
+.format_textStyles_section {
+  gap: 10px;
 }

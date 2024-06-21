@@ -101,7 +101,7 @@ export default function EditorPage() {
           </div>
 
           <div className={style.left_container}>
-            <span>{isSaving ? "saving" : `done`}</span>
+            <span className={style.saved_text}>{!isSaving && "Changes saved"}</span>
             <button
               onClick={(e) => navigate("/publish", { state: post })}
               className={`${style.control_btn} ${style.publish_btn}`}
