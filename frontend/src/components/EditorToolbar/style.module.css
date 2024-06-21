@@ -22,11 +22,17 @@
 .button {
   display: flex;
   align-items: center;
-  margin: 4px;
+  margin: 2px;
   cursor: pointer;
   height: 100%;
   background-color: transparent;
   border: none;
+  padding: 6px;
+}
+
+.button:hover {
+  background-color: var(--button-color-light);
+  color: var(--button-text-color-light);
 }
 
 .button i {
@@ -60,7 +66,11 @@
   font-weight: 600;
 }
 
-
 .format_textStyles_section {
   gap: 10px;
+}
+
+.active {
+  background-color: var(--button-color-light);
+  color: var(--button-text-color-light);
 }

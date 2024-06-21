@@ -85,7 +85,7 @@ export default function EditorPage() {
 
   if (false) return <Loading />;
 
-  //if (!editor) return null;
+  if (!editor) return null;
 
   return (
     <div className={style.container}>
@@ -96,7 +96,7 @@ export default function EditorPage() {
               <i className="bx bx-arrow-back"></i>
             </button>
             <div className={style.title_wrapper}>
-              <p className={style.page_title}>{post.title}</p> 
+              <p className={style.page_title}>{post.title}</p>
             </div>
           </div>
 
@@ -112,7 +112,7 @@ export default function EditorPage() {
             <ProfileDropdown />
           </div>
         </div>
-        <Toolbar />
+        <Toolbar editor={editor} />
       </div>
 
       <div className={style.content}>
