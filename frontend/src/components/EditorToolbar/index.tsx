@@ -48,17 +48,6 @@ export default function Toolbar({ editor }: ToolBarProps) {
         />
 
         <Dropdown
-          defaultValue={{ type: "FONTFAMILY", label: "Roboto", value: "Roboto" }}
-          type="Font"
-          options={[
-            {
-              type: "FONTFAMILY",
-              label: "Roboto",
-              value: "Roboto",
-            },
-          ]}
-        />
-        <Dropdown
           defaultValue={{ type: "FONTSIZE", label: 5, value: 5 }}
           type="FontSize"
           options={[
