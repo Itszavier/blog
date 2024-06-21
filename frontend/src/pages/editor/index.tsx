@@ -29,7 +29,7 @@ export default function EditorPage() {
   const navigate = useNavigate();
   // Use state with an initial function
   const [post, setPost] = useState<IPostInitailData>(() => ({
-    title: "",
+    title: "Test title of a post",
     subtitle: "",
     content: {
       html: "",
@@ -37,13 +37,13 @@ export default function EditorPage() {
   }));
 
   // Use the fetch hook
-  const { isPending } = useFetch<IPost>(`/posts/fetch/editable/${postId}`, {
+  /*const { isPending } = useFetch<IPost>(`/posts/fetch/editable/${postId}`, {
     key: "post",
     onfetch: (data) => {
       console.log("saved handle save function", data);
       setPost({ title: data.title, subtitle: data.subtitle, content: data.content });
     },
-  });
+  }); */
 
   const { isSaving } = useAutoSave<IPostInitailData>(post, {
     onSave: handleAutoSave,
@@ -67,7 +67,7 @@ export default function EditorPage() {
     content: post.content.html,
   });
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (!isPending) {
       editor?.commands.setContent(post.content.html);
     }
@@ -75,7 +75,7 @@ export default function EditorPage() {
     if (editor && editor?.getHTML().length > 0) {
       editor.commands.focus("end");
     }
-  }, [isPending]);
+  }, [isPending]);*/
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPost((prev) => {
@@ -83,15 +83,23 @@ export default function EditorPage() {
     });
   };
 
-  if (isPending) return <Loading />;
+  if (false) return <Loading />;
 
-  if (!editor) return null;
+  //if (!editor) return null;
 
   return (
     <div className={style.container}>
       <div className={style.header}>
         <div className={style.control}>
-          <button className={style.back_btn} onClick={() => navigate(-1)}></button>
+          <div className={style.right_container}>
+            <button className={style.back_btn} onClick={() => navigate(-1)}>
+              <i className="bx bx-arrow-back"></i>
+            </button>
+            <div className={style.title_wrapper}>
+              <p className={style.page_title}>{post.title}</p> 
+            </div>
+          </div>
+
           <div className={style.left_container}>
             <span>{isSaving ? "saving" : `done`}</span>
             <button
@@ -104,14 +112,14 @@ export default function EditorPage() {
             <ProfileDropdown />
           </div>
         </div>
-        <Toolbar editor={editor} />
+        <Toolbar />
       </div>
+
       <div className={style.content}>
         <div className={style.middle_content}>
           <div className={style.meta_container}>
             <div className={style.input_wrapper}>
               <input
-                type="text"
                 placeholder="Title"
                 value={post.title}
                 className={`${style.input} ${style.title_input}`}
@@ -125,6 +133,7 @@ export default function EditorPage() {
                 value={post.subtitle}
                 onChange={handleChange}
                 name="subtitle"
+                type="text"
                 className={`${style.input} ${style.subtitle_input}`}
               />
             </div>

@@ -2,27 +2,23 @@
 
 import { Editor } from "@tiptap/react";
 import style from "./style.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropdown from "../../components/dropdown";
 
 interface ToolBarProps {
-  editor: Editor;
+  editor?: Editor;
 }
 const list: any = [
-  { type: "PARAGRAPH", label: "Paragraph", value: "" },
-  { type: "HEADING", depth: 1, label: "Heading 1" },
+  { type: "PARAGRAPH", label: "Paragraph", value: "paragraph" },
   { type: "HEADING", depth: 1, label: "Heading 1" },
   { type: "HEADING", depth: 2, label: "Heading 2" },
   { type: "HEADING", depth: 3, label: "Heading 3" },
 ];
-export default function Toolbar({ editor }: ToolBarProps) {
-  const handleAlign = (e: React.MouseEvent<HTMLButtonElement>) => {
-    editor.commands.setTextAlign(e.currentTarget.name);
-    editor.chain().focus().run();
-  };
 
+export default function Toolbar({ editor }: ToolBarProps) {
+ 
   return (
-    <div className={style.toolbar}>
+    <div className={`${style.toolbar} `}>
       <div className={`${style.section}`}>
         <button className={`${style.button}`}>
           <i className="bx bx-undo"></i>
@@ -42,16 +38,18 @@ export default function Toolbar({ editor }: ToolBarProps) {
       </div>
       <div className={`${style.section} ${style.format_textStyles_section}`}>
         <Dropdown
-          defaultValue={{ type: "PARAGRAPH", label: "Paragarph", value: "paragraph" }}
+          defaultValue={list[0]}
           type="heading/Normal"
+          onSelect={(selected) => console.log(selected)}
           options={list}
         />
 
         <Dropdown
           defaultValue={{ type: "FONTSIZE", label: 5, value: 5 }}
           type="FontSize"
+          onSelect={(selected) => console.log(selected)}
           options={[
-            { type: "FONTSIZE", label: 10, value: 5 },
+            { type: "FONTSIZE", label: 10, value: 10 },
             { type: "FONTSIZE", label: 16, value: 16 },
           ]}
           width={"70px"}

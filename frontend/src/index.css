@@ -48,25 +48,7 @@ body {
   height: 100%;
 }
 
-::-webkit-scrollbar {
-  width: 5px;
-}
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: var(--secoundary);
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #bbbbbb;
-  border-radius: 2px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
 
 .tiptap p.is-editor-empty:first-child::before {
   color: rgb(192, 192, 192);
@@ -75,4 +57,23 @@ body {
   height: 0;
   pointer-events: none;
   color: var(--secondaryFontColor);
+}
+::-webkit-scrollbar {
+  width: 0px; /* Adjust the width if necessary */
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent; /* Adjust the thumb color if needed */
+  border-radius: 10px; /* Optional: round the scrollbar thumb */
+  background-color: transparent;
+}
+
+::-webkit-scrollbar:hover {
+  /* Adjust the width if necessary */
+  background-color: transparent;
 }

@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect, useRef } from "react";
 import style from "./style.module.css";
 
@@ -36,6 +38,9 @@ export default function Dropdown(props: DropdownProps) {
   }, []);
 
   const handleClick = (item: Menu) => {
+    if (item.type == "FONTSIZE") {
+      setFontValue(item.value);
+    }
     setSelected(item);
     setShowMenu(false);
     props.onSelect(item);
@@ -44,7 +49,11 @@ export default function Dropdown(props: DropdownProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "font") {
       setSelected((prev) => {
-        const newSelected = { ...prev, label: e.target.value, value: e.target.value } as Menu;
+        const newSelected = {
+          ...prev,
+          label: e.target.value,
+          value: e.target.value,
+        } as Menu;
         props.onSelect(newSelected);
         return newSelected;
       });
@@ -115,20 +124,20 @@ export default function Dropdown(props: DropdownProps) {
 
       {showMenu && (
         <div className={style.dropdown}>
-          {options.map((value) => {
+          {options.map((value, index) => {
             switch (value.type) {
-              case "HEADING":
+              case "PARAGRAPH":
                 return (
-                  <HeadingItem
-                    key={value.label}
+                  <ParagraphItem
+                    key={index}
                     onClick={() => handleClick(value)}
                     item={value}
                   />
                 );
-              case "PARAGRAPH":
+              case "HEADING":
                 return (
-                  <ParagraphItem
-                    key={value.label}
+                  <HeadingItem
+                    key={index}
                     onClick={() => handleClick(value)}
                     item={value}
                   />
@@ -136,7 +145,7 @@ export default function Dropdown(props: DropdownProps) {
               case "FONTSIZE":
                 return (
                   <FontSizeItem
-                    key={value.label}
+                    key={index}
                     onClick={() => handleClick(value)}
                     item={value}
                   />
@@ -144,7 +153,7 @@ export default function Dropdown(props: DropdownProps) {
               case "FONTFAMILY":
                 return (
                   <FontFamilyItem
-                    key={value.label}
+                    key={index}
                     onClick={() => handleClick(value)}
                     item={value}
                   />

@@ -11,6 +11,14 @@
   cursor: pointer;
   gap: 8px;
   justify-content: center;
+  position: -webkit-sticky; /* Required for Safari */
+  position: sticky;
+  top: 100px;
+}
+
+.sticky {
+  position: fixed; /* Make it fixed when scrolling */
+  top: 0; /* Stick it to the top */
 }
 
 .button {
