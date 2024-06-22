@@ -15,6 +15,7 @@
 .list {
   padding: 18px;
   list-style: none;
+  width: 100%;
 }
 
 .list li {
@@ -25,6 +26,7 @@
   text-decoration: none;
   color: var(--secondary-text-color);
 }
+
 .title {
   font-weight: 500;
   margin-left: 8px;
@@ -69,6 +71,13 @@
   align-items: center;
   text-decoration: none;
   font-size: 17px;
+  padding: 4px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.headerLink:hover {
+  background-color: var(--accent-color);
 }
 
 .headerLink i {

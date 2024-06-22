@@ -23,6 +23,11 @@ export default function BrowseSideNav() {
             <i className="bx bxs-bookmarks"></i> <span>Collections</span>
           </Link>
         </li>
+        <li className={style.headerItem}>
+          <Link className={style.headerLink} to="/Dashboard">
+            <i className="bx bxs-dashboard"></i> <span>Dashboard</span>
+          </Link>
+        </li>
       </ul>
 
       <div className={style.wrapper}>

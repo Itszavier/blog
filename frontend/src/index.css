@@ -54,6 +54,6 @@ body {
   width: 2px;
   display: inline-block;
   background-color: var(--border-color);
-  height: 28px;
+  height: 25px;
   margin: 0 10px;
 }

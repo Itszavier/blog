@@ -24,7 +24,10 @@ export default function CardFooter({ post }: CardFooterProps) {
         />
 
         <span>
-          <Link className={style.link} to={`/profile/${post.author.username}`}>
+          <Link
+            className={`${style.link} text-p`}
+            to={`/profile/${post.author.username}`}
+          >
             {post.author.name}
           </Link>
         </span>
