@@ -4,13 +4,13 @@
   align-items: center;
   padding: 8px;
   border-radius: 1px;
-  background-color: var(--secondary-color-light);
+  background-color: var(--header-footer-background-color);
   width: 100%;
   flex-direction: row;
   cursor: pointer;
   gap: 8px;
   justify-content: center;
-  position: -webkit-sticky; /* Required for Safari */
+   /* Required for Safari */
   height: 45px;
 }
 
@@ -27,6 +27,7 @@
   height: 100%;
   border: none;
   padding: 6px;
+  background: transparent;
 }
 
 .button:hover {

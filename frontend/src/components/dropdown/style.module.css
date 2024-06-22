@@ -10,6 +10,7 @@
   height: 35px;
   padding: 5px;
   border-radius: 2px;
+  background-color: #303030;
 }
 
 .input_container i {
@@ -23,6 +24,7 @@
   padding: 4px;
   width: 100%;
   background-color: transparent;
+  flex: 1;
 }
 
 .dropdown {
@@ -71,10 +73,8 @@
   padding: 10px 0px;
 }
 
-
 .font_family_btn:hover {
 }
-
 
 .font_family_btn p {
   width: 100%;

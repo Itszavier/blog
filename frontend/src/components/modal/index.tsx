@@ -1,3 +1,5 @@
+/** @format */
+
 // reusable code
 import React from "react";
 // import ReactDOM from "react-dom";
@@ -14,7 +16,7 @@ interface ModalProps {
   children: any;
 }
 export default function Modal(props: ModalProps) {
-  if (!props.isOpen) return null;
+  if (props.isOpen === false) return null;
 
   return (
     <div

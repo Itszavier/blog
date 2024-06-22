@@ -14,7 +14,8 @@ import PostView from "./pages/post";
 import Browse from "./pages/browse";
 import Create from "./pages/create";
 import NotFound from "./pages/404";
-import  './css/theme.css'
+import "./css/theme.css";
+import CreateModal from "./components/createModal";
 function App() {
   const location = useLocation();
   const [isDarkTheme, setIsDarkTheme] = useState(true);
@@ -54,7 +55,7 @@ function App() {
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <CreatePostModal />
+      {/*<CreateModal />*/}
       <AuthModal />
     </>
   );

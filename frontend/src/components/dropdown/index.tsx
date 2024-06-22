@@ -127,7 +127,7 @@ export default function Dropdown(props: DropdownProps) {
       </div>
 
       {showMenu && (
-        <div className={style.dropdown}>
+        <div className={` card ${style.dropdown}`}>
           {options.map((value, index) => {
             switch (value.type) {
               case "PARAGRAPH":
