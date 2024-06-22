@@ -127,9 +127,16 @@ textarea {
   padding: 4px 80px;
 }
 
-
 .card {
   border: 2px solid var(--card-border-color);
   background-color: var(--card-background-color);
   color: var(--card-text-color);
+}
+
+.text-p {
+  color: var(--primary-text-color);
+}
+
+.text-s {
+  color: var(--secondary-text-color);
 }

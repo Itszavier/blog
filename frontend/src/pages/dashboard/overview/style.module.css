@@ -9,6 +9,7 @@
   gap: 10px;
   width: 100%;
   background-color: var(--primary);
+  padding: 10px;
 }
 
 .welcome_section {

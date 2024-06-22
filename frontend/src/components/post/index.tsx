@@ -9,6 +9,8 @@ import { IPost } from "../../api/types";
 import { FaCommentAlt, FaHeart } from "react-icons/fa";
 import { useEffect } from "react";
 import { decodeTitle, encodeTitle } from "../../utils";
+import CardBody from "./body";
+import CardFooter from "./footer";
 
 interface PostProps {
   post: IPost;
@@ -43,71 +45,9 @@ export default function PostCard({
   }, []);
 
   return (
-    <div
-      style={{
-        width: width ? width : "70%",
-        minHeight: height ? height : "260px",
-      }}
-      className={`card ${style.post_card}`}
-    >
-      <div className={style.post_card_header}>
-        <img
-          className={style.profile_image}
-          src={post.author.profileImage.url}
-          width={20}
-          height={20}
-        />
-
-        <span>
-          <Link className={style.link} to={`/profile/${post.author.username}`}>
-            {post.author.name}
-          </Link>
-        </span>
-        {statusText && <BsDot />}
-        <DisplayStatusText />
-
-        {showMenu && <PostMenuDropdown post={post} />}
-      </div>
-      <div className={style.post_card_body}>
-        <div className={style.post_data_wrapper}>
-          <p className={style.title}>
-            <Link
-              className={style.link}
-              to={`/article/${encodeTitle(post.title)}/${post.handle}`}
-            >
-              {post.title}
-            </Link>
-          </p>
-          <p className={style.sub_title}>{post.subtitle || "subtitle from content"}</p>
-          <div className={style.profile_card_date}>
-            <span>{moment(post.createdAt).format("MMM DD YYYY")}</span>
-            {post.createdAt !== post.updatedAt && <BsDot />}
-            {post.createdAt !== post.updatedAt && (
-              <p>
-                <span>Updated</span> {moment(post.updatedAt).fromNow()}
-              </p>
-            )}
-          </div>
-        </div>
-        {post.heroImage?.url && (
-          <img
-            className={style.heroImage}
-            src={post.heroImage?.url}
-            alt=" "
-            width={120}
-            height={90}
-          />
-        )}
-      </div>
-      <div className={style.footer}>
-        <button className={style.card_footer_button}>
-          <FaHeart /> <span>0</span>
-        </button>
-
-        <button className={style.card_footer_button}>
-          <FaCommentAlt />
-        </button>
-      </div>
+    <div className={`card ${style.post_card}`}>
+      <CardBody post={post} />
+      <CardFooter post={post} />
     </div>
   );
 }

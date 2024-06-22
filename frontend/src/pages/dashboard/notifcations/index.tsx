@@ -59,7 +59,7 @@ export default function Notifcations() {
       <ul className={style.notifcation_list}>
         {notifications.map((notifcation) => {
           return (
-            <li className={style.notifcation_item}>
+            <li className={`card ${style.notifcation_item}`}>
               <div className={style.header}>
                 <button className={style.remove_btn}>
                   <i className="bx bxs-x-square"></i>

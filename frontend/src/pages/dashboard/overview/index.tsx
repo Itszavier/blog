@@ -27,12 +27,12 @@ export default function Overview() {
 
   return (
     <div className={style.container}>
-      <div className={style.welcome_section}>
+      <div className={`card ${style.welcome_section}`}>
         <h2>Welcome, {auth.user?.name}!</h2>
         <p>Here’s a summary of your activity on the platform.</p>
       </div>
 
-      <div className={style.activity_summary}>
+      <div className={`card ${style.activity_summary} `}>
         <div className={style.summary_item}>
           <h3>Published Posts</h3>
           <p>0</p>
@@ -51,7 +51,6 @@ export default function Overview() {
         </div>
       </div>
       <ActivitySummary title="Drafts" posts={recentPosts!} />
-
     </div>
   );
 }
@@ -89,7 +88,7 @@ function ActivitySummary(props: ActivitySummaryProps) {
               navigate(`/editor/${post._id}`);
             }}
             key={post._id}
-            className={style.recent_post_item}
+            className={`card ${style.recent_post_item}`}
           >
             <img src="https://picsum.photos/320/120" alt="" />
             <div className={style.recent_post_text_wrapper}>
