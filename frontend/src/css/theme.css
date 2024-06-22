@@ -62,6 +62,12 @@ button {
   border: 1px solid var(--button-border-color);
 }
 
+.button {
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  border: 1px solid var(--button-border-color);
+}
+
 button.secondary {
   background-color: var(--secondary-button-background-color);
   color: var(--secondary-button-text-color);
@@ -91,36 +97,39 @@ textarea {
 }
 
 .navbar {
-    background-color: var(--header-footer-background-color);
-    color: var(--header-footer-text-color);
+  background-color: var(--header-footer-background-color);
+  color: var(--header-footer-text-color);
 }
 
 .card {
-    background-color: var(--card-background-color);
-    color: var(--card-text-color);
-    border: 1px solid var(--card-border-color);
+  background-color: var(--card-background-color);
+  color: var(--card-text-color);
+  border: 1px solid var(--card-border-color);
 }
 
 .border {
-    border-color: var(--border-color);
+  border-color: var(--border-color);
 }
 
-.navbar, .sidenav {
-    background-color: var(--header-footer-background-color);
-    color: var(--header-footer-text-color);
+.navbar,
+.sidenav {
+  background-color: var(--header-footer-background-color);
+  color: var(--header-footer-text-color);
 }
 
-.navbar a, .sidenav a {
-    color: var(--header-footer-text-color);
-    text-decoration: none;
+.navbar a,
+.sidenav a {
+  color: var(--header-footer-text-color);
+  text-decoration: none;
 }
 
 .navbar {
-    padding: 4px 80px;
+  padding: 4px 80px;
 }
 
-.navbar a:hover, .sidenav a:hover {
-    text-decoration: underline;
+.navbar a:hover,
+.sidenav a:hover {
+  text-decoration: underline;
 }
 .card {
   border: 2px solid var(--card-border-color);

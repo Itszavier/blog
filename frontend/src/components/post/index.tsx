@@ -48,7 +48,7 @@ export default function PostCard({
         width: width ? width : "70%",
         minHeight: height ? height : "260px",
       }}
-      className={`${style.post_card}`}
+      className={`card ${style.post_card}`}
     >
       <div className={style.post_card_header}>
         <img

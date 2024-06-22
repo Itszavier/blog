@@ -24,13 +24,16 @@ export default function Navbar() {
         </Link>
       </div>
 
-      <ul className={style.NavLink}>
+      <ul className={style.navList}>
         {user ? (
           <>
-            <li className={style.list_item}>
+            <li className={style.listItem}>
               <Link to={"/browse"}>browse</Link>
             </li>
-            <li className={style.list_item}>
+            <li className={style.listItem}>
+              <Link to={"/create"}>create</Link>
+            </li>
+            <li className={style.listItem}>
               <ProfileDropdown />
             </li>
           </>

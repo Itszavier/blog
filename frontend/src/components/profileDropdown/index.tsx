@@ -43,18 +43,18 @@ export default function ProfileDropdown() {
     }
   };
   return (
-    <div id={"dropdown"} className={style.container}>
-      <div
+    <div id={"dropdown"} className={` ${style.container}`}>
+      <button
         id={"dropdown"}
         onClick={() => setToggle((prev) => !prev)}
         className={style.header}
       >
         <span>{user.username}</span>
         <img className={style.user_profile} src={user.profileImage.url} alt="" />
-      </div>
+      </button>
 
       {toggle && (
-        <div id={"dropdown"} className={style.body}>
+        <div id={"dropdown"} className={`card ${style.body}`}>
           <Link
             className={style.link}
             id={"dropdown"}
@@ -88,7 +88,7 @@ export default function ProfileDropdown() {
             <i className="bx bxs-bell"></i>
             notification
           </Link>
-          <button onClick={handleLogout} className={style.logout_btn}>
+          <button onClick={handleLogout} className={`button ${style.logout_btn}`}>
             logout
           </button>
         </div>
