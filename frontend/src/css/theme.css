@@ -127,10 +127,7 @@ textarea {
   padding: 4px 80px;
 }
 
-.navbar a:hover,
-.sidenav a:hover {
-  text-decoration: underline;
-}
+
 .card {
   border: 2px solid var(--card-border-color);
   background-color: var(--card-background-color);

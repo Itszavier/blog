@@ -32,7 +32,7 @@
 
 .ctaButton {
   padding: 10px 15px;
-  width: 145px;
+  width: 180px;
   margin-top: 10px;
   cursor: pointer;
 }
@@ -42,8 +42,6 @@
   right: 100px;
 }
 
-.features {
-}
 
 .divider {
   padding: 80px 40px;

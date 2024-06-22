@@ -16,7 +16,7 @@ export default function Home() {
             Create and Share Your <span>Expertise with ProArticle</span>
           </h1>
           <p>Empower Your Writing. Engage with Professionals. Share Your Knowledge.</p>
-          <button className={style.ctaButton}>Get Started Now</button>
+          <button className={style.ctaButton}>Get Started For Free</button>
         </div>
       </header>
 
