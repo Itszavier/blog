@@ -1,0 +1,53 @@
+/** @format */
+
+import { Menu } from "../dropdown";
+
+export const fontFamilies: Menu[] = [
+  { type: "FONTFAMILY", label: "Arial", value: "Arial, sans-serif" },
+  { type: "FONTFAMILY", label: "Helvetica", value: "Helvetica, sans-serif" },
+  { type: "FONTFAMILY", label: "Times New Roman", value: "Times New Roman, serif" },
+  { type: "FONTFAMILY", label: "Courier New", value: "Courier New, monospace" },
+  { type: "FONTFAMILY", label: "Georgia", value: "Georgia, serif" },
+  { type: "FONTFAMILY", label: "Verdana", value: "Verdana, sans-serif" },
+  { type: "FONTFAMILY", label: "Trebuchet MS", value: "Trebuchet MS, sans-serif" },
+  { type: "FONTFAMILY", label: "Lucida Console", value: "Lucida Console, monospace" },
+  {
+    type: "FONTFAMILY",
+    label: "Comic Sans MS",
+    value: "Comic Sans MS, cursive, sans-serif",
+  },
+  { type: "FONTFAMILY", label: "Impact", value: "Impact, sans-serif" },
+  { type: "FONTFAMILY", label: "Tahoma", value: "Tahoma, sans-serif" },
+  { type: "FONTFAMILY", label: "Palatino Linotype", value: "Palatino Linotype, serif" },
+  { type: "FONTFAMILY", label: "Arial Black", value: "Arial Black, sans-serif" },
+  { type: "FONTFAMILY", label: "Garamond", value: "Garamond, serif" },
+  {
+    type: "FONTFAMILY",
+    label: "Lucida Sans Unicode",
+    value: "Lucida Sans Unicode, sans-serif",
+  },
+  { type: "FONTFAMILY", label: "Century Gothic", value: "Century Gothic, sans-serif" },
+  { type: "FONTFAMILY", label: "Calibri", value: "Calibri, sans-serif" },
+  { type: "FONTFAMILY", label: "Optima", value: "Optima, sans-serif" },
+  { type: "FONTFAMILY", label: "Futura", value: "Futura, sans-serif" },
+  { type: "FONTFAMILY", label: "Gill Sans", value: "Gill Sans, sans-serif" },
+  {
+    type: "FONTFAMILY",
+    label: "Franklin Gothic Medium",
+    value: "Franklin Gothic Medium, sans-serif",
+  },
+  { type: "FONTFAMILY", label: "Candara", value: "Candara, sans-serif" },
+  { type: "FONTFAMILY", label: "Bookman", value: "Bookman, serif" },
+  { type: "FONTFAMILY", label: "Rockwell", value: "Rockwell, serif" },
+  { type: "FONTFAMILY", label: "Baskerville", value: "Baskerville, serif" },
+  { type: "FONTFAMILY", label: "Goudy Old Style", value: "Goudy Old Style, serif" },
+  { type: "FONTFAMILY", label: "Copperplate", value: "Copperplate, serif" },
+  { type: "FONTFAMILY", label: "Brush Script MT", value: "Brush Script MT, cursive" },
+  { type: "FONTFAMILY", label: "Perpetua", value: "Perpetua, serif" },
+  { type: "FONTFAMILY", label: "Monaco", value: "Monaco, monospace" },
+  { type: "FONTFAMILY", label: "Consolas", value: "Consolas, monospace" },
+  { type: "FONTFAMILY", label: "Andale Mono", value: "Andale Mono, monospace" },
+  { type: "FONTFAMILY", label: "Courier", value: "Courier, monospace" },
+  { type: "FONTFAMILY", label: "Lucida Bright", value: "Lucida Bright, serif" },
+  { type: "FONTFAMILY", label: "Century Schoolbook", value: "Century Schoolbook, serif" },
+];

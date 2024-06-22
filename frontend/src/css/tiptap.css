@@ -55,7 +55,8 @@
   /* Background color */
 }
 
-.content_preview h1,
+.content_preview,
+h1,
 .content_preview h2,
 .content_preview h3,
 .content_preview h4,
@@ -67,7 +68,7 @@
   margin-bottom: 10px;
 }
 
-.content_preview p {
+.content_preview  {
   margin-bottom: 15px;
 }
 

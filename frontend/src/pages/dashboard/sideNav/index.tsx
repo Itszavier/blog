@@ -39,7 +39,7 @@ export default function SideNav() {
   const Navigate = useNavigate();
   const auth = useAuth();
   return (
-    <div className={style.sidebar}>
+    <div className={`sidenav ${style.sidebar} `}>
       <header className={style.logo}>
         <span className={style.image}>
           <img src={auth.user?.profileImage.url} alt="" />

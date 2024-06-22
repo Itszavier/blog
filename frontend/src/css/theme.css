@@ -1,0 +1,129 @@
+/**
+ * theme.css
+ *
+ * @format
+ */
+
+:root {
+  --background-color: #ffffff;
+  --primary-text-color: #000000;
+  --secondary-text-color: #666666;
+  --accent-color: #1a73e8;
+  --button-background-color: #e0e0e0;
+  --button-text-color: #000000;
+  --button-border-color: #cccccc;
+  --secondary-button-background-color: #f0f0f0;
+  --secondary-button-text-color: #666666;
+  --input-background-color: #ffffff;
+  --input-text-color: #000000;
+  --input-border-color: #cccccc;
+  --header-footer-background-color: #e0e0e0;
+  --header-footer-text-color: #000000;
+  --card-background-color: #ffffff;
+  --card-text-color: #000000;
+  --card-border-color: #cccccc;
+  --border-color: #cccccc;
+}
+
+body.dark-theme {
+  --background-color: #121212;
+  --primary-text-color: #ffffff;
+  --secondary-text-color: #b0b0b0;
+  --accent-color: #bb86fc;
+  --button-background-color: #1f1f1f;
+  --button-text-color: #ffffff;
+  --button-border-color: #272727;
+  --secondary-button-background-color: #333333;
+  --secondary-button-text-color: #b0b0b0;
+  --input-background-color: #1f1f1f;
+  --input-text-color: #ffffff;
+  --input-border-color: #272727;
+  --header-footer-background-color: #1f1f1f;
+  --header-footer-text-color: #ffffff;
+  --card-background-color: #1f1f1f;
+  --card-text-color: #ffffff;
+  --card-border-color: #272727;
+  --border-color: #272727;
+}
+
+/* Additional elements as needed */
+body {
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+}
+
+a {
+  color: var(--accent-color);
+}
+
+button {
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  border: 1px solid var(--button-border-color);
+}
+
+button.secondary {
+  background-color: var(--secondary-button-background-color);
+  color: var(--secondary-button-text-color);
+}
+
+input,
+textarea {
+  background-color: var(--input-background-color);
+  color: var(--input-text-color);
+  border: 1px solid var(--input-border-color);
+}
+
+.header,
+.footer {
+  background-color: var(--header-footer-background-color);
+  color: var(--header-footer-text-color);
+}
+
+.card {
+  background-color: var(--card-background-color);
+  color: var(--card-text-color);
+  border: 1px solid var(--card-border-color);
+}
+
+.border {
+  border-color: var(--border-color);
+}
+
+.navbar {
+    background-color: var(--header-footer-background-color);
+    color: var(--header-footer-text-color);
+}
+
+.card {
+    background-color: var(--card-background-color);
+    color: var(--card-text-color);
+    border: 1px solid var(--card-border-color);
+}
+
+.border {
+    border-color: var(--border-color);
+}
+
+.navbar, .sidenav {
+    background-color: var(--header-footer-background-color);
+    color: var(--header-footer-text-color);
+}
+
+.navbar a, .sidenav a {
+    color: var(--header-footer-text-color);
+    text-decoration: none;
+}
+
+.navbar {
+    padding: 4px 80px;
+}
+
+.navbar a:hover, .sidenav a:hover {
+    text-decoration: underline;
+}
+.card {
+  border: 2px solid var(--card-border-color);
+  background-color: var(--card-background-color);
+  color: var(--card-text-color);
+}

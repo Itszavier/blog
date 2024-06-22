@@ -6,6 +6,7 @@ import { useModal } from "../../context/modalContext";
 import ProfileDropdown from "../profileDropdown";
 import style from "./styles.module.css";
 import { Link } from "react-router-dom";
+
 export default function Navbar() {
   const { user } = useAuth();
   const postModal = useModal("createPost");
@@ -16,43 +17,27 @@ export default function Navbar() {
   };
 
   return (
-    <div className={style.container}>
-      <div className={style.logo_wrapper}>
-        <Link className={style.logo_link} to={user ? "/browse" : "/"}>
-          <h2 className={style.logo}>Narrate</h2>
+    <div className={`navbar ${style.container}`}>
+      <div className={style.logo_container}>
+        <Link to="/" className={style.logo_link}>
+          <h3>ProArticle</h3>
         </Link>
       </div>
 
-      <div className={style.link_container}>
-        {!user ? (
+      <ul className={style.NavLink}>
+        {user ? (
           <>
-            <Link className={style.link} to="#">
-              About
-            </Link>
-
-            <Link className={style.link} to="#">
-              Membership
-            </Link>
-
-            <button
-              className={` ${style.link} ${style.get_started_link} `}
-              onClick={handleLoginPopup}
-            >
-              Get started
-            </button>
+            <li className={style.list_item}>
+              <Link to={"/browse"}>browse</Link>
+            </li>
+            <li className={style.list_item}>
+              <ProfileDropdown />
+            </li>
           </>
         ) : (
-          <>
-            <Link to={"/browse"} className={style.link}>
-              Browse
-            </Link>{" "}
-            <Link to={"/create"} className={style.link}>
-              Create
-            </Link>
-            <ProfileDropdown />
-          </>
+          ""
         )}
-      </div>
+      </ul>
     </div>
   );
 }

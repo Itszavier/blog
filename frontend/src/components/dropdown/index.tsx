@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import style from "./style.module.css";
 
-type Menu =
+export type Menu =
   | { type: "PARAGRAPH"; value: string; label: string }
   | { type: "HEADING"; depth: number; label: string; value?: string }
   | { type: "FONTSIZE"; label: number; value: number }
@@ -73,7 +73,11 @@ export default function Dropdown(props: DropdownProps) {
 
   const RenderInput = () => {
     if (props.type === "heading/Normal") {
-      return <span className={style.selected_text}>{selected.label}</span>;
+      return (
+        <span onClick={(e) => props.onSelect(selected)} className={style.selected_text}>
+          {selected.label}
+        </span>
+      );
     }
 
     if (props.type === "FontSize") {
@@ -196,15 +200,16 @@ function FontFamilyItem(props: ItemProps) {
           props.onClick();
         }
       }}
-      className={style.dropdown_select_btn}
+      className={`${style.dropdown_select_btn} ${style.font_family_btn}`}
     >
-      <span
+      <p
+        style={{ fontFamily: props.item.value as string }}
         className={`${
           props.item.type === "HEADING" && style[`heading-${props.item.depth}`]
         }`}
       >
         {props.item.label}
-      </span>
+      </p>
     </button>
   );
 }

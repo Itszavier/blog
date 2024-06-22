@@ -2,9 +2,10 @@
 
 import { Editor } from "@tiptap/react";
 import style from "./style.module.css";
-import { useEffect, useState } from "react";
-import Dropdown from "../../components/dropdown";
-import { StringChain } from "lodash";
+
+import Dropdown, { Menu } from "../../components/dropdown";
+import { fontFamilies } from "./variables";
+import { useState, useCallback, useEffect } from "react";
 
 interface ToolBarProps {
   editor: Editor;
@@ -16,40 +17,100 @@ const list: any = [
   { type: "HEADING", depth: 3, label: "Heading 3" },
 ];
 
+type ActiveEnum =
+  | "bold"
+  | "italic"
+  | "orderedList"
+  | "bulletList"
+  | "link"
+  | "alignLeft"
+  | "alignRight"
+  | "alignCenter"
+  | "justify";
+
+const CommandShortHand = {
+  redo: "redo",
+  undo: "undo",
+  bold: "bold",
+  italic: "italic",
+  underline: "underline",
+  orderedList: "orderedList",
+  bulletList: "bulletList",
+  alignLeft: "alignLeft",
+  alignRight: "alignRight",
+  alignCenter: "center",
+  justify: "justify",
+};
+
 export default function Toolbar({ editor }: ToolBarProps) {
+
+  const handleHeading = (selected: Menu) => {
+    if (selected.type === "PARAGRAPH") {
+      return editor.chain().focus().setParagraph().run();
+    }
+    if (selected.type !== "HEADING") return;
+
+    editor
+      .chain()
+      .focus()
+      .setHeading({ level: selected.depth as any })
+      .run();
+  };
+
+  const handleFontFamily = (selected: Menu) => {
+    if (selected.type !== "FONTFAMILY") return;
+    if (editor.isActive({ fontFamily: selected.value })) {
+      editor.chain().focus().unsetFontFamily().run();
+    }
+    editor.chain().focus().setFontFamily(selected.value).run();
+  };
+
+
+
   const handleCommand = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const command = e.currentTarget.name;
     switch (command) {
-      case "redo":
+      case CommandShortHand.redo:
         editor.chain().focus().redo().run();
         break;
-      case "undo":
+      case CommandShortHand.undo:
         editor.chain().focus().undo().run();
         break;
-      case "bold":
+      case CommandShortHand.bold:
         editor.chain().focus().toggleBold().run();
         break;
-      case "italic":
+      case CommandShortHand.italic:
         editor.chain().focus().toggleItalic().run();
         break;
-      case "underline":
+      case CommandShortHand.underline:
         // TipTap does not support underline by default. You need to add an extension for it.
         // editor.chain().focus().toggleUnderline().run();
         break;
-      case "orderedList":
+      case CommandShortHand.orderedList:
         editor.chain().focus().toggleOrderedList().run();
         break;
-      case "bulletList":
+
+      case CommandShortHand.bulletList:
         editor.chain().focus().toggleBulletList().run();
+        break;
+      case CommandShortHand.alignLeft:
+        editor.chain().focus().setTextAlign("left").run();
+        break;
+      case CommandShortHand.alignRight:
+        editor.chain().focus().setTextAlign("right").run();
+        break;
+      case CommandShortHand.justify:
+        editor.chain().focus().setTextAlign("justify").run();
+        break;
+      case CommandShortHand.alignCenter:
+        editor.chain().focus().setTextAlign("center").run();
         break;
       default:
         break;
     }
   };
 
-  const isActive = (
-    command: "bold" | "italic" | "orderedList" | "bulletList" | "link"
-  ) => {
+  const isActive = (command: ActiveEnum) => {
     switch (command) {
       case "bold":
         return editor.isActive("bold");
@@ -61,6 +122,14 @@ export default function Toolbar({ editor }: ToolBarProps) {
         return editor.isActive("bulletList");
       case "link":
         return editor.isActive("link");
+      case "alignLeft":
+        return editor.isActive({ textAlign: "left" });
+      case "alignRight":
+        return editor.isActive({ textAlign: "right" });
+      case "alignCenter":
+        return editor.isActive({ textAlign: "center" });
+      case "justify":
+        return editor.isActive({ textAlign: "justify" });
       default:
         return false;
     }
@@ -69,16 +138,24 @@ export default function Toolbar({ editor }: ToolBarProps) {
   return (
     <div className={`${style.toolbar} `}>
       <div className={`${style.section}`}>
-        <button onClick={handleCommand} name="undo" className={`${style.button}`}>
+        <button
+          onClick={handleCommand}
+          name={CommandShortHand.undo}
+          className={`${style.button}`}
+        >
           <i className="bx bx-undo"></i>
         </button>
-        <button onClick={handleCommand} name="redo" className={`${style.button}`}>
+        <button
+          onClick={handleCommand}
+          name={CommandShortHand.redo}
+          className={`${style.button}`}
+        >
           <i className="bx bx-redo"></i>
         </button>
       </div>
       <div className={`${style.section} ${style.format_section}`}>
         <button
-          name="bold"
+          name={CommandShortHand.bold}
           onClick={handleCommand}
           className={`${style.button} ${isActive("bold") && style.active}`}
         >
@@ -86,7 +163,7 @@ export default function Toolbar({ editor }: ToolBarProps) {
         </button>
 
         <button
-          name="italic"
+          name={CommandShortHand.italic}
           onClick={handleCommand}
           className={`${style.button} ${isActive("italic") && style.active}`}
         >
@@ -95,36 +172,51 @@ export default function Toolbar({ editor }: ToolBarProps) {
       </div>
       <div className={`${style.section} ${style.format_textStyles_section}`}>
         <Dropdown
-          defaultValue={list[0]}
+          defaultValue={
+            fontFamilies[0]
+          }
           type="heading/Normal"
-          onSelect={(selected) => console.log(selected)}
+          onSelect={handleHeading}
           options={list}
         />
 
         <Dropdown
-          defaultValue={{ type: "FONTSIZE", label: 5, value: 5 }}
-          type="FontSize"
-          onSelect={(selected) => console.log(selected)}
-          options={[
-            { type: "FONTSIZE", label: 10, value: 10 },
-            { type: "FONTSIZE", label: 16, value: 16 },
-          ]}
-          width={"70px"}
+          onSelect={handleFontFamily}
+          defaultValue={fontFamilies[0]}
+          options={fontFamilies}
+          type="Font"
+          width={"140px"}
         />
       </div>
 
       <div className={`${style.section} ${style.format_align_section}`}>
-        <button className={`${style.button}`}>
+        <button
+          name={CommandShortHand.alignLeft}
+          onClick={handleCommand}
+          className={`${style.button}`}
+        >
           <i className="bx bx-align-left"></i>
         </button>
-        <button className={`${style.button}`}>
+        <button
+          name={CommandShortHand.alignCenter}
+          onClick={handleCommand}
+          className={`${style.button}`}
+        >
           <i className="bx bx-align-middle"></i>
         </button>
-        <button className={`${style.button}`}>
+        <button
+          name={CommandShortHand.alignRight}
+          onClick={handleCommand}
+          className={`${style.button} `}
+        >
           <i className="bx bx-align-right"></i>
         </button>
 
-        <button className={`${style.button}`}>
+        <button
+          name={CommandShortHand.justify}
+          onClick={handleCommand}
+          className={`${style.button} ${isActive("justify") && style.active}`}
+        >
           <i className="bx bx-align-justify"></i>
         </button>
       </div>

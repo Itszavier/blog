@@ -16,7 +16,6 @@
   flex: 1;
   height: 100%;
   overflow-y: auto;
-  background-color: var(--accent);
 }
 
 .post_card {
@@ -27,8 +26,6 @@
   width: 70%;
   min-height: 260px;
   padding: 10px;
-  background-color: var(--accent);
-  color: var(--primaryFontColor);
   border-radius: 10px;
 }
 
@@ -39,7 +36,6 @@
 
 .sub_title {
   font-size: 1.1rem;
-  color: var(--secondaryFontColor);
 }
 
 .post_data_wrapper {
@@ -72,7 +68,6 @@
   display: flex;
   gap: 10px;
   font-size: 13px;
-  color: var(--secondaryFontColor);
   margin-top: 10px;
 }
 
@@ -88,7 +83,6 @@
   display: flex;
   gap: 8px;
   font-size: 18px;
-  color: var(--primaryFontColor);
   background-color: transparent;
   border: none;
   align-items: center;
@@ -96,16 +90,13 @@
 }
 .link {
   text-decoration: none;
-  color: var(--primaryFontColor);
 }
 
 .link:hover {
-  text-decoration: 2px solid var(--secondaryFontColor);
 }
 
 .status_text {
   font-size: 12px;
-  color: var(--secondaryFontColor);
 }
 
 .no_articles_container {
@@ -117,12 +108,9 @@
 
 .no_articles_message {
   font-size: 16px; /* Adjust the font size as needed */
-  color: var(--primaryFontColor); /* Adjust the color as needed */
   text-align: center; /* Center align the text */
   margin: 20px 0; /* Add some space above and below the message */
   padding: 20px; /* Add some padding around the message */
-  background-color: var(--tertiary); /* Optional: Add a background color */
-  /* Optional: Add a border */
   border-radius: 5px; /* Optional: Add rounded corners */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
 }
@@ -133,7 +121,6 @@
   padding: 10px 20px; /* Add padding to the button */
   font-size: 16px; /* Adjust the font size as needed */
   color: #fff; /* Button text color */
-  background-color: var(--primaryButtonColor); /* Button background color */
   border: none; /* Remove default border */
   border-radius: 5px; /* Add rounded corners */
   cursor: pointer; /* Change cursor to pointer */
@@ -141,7 +128,7 @@
 }
 
 .create_article_button:hover {
-  background-color: #0056b3; /* Darker shade for hover effect */
+
 }
 
 @media screen and (max-width: 680px) {

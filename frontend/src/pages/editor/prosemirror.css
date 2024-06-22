@@ -17,3 +17,14 @@
   background-color: transparent;
   color: var(--text-color-light);
 }
+
+.ProseMirror ul,
+ol {
+  margin-bottom: 15px;
+  padding-left: 20px;
+  list-style-position: outside;
+  margin-left: 25px;
+}
+.ProseMirror li {
+  margin-bottom: 5px;
+}

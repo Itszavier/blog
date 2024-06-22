@@ -1,6 +1,6 @@
 /** @format */
 import "./css/tiptap.css";
-
+import { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Home from "./pages/home";
@@ -13,9 +13,23 @@ import CreatePostModal from "./components/createPostModal";
 import PostView from "./pages/post";
 import Browse from "./pages/browse";
 import Create from "./pages/create";
-
+import NotFound from "./pages/404";
+import  './css/theme.css'
 function App() {
   const location = useLocation();
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
+
+  useEffect(() => {
+    if (isDarkTheme) {
+      document.body.classList.add("dark-theme");
+    } else {
+      document.body.classList.remove("dark-theme");
+    }
+  }, [isDarkTheme]);
+
+  const toggleTheme = () => {
+    setIsDarkTheme((prevTheme) => !prevTheme);
+  };
   const path = location.pathname;
   // Define the paths where the Navbar should be hidden
   const pathsWithoutNavbar = ["/dashboard", "/editor"];
@@ -28,7 +42,6 @@ function App() {
       {!hideNavbar && <Navbar />}
 
       <Routes>
-        {" "}
         <Route path="/editor/:postId" element={<EditorPage />} />
         <Route path={"/"} element={<Home />} />
         <Route path="/profile/:username" element={<Profile />} />
@@ -39,6 +52,7 @@ function App() {
 
           <Route element={<Settings />} path="/dashboard/*" />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <CreatePostModal />
       <AuthModal />

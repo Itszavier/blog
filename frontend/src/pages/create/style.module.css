@@ -1,13 +1,11 @@
 /** @format */
 
 .container {
-  background-color: var(--accent);
   height: 100vh;
   padding-top: 60px;
   width: 100%;
   display: flex;
   justify-content: center;
-  color: var(--primaryFontColor);
   align-items: center;
   flex-direction: column;
 }
@@ -38,8 +36,6 @@
   border: none;
   height: fit-content;
   height: 40px;
-  background-color: var(--tertiary);
-  color: var(--primaryFontColor);
   font-size: 18px;
 }
 
@@ -55,7 +51,6 @@ input:focus {
 
 .button {
   padding: 10px;
-  background-color: var(--primaryButtonColor);
   border-radius: 12px;
   border: none;
   width: 130px;
