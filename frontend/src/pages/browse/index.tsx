@@ -5,6 +5,7 @@ import { IPost } from "../../api/types";
 import { serverAxios } from "../../api/axios";
 import { Loading } from "../../components/loading";
 import PostCard from "../../components/post";
+import BrowseSideNav from "../../components/browseSideNav";
 
 export default function Browse() {
   const [loading, setLoading] = useState(true);
@@ -30,6 +31,8 @@ export default function Browse() {
 
   return (
     <div className={style.container}>
+      <BrowseSideNav />
+
       <div className={style.posts_container}>
         <div className={style.posts_container_header}>
           <button className={style.filter_btn}>Relevant</button>
