@@ -2,6 +2,7 @@
 import "./css/tiptap.css";
 import { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/navbar";
 import Home from "./pages/home";
 import Profile from "./pages/profile";
@@ -17,6 +18,7 @@ import "./css/theme.css";
 import CreateModal from "./components/createModal";
 
 import Publish from "./pages/publish";
+
 function App() {
   const location = useLocation();
   const [isDarkTheme, setIsDarkTheme] = useState(true);

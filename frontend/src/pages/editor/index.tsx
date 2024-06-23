@@ -41,7 +41,7 @@ export default function EditorPage() {
     },
   }));
 
-  const { isPending } = useFetch<IPost>(`/posts/fetch/editable/${postId}`, {
+  const { isPending, data } = useFetch<IPost>(`/posts/fetch/editable/${postId}`, {
     key: "post",
     onfetch: (data) => {
       console.log("saved handle save function", data);
@@ -151,7 +151,16 @@ export default function EditorPage() {
         </div>
       </div>
 
-      <PublishModal post={post} open={true} onClose={() => closeModal()} />
+      <PublishModal
+        post={{
+          ...post,
+          heroImage: data?.heroImage?.url,
+          tags: data!.tags,
+          description: data?.description,
+        }}
+        open={isOpen}
+        onClose={() => closeModal()}
+      />
     </div>
   );
 }

@@ -44,6 +44,10 @@ const postSchema = new Schema<IPostSchema>({
   subtitle: {
     type: SchemaTypes.String,
   },
+  description: {
+    type: SchemaTypes.String,
+    default: "",
+  },
   tags: {
     type: [SchemaTypes.String],
     default: [],

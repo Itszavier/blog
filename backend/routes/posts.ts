@@ -12,6 +12,7 @@ import { heroImageUpload } from "../multer/file";
 import { errorMessage } from "../middleware/error";
 import uploadImageFile from "../utils";
 import { getSelectedUserFields } from "./user";
+import { publishArticle } from "../controller/article";
 
 const router = Router();
 
@@ -192,7 +193,7 @@ router.post(
         title: z
           .string()
           .min(5, { message: "Title must be at least 5 characters long" })
-          .max(100, { message: "Title cannot exceed 100 characters" }),
+          .max(150, { message: "Title cannot exceed 100 characters" }),
         subtitle: z
           .string()
           .min(2, { message: "Subtitle must be at least 5 characters long" })
@@ -481,4 +482,10 @@ router.put("/dislike/:postId", ensureAuthenticated, async (req, res, next) => {
   }
 });
 
+router.post(
+  "/publish/:id",
+  ensureAuthenticated,
+  heroImageUpload.single("heroImage"),
+  publishArticle
+);
 export default router;

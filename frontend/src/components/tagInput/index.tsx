@@ -4,8 +4,8 @@ import style from "./style.module.css";
 
 interface TagInputProps {
   tags: string[];
-  onRemove?: (updatedTags: string[]) => {};
-  onAdd?: (updatedTags: string[]) => {};
+  onRemove?: (updatedTags: string[]) => any;
+  onAdd?: (updatedTags: string[]) => any;
   maxWidth?: string;
   maxheight?: string;
   // onInputChange?: () => {};
