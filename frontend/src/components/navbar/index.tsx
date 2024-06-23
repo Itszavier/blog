@@ -17,7 +17,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className={`navbar ${style.container}`}>
+    <div className={`nav ${style.container}`}>
       <div className={style.logo_container}>
         <Link to="/" className={style.logo_link}>
           <h3>ProArticle</h3>

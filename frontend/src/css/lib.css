@@ -21,7 +21,26 @@
 }
 
 /* Button Styling */
+.btn {
+  cursor: pointer;
+  padding: 8px 12px;
+  min-width: 120px;
+  min-height: 45px;
+  margin: 4px;
+  font-size: 17px;
+}
 
+.btn-primary {
+  padding: 8px 12px;
+  min-width: 120px;
+  min-height: 45px;
+}
+
+.btn-secondary {
+  padding: 8px 12px;
+  min-width: 120px;
+  min-height: 45px;
+}
 /*flex postion className*/
 
 .error-v {

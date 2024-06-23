@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Modal from "../modal";
 import style from "./style.module.css";
-import Button from "react-bootstrap/Button";
+import TagInput from "../tagInput";
 
 interface IPostData {
   _id: string;
@@ -21,6 +21,7 @@ interface PublishModalProps {
 }
 export default function PublishModal(props: PublishModalProps) {
   const [showTitleInput, setTitleInput] = useState(false);
+  const [tags, setTags] = useState<string[]>([]);
   const [showSubtitleInput, setShowSubtitleInput] = useState(false);
   const [title, setTitle] = useState(() => props.post.title || "");
   const [subtitle, setSubtitle] = useState(() => props.post.subtitle || "");
@@ -41,33 +42,36 @@ export default function PublishModal(props: PublishModalProps) {
           </p>
         </div>
         <div className="divider-h"></div>
+
+        <input type="file" />
+
+        <div className="divider-h"> </div>
         <div>
           <form>
             <div className={style.cover_image}></div>
             <div className={"form-group"}>
-              <input
-                disabled={showTitleInput}
-                value={title}
-                className={style.input}
-              ></input>
+              <label>Title</label>
+              <input disabled={showTitleInput} value={title} className={style.input} />
             </div>
-
             <div className={"form-group"}>
-              <input value={subtitle} className={style.input}></input>
+              <label>Subtitle</label>
+              <input value={subtitle} className={style.input} />
             </div>
-
             <div className="form-group">
               <label>Description</label>
               <textarea className={style.text_area} />
             </div>
 
-            <div className="d-grid gap-2">
-              <Button variant="secondary" size="lg">
-                close
-              </Button>
-              <Button variant="primary" size="lg">
+            <div className="form-group">
+              <label>Tags</label>
+              <TagInput tags={tags} />
+            </div>
+
+            <div className={style.btn_container}>
+              <button className={`.btn btn-secondary ${style.button}`}>close</button>
+              <button className={`.btn btn-primary  ${style.button}`}>
                 Publish & View
-              </Button>
+              </button>
             </div>
           </form>
         </div>

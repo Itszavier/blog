@@ -13,7 +13,7 @@ export default function ProfileDropdown() {
   const Navgate = useNavigate();
 
   const handleClickOutside = (event: any) => {
-    if (toggle && !event.target.closest("#dropdown")) {
+    if (toggle && !event.target.closest("#profileDropdown")) {
       setToggle(false);
     }
   };
@@ -43,9 +43,9 @@ export default function ProfileDropdown() {
     }
   };
   return (
-    <div id={"dropdown"} className={` ${style.container}`}>
+    <div id={"profileDropdown"} className={` ${style.container}`}>
       <button
-        id={"dropdown"}
+        id={"profileDropdown"}
         onClick={() => setToggle((prev) => !prev)}
         className={style.header}
       >
@@ -54,7 +54,7 @@ export default function ProfileDropdown() {
       </button>
 
       {toggle && (
-        <div id={"dropdown"} className={`card ${style.body}`}>
+        <div id={"profileDropdown"} className={`card ${style.body}`}>
           <Link
             className={style.link}
             id={"dropdown"}

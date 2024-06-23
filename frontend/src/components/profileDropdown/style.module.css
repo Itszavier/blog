@@ -39,9 +39,8 @@
   right: 0;
   top: 64px;
   font-size: 16px;
-  z-index: 90;
+  z-index: 20;
 }
-
 .body i {
   min-width: 20px;
 }

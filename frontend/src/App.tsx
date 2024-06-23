@@ -9,14 +9,13 @@ import ProtectedRoutes from "./components/protected";
 import Settings from "./pages/dashboard";
 import AuthModal from "./components/authmodal";
 import EditorPage from "./pages/editor";
-import CreatePostModal from "./components/createPostModal";
 import PostView from "./pages/post";
 import Browse from "./pages/browse";
 import Create from "./pages/create";
 import NotFound from "./pages/404";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/theme.css";
 import CreateModal from "./components/createModal";
+
 import Publish from "./pages/publish";
 function App() {
   const location = useLocation();
@@ -57,7 +56,7 @@ function App() {
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {/*<CreateModal />*/}
+      {/*<CreateModal /> */}
       <AuthModal />
     </>
   );

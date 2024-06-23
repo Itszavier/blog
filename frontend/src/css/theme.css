@@ -128,7 +128,7 @@ textarea {
   border-color: var(--border-color);
 }
 
-.navbar {
+.nav {
   background-color: var(--header-footer-background-color);
   color: var(--header-footer-text-color);
 }
@@ -143,19 +143,19 @@ textarea {
   border-color: var(--border-color);
 }
 
-.navbar,
+.nav,
 .sidenav {
   background-color: var(--header-footer-background-color);
   color: var(--header-footer-text-color);
 }
 
-.navbar a,
+.nav a,
 .sidenav a {
   color: var(--header-footer-text-color);
   text-decoration: none;
 }
 
-.navbar {
+.nav{
   padding: 4px 80px;
 }
 
