@@ -14,6 +14,12 @@
   --button-border-color: #cccccc;
   --secondary-button-background-color: #f0f0f0;
   --secondary-button-text-color: #666666;
+  --success-button-background-color: #4caf50;
+  --success-button-text-color: #ffffff;
+  --danger-button-background-color: #f44336;
+  --danger-button-text-color: #ffffff;
+  --warning-button-background-color: #ffc107;
+  --warning-button-text-color: #000000;
   --input-background-color: #ffffff;
   --input-text-color: #000000;
   --input-border-color: #cccccc;
@@ -35,6 +41,12 @@ body.dark-theme {
   --button-border-color: #272727;
   --secondary-button-background-color: #333333;
   --secondary-button-text-color: #b0b0b0;
+  --success-button-background-color: #388e3c;
+  --success-button-text-color: #ffffff;
+  --danger-button-background-color: #d32f2f;
+  --danger-button-text-color: #ffffff;
+  --warning-button-background-color: #fbc02d;
+  --warning-button-text-color: #000000;
   --input-background-color: #1f1f1f;
   --input-text-color: #ffffff;
   --input-border-color: #272727;
@@ -71,6 +83,26 @@ button {
 button.secondary {
   background-color: var(--secondary-button-background-color);
   color: var(--secondary-button-text-color);
+}
+
+button.primary {
+  background-color: var(--accent-color);
+  color: var(--primary-text-color);
+}
+
+button.success {
+  background-color: var(--success-button-background-color);
+  color: var(--success-button-text-color);
+}
+
+button.danger {
+  background-color: var(--danger-button-background-color);
+  color: var(--danger-button-text-color);
+}
+
+button.warning {
+  background-color: var(--warning-button-background-color);
+  color: var(--warning-button-text-color);
 }
 
 input,

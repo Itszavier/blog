@@ -6,7 +6,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 2000;
+  z-index: 999;
 }
 
 .logo_container {
@@ -34,4 +34,33 @@
   align-items: center;
   margin-left: 8px;
   text-transform: capitalize;
+}
+
+.navBtn {
+  display: flex;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 800ms ease-in-out;
+}
+
+.link {
+  align-items: center;
+  display: flex;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 400ms ease-in-out;
+}
+.link i {
+  font-size: 20px;
+}
+
+.link:hover {
+  background-color: var(--accent-color);
+  color: black;
+}
+
+.navBtn:hover {
+  background-color: var(--accent-color);
+  color: black;
 }

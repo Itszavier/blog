@@ -14,8 +14,10 @@ import PostView from "./pages/post";
 import Browse from "./pages/browse";
 import Create from "./pages/create";
 import NotFound from "./pages/404";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/theme.css";
 import CreateModal from "./components/createModal";
+import Publish from "./pages/publish";
 function App() {
   const location = useLocation();
   const [isDarkTheme, setIsDarkTheme] = useState(true);
@@ -48,9 +50,9 @@ function App() {
         <Route path="/profile/:username" element={<Profile />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/create" element={<Create />} />
+          <Route path="/publish/:postId" element={<Publish />} />
           <Route path="/article/:title/:handle" element={<PostView />} />
           <Route path="/browse" element={<Browse />} />
-
           <Route element={<Settings />} path="/dashboard/*" />
         </Route>
         <Route path="*" element={<NotFound />} />

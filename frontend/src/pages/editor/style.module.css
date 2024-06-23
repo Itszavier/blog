@@ -69,7 +69,9 @@
   color: white;
 }
 .publish_btn {
-
+  display: flex;
+  align-items: center;
+  color: black;
 }
 .setting_btn {
   margin: 0;

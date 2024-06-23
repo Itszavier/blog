@@ -1,0 +1,30 @@
+/**
+ * Form Styling
+ *
+ * @format
+ */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px;
+}
+
+.form-group textarea {
+  resize: none;
+  padding: 8px;
+}
+
+.form-group input {
+  padding: 8px;
+}
+
+/* Button Styling */
+
+/*flex postion className*/
+
+.error-v {
+  font-size: 12px;
+  color: rgb(145, 26, 26);
+}

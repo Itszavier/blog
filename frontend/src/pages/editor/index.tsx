@@ -11,8 +11,11 @@ import useFetch from "../../hooks/useFetch";
 import { extenions } from "../../tipTap.config";
 import { IPost } from "../../api/types";
 import useAutoSave from "../../hooks/useAutoSave";
+import PublishModal from "../../components/publishModal";
+import { useModal } from "../../context/modalContext";
 
 interface IPostInitailData {
+  _id: string;
   title: string;
   subtitle: string;
   content: {
@@ -27,8 +30,10 @@ async function handleAutoSave(unSavedData: IPostInitailData) {
 export default function EditorPage() {
   const { postId } = useParams();
   const navigate = useNavigate();
+  const { closeModal, openModal, isOpen } = useModal("publish");
   // Use state with an initial function
   const [post, setPost] = useState<IPostInitailData>(() => ({
+    _id: "",
     title: "Test title of a post",
     subtitle: "",
     content: {
@@ -36,14 +41,18 @@ export default function EditorPage() {
     },
   }));
 
-  // Use the fetch hook
-  /*const { isPending } = useFetch<IPost>(`/posts/fetch/editable/${postId}`, {
+  const { isPending } = useFetch<IPost>(`/posts/fetch/editable/${postId}`, {
     key: "post",
     onfetch: (data) => {
       console.log("saved handle save function", data);
-      setPost({ title: data.title, subtitle: data.subtitle, content: data.content });
+      setPost({
+        _id: data._id,
+        title: data.title,
+        subtitle: data.subtitle,
+        content: data.content,
+      });
     },
-  }); */
+  });
 
   const { isSaving } = useAutoSave<IPostInitailData>(post, {
     onSave: handleAutoSave,
@@ -67,7 +76,7 @@ export default function EditorPage() {
     content: post.content.html,
   });
 
-  /*useEffect(() => {
+  useEffect(() => {
     if (!isPending) {
       editor?.commands.setContent(post.content.html);
     }
@@ -75,7 +84,7 @@ export default function EditorPage() {
     if (editor && editor?.getHTML().length > 0) {
       editor.commands.focus("end");
     }
-  }, [isPending]);*/
+  }, [isPending]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPost((prev) => {
@@ -83,7 +92,7 @@ export default function EditorPage() {
     });
   };
 
-  if (false) return <Loading />;
+  if (isPending) return <Loading />;
 
   if (!editor) return null;
 
@@ -103,13 +112,11 @@ export default function EditorPage() {
           <div className={style.left_container}>
             <span className={style.saved_text}>{!isSaving && "Changes saved"}</span>
             <button
-              onClick={(e) => navigate("/publish", { state: post })}
-              className={`${style.control_btn} ${style.publish_btn}`}
+              onClick={() => openModal()}
+              className={`primary ${style.control_btn} ${style.publish_btn}`}
             >
               Publish Article
             </button>
-
-            <ProfileDropdown />
           </div>
         </div>
         <Toolbar editor={editor} />
@@ -143,6 +150,8 @@ export default function EditorPage() {
           </div>
         </div>
       </div>
+
+      <PublishModal post={post} open={true} onClose={() => closeModal()} />
     </div>
   );
 }

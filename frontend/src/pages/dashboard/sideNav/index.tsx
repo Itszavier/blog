@@ -80,16 +80,16 @@ export default function SideNav() {
       <div className={style.footer}>
         <button
           onClick={() => Navigate("/browse")}
-          className={`${style.logoutBtn} ${style.exit_btn}`}
+          className={`button ${style.logoutBtn} ${style.exit_btn}`}
         >
           <i className="bx bxs-exit"></i>
           Exit Dashboard
         </button>
-        <button className={`${style.logoutBtn} ${style.create_btn}`}>
+        <button className={` button ${style.logoutBtn} ${style.create_btn}`}>
           <i className="bx bxs-plus-circle"></i>
           Create
         </button>
-        <button className={`${style.logoutBtn}`}>
+        <button className={`button ${style.logoutBtn}`}>
           <i className={`bx bx-log-out  ${style.icon}`}></i>
           Logout
         </button>

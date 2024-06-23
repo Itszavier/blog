@@ -1,19 +1,36 @@
 /** @format */
 .container {
-  height: 100%;
+  height: 400px;
   width: 390px;
 }
 
 .content {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  position: relative;
   height: 100%;
 }
 
 .header {
   text-align: center;
-  margin-top: 100px;
-  margin-bottom: 90px;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  margin: 8px;
+  padding: 8px;
+}
+
+.header h2 {
+  font-weight: 500px;
+  text-align: center;
+  padding-left: 7px;
+}
+
+.header p {
+  text-align: justify;
+  font-size: 14px;
+  color: var(--secondary-text-color);
 }
 
 .google_icon {
@@ -34,7 +51,6 @@
 .google_signin_btn {
   display: flex;
   align-items: center;
-  gap: 10px;
   width: 290px;
   border: none;
   padding: 8px;
@@ -43,6 +59,13 @@
   justify-content: center;
   transition: ease-in-out 100ms;
   height: 60px;
+}
+
+.google_signin_btn i {
+  min-width: 30px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .google_signin_btn:hover {

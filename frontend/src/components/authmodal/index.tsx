@@ -23,12 +23,15 @@ export default function AuthModal() {
     >
       <div className={style.content}>
         <div className={style.header}>
-          <h2>Narrate</h2>
+          <h2>Sign in</h2>
+          <p>
+            click the button below to sign in with your Google account for quick and
+            secure access to our services.
+          </p>
         </div>
         <div onClick={handleLogin} className={style.button_container}>
-          <button className={style.google_signin_btn}>
-            <FaGoogle size={30} />
-            Sign in with google
+          <button className={`button ${style.google_signin_btn}`}>
+            <i className="bx bxl-google"></i>Sign in with Google
           </button>
         </div>
       </div>

@@ -10,6 +10,7 @@
   height: 230px;
   transition: transform 0.2s;
   cursor: pointer;
+  width:700px;
 }
 
 .profile_image {

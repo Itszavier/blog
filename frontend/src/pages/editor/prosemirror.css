@@ -5,7 +5,6 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   min-height: 560px;
-  background-color: var(--background-color-light);
   overflow-y: hidden;
 }
 
@@ -15,7 +14,9 @@
   width: 100%;
   min-height: 300px;
   background-color: transparent;
-  color: var(--text-color-light);
+  color: #c9c9c9;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 .ProseMirror ul,

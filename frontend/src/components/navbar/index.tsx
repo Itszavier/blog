@@ -28,17 +28,54 @@ export default function Navbar() {
         {user ? (
           <>
             <li className={style.listItem}>
-              <Link to={"/browse"}>browse</Link>
+              <Link className={style.link} to={"/browse"}>
+                browse
+              </Link>
             </li>
             <li className={style.listItem}>
-              <Link to={"/create"}>create</Link>
+              <Link className={style.link} to={"/create"}>
+                create
+              </Link>
             </li>
             <li className={style.listItem}>
               <ProfileDropdown />
             </li>
           </>
         ) : (
-          ""
+          <>
+            <li className={style.listItem}>
+              <Link to={"#"} className={style.link}>
+                <i className="bx bxl-instagram-alt"></i>
+              </Link>
+            </li>
+            <li className={style.listItem}>
+              <Link to="#" className={style.link}>
+                <i className="bx bxl-twitter"></i>
+              </Link>
+            </li>
+            <li className="divider-v"></li>
+            <li className={style.listItem}>
+              <Link className={style.link} to={"/pricing"}>
+                Membership
+              </Link>
+            </li>
+
+            <li className={style.listItem}>
+              <Link className={style.link} to={"/pricing"}>
+                contact
+              </Link>
+            </li>
+            <li className={style.listItem}>
+              <Link className={style.link} to={"/pricing"}>
+                Explore
+              </Link>
+            </li>
+            <li className={style.listItem}>
+              <button onClick={() => handleLoginPopup()} className={style.navBtn}>
+                GET STARTED
+              </button>
+            </li>
+          </>
         )}
       </ul>
     </div>

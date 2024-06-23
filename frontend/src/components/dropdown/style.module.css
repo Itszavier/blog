@@ -48,6 +48,7 @@
   min-width: 20px;
   height: 100%;
   cursor: pointer;
+  margin-left: auto;
 }
 
 .paragraph {
