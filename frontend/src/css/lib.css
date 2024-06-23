@@ -34,6 +34,8 @@
   padding: 8px 12px;
   min-width: 120px;
   min-height: 45px;
+  background-color: #3a8bd9;
+  border: none;
 }
 
 .btn-secondary {
@@ -46,4 +48,29 @@
 .error-v {
   font-size: 12px;
   color: rgb(145, 26, 26);
+}
+
+.divider-v {
+  width: 2px;
+  display: inline-block;
+  background-color: var(--border-color);
+  height: 25px;
+  margin: 0 10px;
+}
+
+.divider-h {
+  width: 100%;
+  flex: 1;
+  display: inline-block;
+  background-color: var(--border-color);
+  height: 2px;
+  margin: 10px 0px;
+}
+
+.h-15 {
+  height: 2px;
+}
+
+.h-20 {
+  height: 3px;
 }

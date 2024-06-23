@@ -31,50 +31,61 @@ export default function PublishModal(props: PublishModalProps) {
       contentClassName={style.container}
       isOpen={props.open}
       modalKey={"publish"}
+      showCloseBtn={false}
       handleClose={props.onClose}
     >
-      <div>
+      <div className={style.wrapper}>
         <div className={`${style.header}`}>
-          <h2>Finalize Your Article and Get It Ready for Publication</h2>
+          <h2>Get Your Article Ready for Publication</h2>
+          <p>Customize your article metadata</p>
           <p>
             Make sure your article has a good hero image and a title that matches your
             content.
           </p>
         </div>
-        <div className="divider-h"></div>
 
-        <input type="file" />
-
-        <div className="divider-h"> </div>
-        <div>
-          <form>
-            <div className={style.cover_image}></div>
-            <div className={"form-group"}>
-              <label>Title</label>
-              <input disabled={showTitleInput} value={title} className={style.input} />
+        <form>
+          <div className={style.cover_image_upload_container}>
+            {/*<img src="" alt="" /> */}
+            <div className={style.image_upload_text_wrapper}>
+              <i className="bx bx-cloud-upload"></i>
+              <span>Upload a compelling cover image your article</span>
             </div>
-            <div className={"form-group"}>
-              <label>Subtitle</label>
-              <input value={subtitle} className={style.input} />
+            <input className={style.file_input} type="file" />
+          </div>
+          <div className={"form-group"}>
+            <label>Title</label>
+            <input disabled={showTitleInput} value={title} className={style.input} />
+            <div className={style.user_message_section}>
+              <span className={style.required_text}>
+                <i className="bx bx-info-circle"></i>required
+              </span>
+              {/*<div className="divider-v h-15"></div> */}
             </div>
-            <div className="form-group">
-              <label>Description</label>
-              <textarea className={style.text_area} />
+          </div>
+          <div className={"form-group"}>
+            <label>Subtitle</label>
+            <input value={subtitle} className={style.input} />
+            <div className={style.user_message_section}>
+              <span className={style.required_text}>
+                <i className="bx bx-info-circle"></i>required
+              </span>
+              {/*<div className="divider-v"></div> */}
             </div>
-
-            <div className="form-group">
-              <label>Tags</label>
-              <TagInput tags={tags} />
-            </div>
-
-            <div className={style.btn_container}>
-              <button className={`.btn btn-secondary ${style.button}`}>close</button>
-              <button className={`.btn btn-primary  ${style.button}`}>
-                Publish & View
-              </button>
-            </div>
-          </form>
-        </div>
+          </div>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea className={style.text_area} />
+          </div>
+          <div className="form-group">
+            <label>Tags</label>
+            <TagInput tags={tags} />
+          </div>{" "}
+          <div className={style.btn_container}>
+            <button className={`btn btn-secondary ${style.button}`}>Close</button>
+            <button className={`btn btn-primary  ${style.button}`}>Publish & View</button>
+          </div>
+        </form>
       </div>
     </Modal>
   );

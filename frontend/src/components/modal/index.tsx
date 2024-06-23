@@ -14,10 +14,11 @@ interface ModalProps {
   handleClose: () => any;
   onClickOff?: () => {};
   children: any;
+  showCloseBtn?: boolean;
 }
 export default function Modal(props: ModalProps) {
   if (props.isOpen === false) return null;
-
+  
   return (
     <div
       className={`${styles["modal-overlay"]} ${props.overlayClassName}`}
@@ -28,14 +29,16 @@ export default function Modal(props: ModalProps) {
         data-modal-key={props.modalKey}
       >
         {props.children}
-        <button
-          className={styles["modal-close-btn"]}
-          onClick={() => {
-            props.handleClose();
-          }}
-        >
-          Close
-        </button>
+        {props.showCloseBtn && (
+          <button
+            className={styles["modal-close-btn"]}
+            onClick={() => {
+              props.handleClose();
+            }}
+          >
+            Close
+          </button>
+        )}
       </div>
     </div>
   );
