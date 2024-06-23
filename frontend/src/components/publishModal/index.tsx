@@ -45,14 +45,6 @@ export default function PublishModal(props: PublishModalProps) {
         </div>
 
         <form>
-          <div className={style.cover_image_upload_container}>
-            {/*<img src="" alt="" /> */}
-            <div className={style.image_upload_text_wrapper}>
-              <i className="bx bx-cloud-upload"></i>
-              <span>Upload a compelling cover image your article</span>
-            </div>
-            <input className={style.file_input} type="file" />
-          </div>
           <div className={"form-group"}>
             <label>Title</label>
             <input disabled={showTitleInput} value={title} className={style.input} />
@@ -76,6 +68,14 @@ export default function PublishModal(props: PublishModalProps) {
           <div className="form-group">
             <label>Description</label>
             <textarea className={style.text_area} />
+          </div>
+          <div className={style.cover_image_upload_container}>
+            {/*<img src="" alt="" /> */}
+            <div className={style.image_upload_text_wrapper}>
+              <i className="bx bx-cloud-upload"></i>
+              <span>Upload a compelling cover image for  your article</span>
+            </div>
+            <input className={style.file_input} type="file" />
           </div>
           <div className="form-group">
             <label>Tags</label>
