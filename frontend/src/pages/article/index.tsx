@@ -73,6 +73,33 @@ export default function PostView() {
             <h2 className={style.title}>{post.title}</h2>
             <p className={style.subtitle}>{post.subtitle}</p>
           </div>
+          <div className={style.info}>
+            <div className={style.author_info_wrapper}>
+              <div className={style.author_info}>
+                <img width={30} height={30} src={post.author.profileImage.url} alt="" />
+                <span>by {post.author.name}</span>
+              </div>
+              <span className={`text-s ${style.read_time_text}`}>10m read</span>
+            </div>
+            <div className={style.menu}>
+              <div className={style.left}>
+                <button className={style.menu_btn}>
+                  <span>0</span>
+                  <i className="bx bxs-heart"></i>
+                </button>
+
+                <button className={style.menu_btn}>
+                  <span>0</span>
+                  <i className="bx bxs-message-square-dots"></i>
+                </button>
+              </div>
+              <div className={style.right}>
+                <button className={style.menu_btn}>
+                  <i className="bx bxs-bookmark"></i>
+                </button>
+              </div>
+            </div>
+          </div>
 
           {post.heroImage && (
             <div className={style.heroImage_container}>
@@ -131,7 +158,7 @@ async function fetchPost(title: string, handle: string) {
   return new Promise<IPost>(async (resolve, reject) => {
     try {
       const response = await serverAxios.get(
-        `/posts/fetch/publicView/${title}/${handle}`
+        `/article/fetch/publicView/${title}/${handle}`
       );
       const data: IPost = response.data.post;
       resolve(data);

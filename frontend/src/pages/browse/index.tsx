@@ -61,7 +61,7 @@ export default function Browse() {
 async function fetchPosts() {
   return new Promise<IPost[]>(async (resolve, reject) => {
     try {
-      const response = await serverAxios.get("/posts/");
+      const response = await serverAxios.get("/article/");
       const data: IPost[] = response.data.posts;
       resolve(data);
     } catch (error) {

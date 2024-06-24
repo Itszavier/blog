@@ -31,7 +31,6 @@ export const unsupportedSymbols = [
   "'",
 ];
 
-
 interface IImageUpload {
   file: Express.Multer.File;
   previous: { id: string; storage: string; url: string };
@@ -90,3 +89,25 @@ export default async function uploadImageFile(
     }
   });
 }
+
+export const userSelectedFields = [
+  "_id",
+  "username",
+  "name",
+  "bio",
+  "profileImage",
+  "followers",
+  "following",
+];
+
+type SelectedUserFields = "follow" | "user";
+
+export const getSelectedUserFields = (type: SelectedUserFields) => {
+  if (type === "follow") {
+    return userSelectedFields
+      .filter((field) => field !== "followers" && field !== "following")
+      .join(" ");
+  } else {
+    return userSelectedFields.join(" ");
+  }
+};

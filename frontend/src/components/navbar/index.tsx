@@ -38,6 +38,9 @@ export default function Navbar() {
               </Link>
             </li>
             <li className={style.listItem}>
+              <i className="bx bxs-bell"></i>
+            </li>
+            <li className={style.listItem}>
               <ProfileDropdown />
             </li>
           </>
@@ -55,18 +58,18 @@ export default function Navbar() {
             </li>
             <li className="divider-v"></li>
             <li className={style.listItem}>
-              <Link className={style.link} to={"/pricing"}>
+              <Link className={style.link} to={"#"}>
                 Membership
               </Link>
             </li>
 
             <li className={style.listItem}>
-              <Link className={style.link} to={"/pricing"}>
+              <Link className={style.link} to={"#"}>
                 contact
               </Link>
             </li>
             <li className={style.listItem}>
-              <Link className={style.link} to={"/pricing"}>
+              <Link className={style.link} to={"/browse"}>
                 Explore
               </Link>
             </li>

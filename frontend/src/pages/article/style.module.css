@@ -58,7 +58,6 @@
 .author_container img {
   width: 25px;
   height: 25px;
- 
 }
 
 .post_info_container {
@@ -67,47 +66,82 @@
 
 .title {
   width: 100%;
-  text-align: center;
+  font-style: oblique;
 }
+
 .subtitle {
   margin-top: 8px;
-  text-align: center;
   color: var(--secondary-text-color);
 }
 
-
-
 .menu {
   display: flex;
-  flex-direction: column;
-  position: absolute;
-  left: 12%;
-  gap: 20px;
   font-size: 40px;
-  justify-content: center;
+  width: 100%;
   align-items: center;
   width: fit-content;
-  height: 90%;
-  padding: 18px;
-  background-color: var(--card-background-color);
+  max-height: 50px;
+  padding: 20px 0px;
+  width: 100%;
 }
 
 .menu_btn {
-  width: 100%;
-  font-size: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 40px;
   border: none;
   background: transparent;
-  flex-direction: column;
+  flex-direction: row;
   gap: 1px;
   cursor: pointer;
   padding: 8px;
+  margin-right: 8px;
+  font-size: 24px;
 }
 
 .menu_btn span {
-  font-size: 15px;
+  min-width: 30px;
+  font-size: 20px;
+}
+.left,
+.right {
+  display: flex;
+  align-items: center;
+}
+.right {
+  margin-left: auto;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border-color);
+  height: 108px;
+  padding: 8px;
+  margin-bottom: 8px;
+  gap: 15px;
+  border-bottom: 2px solid var(--border-color);
+  padding: 10px;
 }
 
+.author_info {
+  display: flex;
+  padding: 0px 8px;
+}
+
+.author_info img {
+  border-radius: 20px;
+  margin-right: 8px;
+}
+
+.read_time_text {
+  font-size: 13px;
+  margin-left: auto;
+  width: fit-content;
+  margin-right: 16px;
+}
+
+.author_info_wrapper {
+  display: flex;
+  align-items: center;
+}

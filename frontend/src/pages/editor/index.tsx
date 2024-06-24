@@ -41,7 +41,7 @@ export default function EditorPage() {
     },
   }));
 
-  const { isPending, data } = useFetch<IPost>(`/posts/fetch/editable/${postId}`, {
+  const { isPending, data } = useFetch<IPost>(`/posts/editable/${postId}`, {
     key: "post",
     onfetch: (data) => {
       console.log("saved handle save function", data);

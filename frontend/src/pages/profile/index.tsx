@@ -21,7 +21,7 @@ export default function Profile() {
     setMemberLoading(true);
     const abortController = new AbortController();
     serverAxios
-      .get(`/user/fetch/username/${username}`, { signal: abortController.signal })
+      .get(`/user/username/${username}`, { signal: abortController.signal })
       .then(function (response) {
         setMember(response.data.user);
       })
@@ -41,7 +41,7 @@ export default function Profile() {
     if (member) {
       setPostsLoading(true);
       serverAxios
-        .get(`/posts/fetch/user/${member._id}`)
+        .get(`/posts/id/${member._id}`)
         .then((response) => {
           setPosts(response.data.posts);
         })

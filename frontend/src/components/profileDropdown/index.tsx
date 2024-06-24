@@ -92,9 +92,11 @@ export default function ProfileDropdown() {
             <i className="bx bxs-bell"></i>
             notification
           </Link>
-          <button onClick={handleLogout} className={`button ${style.logout_btn}`}>
-            logout
-          </button>
+          <div className={style.footer}>
+            <button onClick={handleLogout} className={`btn btn-secondary border  ${style.logout_btn}`}>
+              logout
+            </button>
+          </div>
         </div>
       )}
     </div>

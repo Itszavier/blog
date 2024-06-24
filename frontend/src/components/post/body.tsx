@@ -16,9 +16,7 @@ export default function CardBody({ post }: CardBodyProps) {
     <div className={style.post_card_body}>
       <div className={style.post_data_wrapper}>
         <p className={style.title}>
-          <Link className={`text-p ${style.link}`} to={encodedUrl}>
             {post.title}
-          </Link>
         </p>
 
         <p className={`${style.sub_title} text-s `}>{post.subtitle || "subtitle from content"}</p>
