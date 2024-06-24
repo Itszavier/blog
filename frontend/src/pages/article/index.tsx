@@ -5,7 +5,7 @@ import { serverAxios } from "../../api/axios";
 import { IPost } from "../../api/types";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/auth";
-import { Loading } from "../../components/loading";
+import { ButtonLoader, Loading } from "../../components/loading";
 import { MdComment } from "react-icons/md";
 import { IoBookmark, IoHeart, IoHeartDislike } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
@@ -13,6 +13,7 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "@reactuses/core";
 import { toast, ToastContainer } from "react-toastify";
 import { likeArticle, unLikeArticle } from "../../api/functions";
+import { ClipLoader } from "react-spinners";
 
 export default function PostView() {
   const { title, handle } = useParams<{ title: string; handle: string }>();
@@ -64,7 +65,10 @@ export default function PostView() {
       const data = await likeArticle(post?._id as string);
       console.log(data);
     } catch (error) {
-      toast.error("Something went wrong while proforming action like", { theme: "dark" });
+      toast.error(
+        `Error: Unable to Complete Action We encountered an issue while trying like this post`,
+        { theme: "dark" }
+      );
       console.log(error);
     } finally {
       setIsLikeLoading(false);
@@ -79,7 +83,10 @@ export default function PostView() {
       const data = await unLikeArticle(post?._id as string);
       console.log(data);
     } catch (error) {
-      toast.error("Something went wrong while proforming action unlike", { theme: "dark" });
+      toast.error(
+        `Error: Unable to Complete Action We encountered an issue while trying like this post`,
+        { theme: "dark" }
+      );
       console.log(error);
     } finally {
       setIsLikeLoading(false);
@@ -122,7 +129,7 @@ export default function PostView() {
                   name={"like button"}
                   className={style.menu_btn}
                 >
-                  <span>0</span>
+                  {true ? <ClipLoader color="white"  size={2} />: <span>0</span>}
                   <i className="bx bxs-heart"></i>
                 </button>
 

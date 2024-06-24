@@ -16,5 +16,5 @@ interface IButtonLoaderProps {
 }
 
 export function ButtonLoader(props: IButtonLoaderProps) {
-  return <ClipLoader size={18|| props.size} color="white" />;
+  return <ClipLoader size={props.size ? props.size : 18} color="white" />;
 }
