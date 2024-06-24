@@ -12,6 +12,7 @@ import { FaEdit } from "react-icons/fa";
 import Confetti from "react-confetti";
 import { useWindowSize } from "@reactuses/core";
 import { toast, ToastContainer } from "react-toastify";
+import { likeArticle, unLikeArticle } from "../../api/functions";
 
 export default function PostView() {
   const { title, handle } = useParams<{ title: string; handle: string }>();
@@ -19,6 +20,7 @@ export default function PostView() {
   const state: { published: boolean; message: string } | undefined = location.state;
   const [post, setPost] = useState<IPost | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isLikeLoading, setIsLikeLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [wasPublished, setWasPublished] = useState<boolean>(false);
   console.log(state, wasPublished);
@@ -53,6 +55,37 @@ export default function PostView() {
     };
   }, []);
 
+  const handleLike = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (!post) {
+      return;
+    }
+    setIsLikeLoading(true);
+    try {
+      const data = await likeArticle(post?._id as string);
+      console.log(data);
+    } catch (error) {
+      toast.error("Something went wrong while proforming action like", { theme: "dark" });
+      console.log(error);
+    } finally {
+      setIsLikeLoading(false);
+    }
+  };
+  const handleUnLike = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (!post) {
+      return;
+    }
+    setIsLikeLoading(true);
+    try {
+      const data = await unLikeArticle(post?._id as string);
+      console.log(data);
+    } catch (error) {
+      toast.error("Something went wrong while proforming action unlike", { theme: "dark" });
+      console.log(error);
+    } finally {
+      setIsLikeLoading(false);
+    }
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -65,6 +98,7 @@ export default function PostView() {
 
   return (
     <div className={style.container}>
+      <ToastContainer position="top-right" autoClose={5000} />
       {wasPublished && <Confetti width={width} height={height} />}
       {/*<Menu post={post} />*/}
       <div className={style.middle}>
@@ -83,7 +117,11 @@ export default function PostView() {
             </div>
             <div className={style.menu}>
               <div className={style.left}>
-                <button className={style.menu_btn}>
+                <button
+                  onClick={handleLike}
+                  name={"like button"}
+                  className={style.menu_btn}
+                >
                   <span>0</span>
                   <i className="bx bxs-heart"></i>
                 </button>
@@ -120,7 +158,6 @@ export default function PostView() {
           />
         </div>
       </div>
-      <ToastContainer position="top-right" autoClose={5000} />
     </div>
   );
 }
@@ -166,4 +203,7 @@ async function fetchPost(title: string, handle: string) {
       reject(error);
     }
   });
+}
+function likePost(arg0: string) {
+  throw new Error("Function not implemented.");
 }

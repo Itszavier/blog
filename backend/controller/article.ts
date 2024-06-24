@@ -143,14 +143,12 @@ export async function likeArticle(req: Request, res: Response, next: NextFunctio
 
     if (post.likes.includes(req.user?._id as any)) {
       console.log("User already like this post");
-      return next(errorMessage(404, "You already like This post"));
+      return next(errorMessage(400, "You already like This post"));
     }
 
-    if (post.dislikes.includes(req.user?._id as any)) {
+    if (post.likes.includes(req.user?._id as any)) {
       // remove dislike
-      await PostModel.findByIdAndUpdate(postId, {
-        $pull: { dislikes: req.user?._id },
-      });
+      return next(errorMessage(400, "You already like this post"));
     }
 
     const updatedPost = await PostModel.findByIdAndUpdate(postId, {
@@ -160,7 +158,7 @@ export async function likeArticle(req: Request, res: Response, next: NextFunctio
     await updatedPost!.populate("author", getAuthorFields());
 
     res.status(200).json({
-      message: "successfuly updated post",
+      message: "successfuly liked this post",
       post: updatedPost,
     });
   } catch (error) {
@@ -169,7 +167,7 @@ export async function likeArticle(req: Request, res: Response, next: NextFunctio
   }
 }
 
-export async function disLikeArticle(req: Request, res: Response, next: NextFunction) {
+export async function unLikeArticle(req: Request, res: Response, next: NextFunction) {
   try {
     const { postId } = req.params;
 
@@ -180,28 +178,19 @@ export async function disLikeArticle(req: Request, res: Response, next: NextFunc
       return next(errorMessage(404, "Could not find a post with this Id"));
     }
 
-    if (post.dislikes.includes(req.user?._id as any)) {
+    if (!post.likes.includes(req.user?._id as any)) {
       console.log("User already like this post");
-      return next(errorMessage(404, "You already dislikes This post"));
-    }
-
-    if (post.likes.includes(req.user?._id as any)) {
-      // remove like
-      console.log("removing like");
-      await PostModel.findByIdAndUpdate(postId, {
-        $pull: { likes: req.user?._id },
-      });
+      return next(errorMessage(404, "You didn't like This post"));
     }
 
     const updatedPost = await PostModel.findByIdAndUpdate(postId, {
-      $push: { dislike: req.user?._id },
+      $pull: { likes: req.user?._id },
     });
-
     await updatedPost!.populate("author", getAuthorFields());
 
     res.status(200).json({
       message: "successfuly updated post",
-      post: updatedPost,
+      updatedPost,
     });
   } catch (error) {
     console.log(error);
@@ -312,6 +301,4 @@ export async function deleteArticleById(
   req: Request,
   res: Response,
   next: NextFunction
-) {
-  
-}
+) {}

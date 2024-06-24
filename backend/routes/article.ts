@@ -6,7 +6,7 @@ import { heroImageUpload } from "../multer/file";
 
 import {
   createArticle,
-  disLikeArticle,
+  unLikeArticle,
   getArticleById,
   getArticleByEncodedTitle,
   getEditable,
@@ -42,6 +42,6 @@ router.post(
 );
 router.put("/like/:postId", ensureAuthenticated, likeArticle);
 
-router.put("/dislike/:postId", ensureAuthenticated, disLikeArticle);
+router.put("/unlike/:postId", ensureAuthenticated, unLikeArticle);
 
 export default router;

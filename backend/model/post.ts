@@ -110,11 +110,7 @@ const postSchema = new Schema<IPostSchema>({
   likes: {
     type: [SchemaTypes.ObjectId],
     default: [],
-  },
-
-  dislikes: {
-    type: [SchemaTypes.ObjectId],
-    default: [],
+    Ref: "User",
   },
 });
 
