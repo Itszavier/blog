@@ -6,7 +6,7 @@
 
 :root {
   --background-color: #ffffff;
-  --primary-text-color: #000000;
+  --primary-text-color: #0c0c0c;
   --secondary-text-color: #666666;
   --accent-color: #1a73e8;
   --button-background-color: #e0e0e0;
@@ -33,7 +33,7 @@
 
 body.dark-theme {
   --background-color: #121212;
-  --primary-text-color: #ffffff;
+  --primary-text-color: #d3d3d4;
   --secondary-text-color: #b0b0b0;
   --accent-color: #bb86fc;
   --button-background-color: #1f1f1f;

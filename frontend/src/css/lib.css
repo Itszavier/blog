@@ -43,6 +43,10 @@
   min-width: 120px;
   min-height: 45px;
 }
+
+.border-none {
+  border: none;
+}
 /*flex postion className*/
 
 .error-v {

@@ -6,15 +6,12 @@ import { IPost } from "../../api/types";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/auth";
 import { Loading } from "../../components/loading";
-import moment from "moment";
-import { BsDot } from "react-icons/bs";
 import { MdComment } from "react-icons/md";
 import { IoBookmark, IoHeart, IoHeartDislike } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
 import Confetti from "react-confetti";
 import { useWindowSize } from "@reactuses/core";
 import { toast, ToastContainer } from "react-toastify";
-import { ToastConfig } from "../../utils";
 
 export default function PostView() {
   const { title, handle } = useParams<{ title: string; handle: string }>();
@@ -69,23 +66,14 @@ export default function PostView() {
   return (
     <div className={style.container}>
       {wasPublished && <Confetti width={width} height={height} />}
-      <Menu post={post} />
+      {/*<Menu post={post} />*/}
       <div className={style.middle}>
         <div className={style.meta_header}>
-          <div className={style.publish_info}>
-            <div className={style.author_container}>
-              <img src={post.author.profileImage.url} alt="" width={35} height={35} />
-              <span>{post.author.name}</span>
-            </div>
-
-            <div className={style.dates}>
-              <span>
-                <strong>0</strong> views
-              </span>
-              <BsDot className={style.seprator} />
-              <span>{moment(post.createdAt).format("MMM DD YYYY")}</span>
-            </div>
+          <div className={style.post_info_container}>
+            <h2 className={style.title}>{post.title}</h2>
+            <p className={style.subtitle}>{post.subtitle}</p>
           </div>
+
           {post.heroImage && (
             <div className={style.heroImage_container}>
               <img
@@ -97,10 +85,6 @@ export default function PostView() {
               />
             </div>
           )}
-          <div className={style.post_info_container}>
-            <h2 className={style.title}>{post.title}</h2>
-            <p className={style.subtitle}>{post.subtitle}</p>
-          </div>
         </div>
         <div className={style.body}>
           <div

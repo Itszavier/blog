@@ -45,7 +45,7 @@ export default function PostCard({
   }, []);
 
   return (
-    <div className={`card ${style.post_card}`}>
+    <div className={`${style.post_card}`}>
       <CardBody post={post} />
       <CardFooter post={post} />
     </div>

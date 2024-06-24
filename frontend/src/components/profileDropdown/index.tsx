@@ -47,14 +47,18 @@ export default function ProfileDropdown() {
       <button
         id={"profileDropdown"}
         onClick={() => setToggle((prev) => !prev)}
-        className={style.header}
+        className={`border-none ${style.header}`}
       >
-        <span>{user.username}</span>
         <img className={style.user_profile} src={user.profileImage.url} alt="" />
       </button>
 
       {toggle && (
         <div id={"profileDropdown"} className={`card ${style.body}`}>
+          <div className={style.body_header}>
+            <Link to={`/profile/${user.username}`}>
+              <span>{user.name}</span>
+            </Link>
+          </div>
           <Link
             className={style.link}
             id={"dropdown"}
