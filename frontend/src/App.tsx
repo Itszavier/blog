@@ -10,7 +10,7 @@ import ProtectedRoutes from "./components/protected";
 import Settings from "./pages/dashboard";
 import AuthModal from "./components/authmodal";
 import EditorPage from "./pages/editor";
-import PostView from "./pages/post";
+import PostView from "./pages/article";
 import Browse from "./pages/browse";
 import Create from "./pages/create";
 import NotFound from "./pages/404";

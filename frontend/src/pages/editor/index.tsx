@@ -111,12 +111,14 @@ export default function EditorPage() {
 
           <div className={style.left_container}>
             <span className={style.saved_text}>{!isSaving && "Changes saved"}</span>
-            <button
-              onClick={() => openModal()}
-              className={`primary ${style.control_btn} ${style.publish_btn}`}
-            >
-              Publish Article
-            </button>
+            {!data?.published && (
+              <button
+                onClick={() => openModal()}
+                className={`primary ${style.control_btn} ${style.publish_btn}`}
+              >
+                Publish Article
+              </button>
+            )}
           </div>
         </div>
         <Toolbar editor={editor} />

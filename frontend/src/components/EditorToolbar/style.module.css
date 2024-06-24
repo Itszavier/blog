@@ -6,11 +6,12 @@
   border-radius: 1px;
   background-color: var(--header-footer-background-color);
   width: 100%;
+  margin-top: 8px;
   flex-direction: row;
   cursor: pointer;
   gap: 8px;
   justify-content: center;
-   /* Required for Safari */
+  /* Required for Safari */
   height: 45px;
 }
 

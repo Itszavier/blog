@@ -1,5 +1,5 @@
 /** @format */
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import style from "./style.module.css";
 import { serverAxios } from "../../api/axios";
 import { IPost } from "../../api/types";
@@ -8,18 +8,24 @@ import { useAuth } from "../../context/auth";
 import { Loading } from "../../components/loading";
 import moment from "moment";
 import { BsDot } from "react-icons/bs";
-import { MdComment, MdModeComment } from "react-icons/md";
+import { MdComment } from "react-icons/md";
 import { IoBookmark, IoHeart, IoHeartDislike } from "react-icons/io5";
-import { FaBookBookmark } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
+import Confetti from "react-confetti";
+import { useWindowSize } from "@reactuses/core";
+import { toast, ToastContainer } from "react-toastify";
+import { ToastConfig } from "../../utils";
 
 export default function PostView() {
-  const { title, handle } = useParams();
-  console.log("Title:", title);
-  const auth = useAuth();
+  const { title, handle } = useParams<{ title: string; handle: string }>();
+  const location = useLocation();
+  const state: { published: boolean; message: string } | undefined = location.state;
   const [post, setPost] = useState<IPost | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState();
+  const [error, setError] = useState<Error | null>(null);
+  const [wasPublished, setWasPublished] = useState<boolean>(false);
+  console.log(state, wasPublished);
+  const { width, height } = useWindowSize();
 
   useEffect(() => {
     fetchPost(title!, handle!)
@@ -29,21 +35,40 @@ export default function PostView() {
       })
       .catch((error) => {
         setError(error);
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);
       });
   }, [title, handle]);
 
+  useEffect(() => {
+    if (!state) {
+      return;
+    }
+    toast.success("Your article was published", { theme: "dark", delay: 5000 });
+    setWasPublished(true);
+    const timeout = setTimeout(() => {
+      setWasPublished(false);
+    }, 5000); // Increased the timeout to 5000ms (5 seconds)
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
+
   if (loading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
   }
 
   if (!post) return null;
 
   return (
     <div className={style.container}>
+      {wasPublished && <Confetti width={width} height={height} />}
       <Menu post={post} />
       <div className={style.middle}>
         <div className={style.meta_header}>
@@ -84,6 +109,7 @@ export default function PostView() {
           />
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={5000} />
     </div>
   );
 }
@@ -120,7 +146,9 @@ function Menu({ post }: { post: IPost }) {
 async function fetchPost(title: string, handle: string) {
   return new Promise<IPost>(async (resolve, reject) => {
     try {
-      const response = await serverAxios.get(`/posts/fetch/publicView/${title}/${handle}`);
+      const response = await serverAxios.get(
+        `/posts/fetch/publicView/${title}/${handle}`
+      );
       const data: IPost = response.data.post;
       resolve(data);
     } catch (error) {

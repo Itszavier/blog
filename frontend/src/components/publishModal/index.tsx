@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../modal";
 import style from "./style.module.css";
 import TagInput from "../tagInput";
@@ -11,6 +11,7 @@ import z from "zod";
 import { isAxiosError } from "axios";
 import { serverAxios } from "../../api/axios";
 import { ButtonLoader } from "../loading";
+import { useNavigate } from "react-router-dom";
 interface IPostData {
   _id: string;
   title: string;
@@ -36,7 +37,22 @@ export default function PublishModal(props: PublishModalProps) {
   const [description, setDescription] = useState(() => props.post.description || "");
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [publishLoading, setPublishLoading] = useState(false);
+  const [filePreview, setFilePreview] = useState<string | null>(null);
   const { closeModal } = useModal("publish");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (file) {
+      setFilePreview(URL.createObjectURL(file));
+    }
+
+    return () => {
+      if (filePreview) {
+        URL.revokeObjectURL(filePreview);
+      }
+    };
+  }, [file]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -92,9 +108,16 @@ export default function PublishModal(props: PublishModalProps) {
           },
         }
       );
+      setErrors({});
       setPublishLoading(false);
-      toast.success(response.data.message, ToastConfig);
-      console.log("publish", response.data);
+      closeModal();
+
+      navigate(
+        `/article/${encodeURIComponent(response.data.post.title)}/${
+          response.data.post.handle
+        }`,
+        { state: { published: true, message: "Your article was published to the cloud" } }
+      );
     } catch (error: any) {
       setPublishLoading(false);
       if (isAxiosError(error)) {
@@ -209,7 +232,15 @@ export default function PublishModal(props: PublishModalProps) {
         </div>
         <div className="form-group">
           <div className={style.cover_image_upload_container}>
-            {/*<img src="" alt="" /> */}
+            {filePreview ? (
+              <img className={style.preview_image} src={filePreview} alt="" />
+            ) : (
+              props.post.heroImage &&
+              props.post.heroImage.length > 0 && (
+                <img className={style.preview_image} src={props.post.heroImage} alt="" />
+              )
+            )}
+
             <div className={style.image_upload_text_wrapper}>
               <i className="bx bx-cloud-upload"></i>
               <span>Upload a compelling cover image for your article</span>
@@ -231,12 +262,13 @@ export default function PublishModal(props: PublishModalProps) {
           >
             Close
           </button>
+
           <button type="submit" className={`btn btn-primary  ${style.button}`}>
             Publish & View {publishLoading && <ButtonLoader />}
           </button>
         </div>
       </form>
-      <ToastContainer position="bottom-center" />
+      <ToastContainer />
       {/* Same as */}
       <ToastContainer />
     </Modal>
