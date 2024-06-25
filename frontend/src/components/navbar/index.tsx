@@ -6,10 +6,12 @@ import { useModal } from "../../context/modalContext";
 import ProfileDropdown from "../profileDropdown";
 import style from "./styles.module.css";
 import { Link } from "react-router-dom";
+import { useTheme } from "../../context/theme";
 
 export default function Navbar() {
   const { user } = useAuth();
-  const postModal = useModal("createPost");
+  // const postModal = useModal("createPost");
+  const { theme, toggleTheme } = useTheme();
   const { openModal } = useModal("auth");
 
   const handleLoginPopup = () => {
@@ -27,6 +29,15 @@ export default function Navbar() {
       <ul className={style.navList}>
         {user ? (
           <>
+            <li className={`${style.listItem} ${style.themeListWrapper}`}>
+              <button className={"border-none "} onClick={() => toggleTheme()}>
+                {theme === "light" ? (
+                  <i className="bx bxs-moon"></i>
+                ) : (
+                  <i className="bx bxs-sun"></i>
+                )}
+              </button>
+            </li>
             <li className={style.listItem}>
               <Link className={style.link} to={"/browse"}>
                 browse

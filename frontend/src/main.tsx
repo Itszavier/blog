@@ -8,15 +8,18 @@ import { BrowserRouter } from "react-router-dom";
 import "./css/lib.css";
 import "./index.css";
 import { AuthProvider } from "./context/auth.tsx";
+import { ThemeProvider } from "./context/theme.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <ModalProvider>
-          <App />
-        </ModalProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <ModalProvider>
+            <App />
+          </ModalProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -5,30 +5,30 @@
  */
 
 :root {
-  --background-color: #ffffff;
-  --primary-text-color: #0c0c0c;
-  --secondary-text-color: #666666;
-  --accent-color: #1a73e8;
-  --button-background-color: #e0e0e0;
-  --button-text-color: #000000;
-  --button-border-color: #cccccc;
-  --secondary-button-background-color: #f0f0f0;
-  --secondary-button-text-color: #666666;
-  --success-button-background-color: #4caf50;
-  --success-button-text-color: #ffffff;
-  --danger-button-background-color: #f44336;
-  --danger-button-text-color: #ffffff;
-  --warning-button-background-color: #ffc107;
-  --warning-button-text-color: #000000;
-  --input-background-color: #ffffff;
-  --input-text-color: #000000;
-  --input-border-color: #cccccc;
-  --header-footer-background-color: #e0e0e0;
-  --header-footer-text-color: #000000;
-  --card-background-color: #ffffff;
-  --card-text-color: #000000;
-  --card-border-color: #cccccc;
-  --border-color: #cccccc;
+  --background-color: #f7f7f7; /* Light grey background for better contrast */
+  --primary-text-color: #333333; /* Darker grey for primary text */
+  --secondary-text-color: #555555; /* Slightly lighter grey for secondary text */
+  --accent-color: #1e88e5; /* A richer blue for accent elements */
+  --button-background-color: #e0e0e0; /* Light grey button background */
+  --button-text-color: #333333; /* Darker text for buttons */
+  --button-border-color: #bbbbbb; /* Grey border for buttons */
+  --secondary-button-background-color: #d3d3d3; /* Slightly darker secondary button background */
+  --secondary-button-text-color: #555555; /* Darker secondary button text */
+  --success-button-background-color: #4caf50; /* Green for success buttons */
+  --success-button-text-color: #ffffff; /* White text for success buttons */
+  --danger-button-background-color: #f44336; /* Red for danger buttons */
+  --danger-button-text-color: #ffffff; /* White text for danger buttons */
+  --warning-button-background-color: #ffc107; /* Yellow for warning buttons */
+  --warning-button-text-color: #333333; /* Darker text for warning buttons */
+  --input-background-color: #ffffff; /* White input background */
+  --input-text-color: #333333; /* Darker text for inputs */
+  --input-border-color: #cccccc; /* Grey border for inputs */
+  --header-footer-background-color: #e0e0e0; /* Light grey background for header and footer */
+  --header-footer-text-color: #333333; /* Darker text for header and footer */
+  --card-background-color: #ffffff; /* White background for cards */
+  --card-text-color: #333333; /* Darker text for cards */
+  --card-border-color: #cccccc; /* Grey border for cards */
+  --border-color: #cccccc; /* General border color */
 }
 
 body.dark-theme {
@@ -155,7 +155,7 @@ textarea {
   text-decoration: none;
 }
 
-.nav{
+.nav {
   padding: 4px 20px;
 }
 

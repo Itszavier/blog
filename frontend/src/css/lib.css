@@ -82,3 +82,10 @@
 .h-20 {
   height: 3px;
 }
+
+.active-color {
+  color: #3a8bd9;
+}
+.active-bg{
+  background-color: #3a8bd9;
+}

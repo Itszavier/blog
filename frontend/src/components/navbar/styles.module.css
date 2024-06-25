@@ -67,3 +67,13 @@
   background-color: var(--accent-color);
   color: black;
 }
+
+.themeListWrapper button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.themeListWrapper button i {
+  font-size: 18px;
+}

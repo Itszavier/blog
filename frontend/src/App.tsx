@@ -18,22 +18,20 @@ import "./css/theme.css";
 import CreateModal from "./components/createModal";
 
 import Publish from "./pages/publish";
+import { useTheme } from "./context/theme";
 
 function App() {
   const location = useLocation();
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const { theme } = useTheme();
 
   useEffect(() => {
-    if (isDarkTheme) {
+    if (theme === "dark") {
       document.body.classList.add("dark-theme");
     } else {
       document.body.classList.remove("dark-theme");
     }
-  }, [isDarkTheme]);
+  }, [theme]);
 
-  const toggleTheme = () => {
-    setIsDarkTheme((prevTheme) => !prevTheme);
-  };
   const path = location.pathname;
   // Define the paths where the Navbar should be hidden
   const pathsWithoutNavbar = ["/dashboard", "/editor"];

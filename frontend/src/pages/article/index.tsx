@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import style from "./style.module.css";
 import { serverAxios } from "../../api/axios";
 import { IPost } from "../../api/types";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../context/auth";
 import { ButtonLoader, Loading } from "../../components/loading";
 import { MdComment } from "react-icons/md";
@@ -18,14 +18,24 @@ import { ClipLoader } from "react-spinners";
 export default function PostView() {
   const { title, handle } = useParams<{ title: string; handle: string }>();
   const location = useLocation();
+  const auth = useAuth();
   const state: { published: boolean; message: string } | undefined = location.state;
   const [post, setPost] = useState<IPost | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isLikeLoading, setIsLikeLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [wasPublished, setWasPublished] = useState<boolean>(false);
+
   console.log(state, wasPublished);
   const { width, height } = useWindowSize();
+
+  const CurrentUserLiked = useMemo<boolean>(() => {
+    if (auth.user && post) {
+      return post.likes.includes(auth.user._id);
+    } else {
+      return false;
+    }
+  }, [auth.user, post?.likes]);
 
   useEffect(() => {
     fetchPost(title!, handle!)
@@ -56,13 +66,25 @@ export default function PostView() {
     };
   }, []);
 
-  const handleLike = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleLike = async () => {
+    if (!auth.user) {
+      // show auth models
+      return;
+    }
     if (!post) {
+      return;
+    }
+    if (CurrentUserLiked) {
       return;
     }
     setIsLikeLoading(true);
     try {
       const data = await likeArticle(post?._id as string);
+
+      setPost((prev) => {
+        return { ...prev, likes: [...prev!.likes, auth.user!._id] } as IPost;
+      });
+      console.log(post.likes);
       console.log(data);
     } catch (error) {
       toast.error(
@@ -74,22 +96,57 @@ export default function PostView() {
       setIsLikeLoading(false);
     }
   };
-  const handleUnLike = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleUnLike = async () => {
     if (!post) {
       return;
     }
+
     setIsLikeLoading(true);
     try {
+      if (!auth.user) {
+        console.log("user does not exist");
+        return;
+      }
       const data = await unLikeArticle(post?._id as string);
       console.log(data);
+      setPost((prev) => {
+        return {
+          ...prev,
+          likes: prev?.likes.filter((likeUserId) => likeUserId != auth.user!._id),
+        } as IPost;
+      });
+      console.log(post.likes);
     } catch (error) {
       toast.error(
-        `Error: Unable to Complete Action We encountered an issue while trying like this post`,
+        `Error: Unable to Complete Action We encountered an issue while trying unlike this post`,
         { theme: "dark" }
       );
       console.log(error);
     } finally {
       setIsLikeLoading(false);
+    }
+  };
+
+  const RenderLikeButton = () => {
+    if (CurrentUserLiked) {
+      return (
+        <button
+          onClick={handleUnLike}
+          name={"unlike button"}
+          className={`${style.menu_btn} active-color `}
+        >
+          {isLikeLoading ? <span>...</span> : <span>{post?.likes.length}</span>}
+          <i className="bx bxs-heart"></i>
+        </button>
+      );
+    } else {
+      console.log("liked", post?.likes.length, post?.likes);
+      return (
+        <button onClick={handleLike} name={"like button"} className={`${style.menu_btn}`}>
+          {isLikeLoading ? <span>...</span> : <span>{post?.likes.length}</span>}
+          <i className="bx bx-heart"></i>
+        </button>
+      );
     }
   };
 
@@ -124,14 +181,7 @@ export default function PostView() {
             </div>
             <div className={style.menu}>
               <div className={style.left}>
-                <button
-                  onClick={handleLike}
-                  name={"like button"}
-                  className={style.menu_btn}
-                >
-                  {true ? <ClipLoader color="white"  size={2} />: <span>0</span>}
-                  <i className="bx bxs-heart"></i>
-                </button>
+                <RenderLikeButton />
 
                 <button className={style.menu_btn}>
                   <span>0</span>
