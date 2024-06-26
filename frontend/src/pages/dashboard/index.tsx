@@ -9,8 +9,6 @@ import SideNav from "./sideNav";
 import Overview from "./overview";
 import Notifcations from "./notifcations";
 
-
-
 export default function Settings() {
   const { setUser } = useAuth();
   const navigate = useNavigate();

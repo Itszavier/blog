@@ -12,7 +12,7 @@ import { MdComment } from "react-icons/md";
 export default function Overview() {
   const auth = useAuth();
 
-  const { isPending, data } = useFetch<IPost[]>(`/posts/fetch/user/${auth.user!._id}`, {
+  const { isPending, data } = useFetch<IPost[]>(`/article/user/${auth.user!._id}`, {
     key: "posts",
   });
 

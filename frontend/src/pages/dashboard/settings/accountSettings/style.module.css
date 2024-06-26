@@ -1,10 +1,6 @@
 /** @format */
 
 .container {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
 }
 
 .header {
@@ -18,18 +14,14 @@
 .header h2 {
   margin: 0;
   font-size: 24px;
-  color: #333;
 }
 
 .header p {
   margin: 0;
-  color: #666;
 }
 
 .form {
-  background-color: var(--secondary-color-light);
   width: 100%;
-  padding: 20px;
   border-radius: 10px;
   display: flex;
   flex-direction: row;
@@ -41,27 +33,26 @@
   flex-direction: column;
   gap: 20px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .input_wrapper {
   display: flex;
   flex-direction: column;
+  width: 450px;
 }
 
 .input_wrapper label {
   padding-left: 4px;
   text-transform: capitalize;
   margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
+  font-weight: 500;
 }
 
 .input_wrapper .input {
-  border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
-  width: 100%;
-  background-color: var(--input-background-light);
+  width: 240px;
   outline: none;
   transition: border-color 0.3s;
 }
@@ -71,14 +62,13 @@
 }
 
 .bio_wrapper textarea {
-  border: 1px solid #ccc;
   padding: 10px;
   height: 80px;
   resize: none;
   outline: none;
-  width: 100%;
   border-radius: 5px;
   transition: border-color 0.3s;
+  width: 350px;
 }
 
 .bio_wrapper textarea:focus {
@@ -87,8 +77,9 @@
 
 .description {
   font-size: 12px;
-  color: var(--text-color-secondary-light);
+  color: var(--secondary-text-color);
   margin-top: 5px;
+  width: 400px;
 }
 
 .file_input {
@@ -134,4 +125,7 @@
 
 .profile_container {
   margin-left: 80px;
+}
+
+.save_btn {
 }

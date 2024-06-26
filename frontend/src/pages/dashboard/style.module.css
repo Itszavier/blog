@@ -15,7 +15,6 @@
   display: flex;
   color: var(--primaryFontColor);
   scroll-behavior: smooth;
-  padding: 10px;
 }
 
 .body::-webkit-scrollbar {
