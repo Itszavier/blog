@@ -229,6 +229,8 @@ export async function updateProfile(req: Request, res: Response, next: NextFunct
         .string()
         .min(5, { message: "Bio must be at least 5 characters long" })
         .max(150, { message: "Bio must be at most 150 characters long" }),
+      pronouns: z.string().optional(),
+
       socials: z
         .string()
         .transform((social, ctx) => {
@@ -281,6 +283,10 @@ export async function updateProfile(req: Request, res: Response, next: NextFunct
       user.occupation = body.occupation;
     }
 
+    if (body.pronouns) {
+      user.pronouns = body.pronouns;
+    }
+
     if (body.username) {
       const existingUser = await UserModel.findOne({ username: body.username });
       if (existingUser) {
@@ -301,5 +307,6 @@ export async function updateProfile(req: Request, res: Response, next: NextFunct
     });
   } catch (error) {
     console.log(error);
+    next(error)
   }
 }

@@ -22,7 +22,6 @@ export interface IPost {
     id: string;
   };
   likes: Schema.Types.ObjectId[];
-  dislikes: Schema.Types.ObjectId[];
   handle: string;
   createdAt: Date;
   updatedAt: Date;

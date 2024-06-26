@@ -3,7 +3,7 @@ import UsernameInput from "../../usernameInput";
 import SocialInput from "../../socialsInput";
 import style from "./style.module.css";
 import { useAuth } from "../../../../context/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { z } from "zod";
 import { isAxiosError } from "axios";
@@ -34,23 +34,45 @@ const FormSchema = z.object({
     .optional(),
 });
 
+interface InitialState {
+  name: string;
+  username: string;
+  bio: string;
+  socials: string[];
+  occupation: string;
+  pronouns: string;
+  file: File | null;
+}
+
 export default function AccountSettings() {
   const auth = useAuth();
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-  const [filePreview, setFilePreview] = useState<string | null>(
-    () => auth.user?.profileImage?.url || null
-  );
+  const [filePreview, setFilePreview] = useState<string | null>(null);
 
-  const [userState, setUserState] = useState(() => ({
-    name: auth.user?.name || "",
-    username: auth.user?.username || "",
-    bio: auth.user?.bio || "",
-    socials: auth.user?.socials || [],
-    occupation: auth.user?.occupation || "",
-    pronouns: auth.user?.pronouns || "",
-    file: File || null,
-  }));
+  const [userState, setUserState] = useState<InitialState>(() => {
+    return {
+      name: auth.user?.name || "",
+      username: auth.user?.username || "",
+      bio: auth.user?.bio || "",
+      socials: auth.user?.socials || [],
+      occupation: auth.user?.occupation || "",
+      pronouns: auth.user?.pronouns || "",
+      file: null,
+    };
+  });
+
+  useEffect(() => {
+    if (userState.file) {
+      URL.createObjectURL(userState.file);
+    }
+
+    return () => {
+      if (filePreview) {
+        URL.revokeObjectURL(filePreview);
+      }
+    };
+  }, [userState.file]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -136,7 +158,18 @@ export default function AccountSettings() {
       <div className={style.input_group}>
         <div className={`form-group  ${style.input_wrapper} `}>
           <div className={style.profile_image_container}>
-            <img src="" alt="Profile" />
+            {filePreview ? (
+              <img className={style.preview_image} src={filePreview} alt="" />
+            ) : (
+              auth.user?.profileImage &&
+              auth.user?.profileImage.url.length > 0 && (
+                <img
+                  className={style.preview_image}
+                  src={auth.user?.profileImage.url}
+                  alt=""
+                />
+              )
+            )}
             <input className={style.file_input} type="file" />
           </div>
         </div>{" "}
@@ -232,7 +265,7 @@ async function saveUserData(data: {
   username?: string | undefined;
   occupation?: string | undefined;
   socials?: string[] | undefined;
-  pronouns?: string,
+  pronouns?: string;
   file: any;
 }) {
   try {

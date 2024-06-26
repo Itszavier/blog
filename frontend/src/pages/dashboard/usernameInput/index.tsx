@@ -93,7 +93,7 @@ export default function UsernameInput(props: usernameInputProps) {
 async function isUsernameAvailable(username: string) {
   return new Promise<{ available: boolean; message: string }>(async (resolve, reject) => {
     try {
-      const response = await serverAxios.get(`/user/username/isAvailable/${username}`);
+      const response = await serverAxios.get(`/user/isAvailable/username/${username}`);
       resolve(response.data);
     } catch (error) {
       reject(error);

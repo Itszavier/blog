@@ -7,8 +7,9 @@ import { generateUsername, generateFromEmail } from "unique-username-generator";
 export interface IUser extends Document {
   _id: Schema.Types.ObjectId | string;
   name: string;
-  username?: string;
+  username: string;
   bio?: string;
+  pronouns?: string;
   bannerUrl?: string;
   profileImage: {
     id: string;
@@ -50,6 +51,10 @@ const userSchema = new Schema<IUser>({
     type: SchemaTypes.String,
   },
   occupation: {
+    type: SchemaTypes.String,
+  },
+
+  pronouns: {
     type: SchemaTypes.String,
   },
 
