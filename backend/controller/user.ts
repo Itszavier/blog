@@ -4,6 +4,8 @@ import UserModel from "../model/user";
 import { getSelectedUserFields, userSelectedFields } from "../utils/";
 import { errorMessage } from "../middleware/error";
 import { z } from "zod";
+import { isArray, min } from "lodash";
+import { getAuthorFields } from "../routes/article";
 
 export async function followUser(req: Request, res: Response, next: NextFunction) {
   const bodySchema = z.object({
@@ -208,5 +210,96 @@ export async function getIsAvailable(req: Request, res: Response, next: NextFunc
   }
 }
 
-export async function updateProfile(req: Request, res: Response, next: NextFunction) {}
+export async function updateProfile(req: Request, res: Response, next: NextFunction) {
+  try {
+    const bodySchema = z.object({
+      name: z
+        .string()
+        .min(1, { message: "Name must be at least 1 character long" })
+        .optional(),
+      username: z
+        .string()
+        .min(5, { message: "Username must be at least 5 characters long" })
+        .optional(),
+      occupation: z
+        .string()
+        .min(1, { message: "Occupation must be at least 1 character long" })
+        .optional(),
+      bio: z
+        .string()
+        .min(5, { message: "Bio must be at least 5 characters long" })
+        .max(150, { message: "Bio must be at most 150 characters long" }),
+      socials: z
+        .string()
+        .transform((social, ctx) => {
+          if (social === undefined) return [];
 
+          try {
+            const parsed = JSON.parse(social);
+            if (
+              Array.isArray(parsed) &&
+              parsed.every((value) => typeof value === "string")
+            ) {
+              return parsed;
+            } else {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Socials must be an array of strings",
+              });
+              return z.NEVER;
+            }
+          } catch (e) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "Socials must be a valid JSON string",
+            });
+            return z.NEVER;
+          }
+        })
+        .optional(),
+    });
+
+    const body = bodySchema.parse(req.body);
+
+    const userId = req.user?._id;
+
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      return next(errorMessage(401, "UnAuthorized"));
+    }
+
+    if (body.name) {
+      user.name = body.name;
+    }
+
+    if (body.bio) {
+      user.bio = body.bio;
+    }
+
+    if (body.occupation) {
+      user.occupation = body.occupation;
+    }
+
+    if (body.username) {
+      const existingUser = await UserModel.findOne({ username: body.username });
+      if (existingUser) {
+        return next(errorMessage(400, "username taken"));
+      }
+    }
+
+    if (body.socials) {
+      user.socials = [...new Set([...user.socials, ...body.socials])];
+    }
+
+    const updatedProfile = await user.save();
+    await updatedProfile.populate("author", getAuthorFields());
+
+    res.status(200).json({
+      success: "Successfully updated profile",
+      user: updatedProfile,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}

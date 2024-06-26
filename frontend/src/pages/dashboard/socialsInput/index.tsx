@@ -11,19 +11,19 @@ const error_message =
 
 interface SocialInputProps {
   socialList: string[];
-  onSocialCreate?: (url: string) => void;
-  onSocialRemove?: (url: string) => void;
+  onSocialCreate?: (url: string[]) => void;
+  onSocialRemove?: (url: string[]) => void;
 }
 export default function SocialInput({
   socialList,
   onSocialCreate,
   onSocialRemove,
 }: SocialInputProps) {
-  const [socials, setSocials] = useState<string[]>(socialList || []);
+  const [socials, setSocials] = useState<string[]>(() => socialList || []);
   const [url, setUrl] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [count, setCount] = useState<number>(socials.length);
-  const [profilePreview, setProfilePreview] = useState<string>('')
+  const [profilePreview, setProfilePreview] = useState<string>("");
 
   useEffect(() => {
     console.log("removed", socials);
@@ -49,7 +49,7 @@ export default function SocialInput({
     setErrorMessage(null);
     setCount((prev) => prev + 1);
     setSocials((prev) => [...prev, url]);
-    if (onSocialCreate) onSocialCreate(url);
+    if (onSocialCreate) onSocialCreate(socials);
     setUrl("");
   };
 
@@ -61,40 +61,39 @@ export default function SocialInput({
 
   const handleRemove = (removedValue: string) => {
     setCount((prev) => prev - 1);
-    if (onSocialRemove) onSocialRemove(removedValue);
+
     setSocials((prev) => {
       return prev.filter((value) => value !== removedValue);
     });
+
+    if (onSocialRemove) onSocialRemove(socials);
   };
 
   return (
-    <div className={style.social_container}>
-      <div className={style.socials_input_wrapper}>
-        <label htmlFor="">Add socials</label>
-        <div className={style.add_input_container}>
-          <input
-            type="text"
-            value={url}
-            className={`${style.input}`}
-            placeholder="https://www.tiktok.com/@your_profile"
-            onChange={handleChange}
-          />
-          <button
-            disabled={url.length <= 0}
-            type="button"
-            onClick={handleAdd}
-            className={style.add_btn}
-          >
-            <IoAddCircle size={20} />
-            <span>{count}/3</span>
-          </button>
-        </div>
-        {errorMessage && (
-          <p className={style.error_message}>
-            {errorMessage} <GoAlertFill />
-          </p>
-        )}
+    <div className={style.socialContainer}>
+      <div className={style.inputWrapper}>
+        <input
+          type="text"
+          value={url}
+          className={`${style.input}`}
+          placeholder="https://www.tiktok.com/@your_profile"
+          onChange={handleChange}
+        />
+        <button
+          disabled={url.length <= 0}
+          type="button"
+          onClick={handleAdd}
+          className={style.add_btn}
+        >
+          <span>{count}/3</span> <i className="bx bxs-plus-circle"></i>
+        </button>
       </div>
+
+      {errorMessage && (
+        <p className={style.error_message}>
+          {errorMessage} <GoAlertFill />
+        </p>
+      )}
 
       <div className={style.socials}>
         {socials.map((social, index) => (
@@ -116,7 +115,7 @@ function Social({ social, handleRemove }: SocialProps) {
     <div className={style.social}>
       <p className={style.social_text}>{social}</p>
       <button onClick={handleRemove} className={style.remove_btn}>
-        <CiCircleRemove />
+        <i className="bx bxs-x-circle"></i>
       </button>
     </div>
   );

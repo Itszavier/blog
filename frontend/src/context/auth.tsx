@@ -17,6 +17,8 @@ export interface IUser {
   followers: string[];
   following: string[];
   socials: string[];
+  occupation?: string;
+  pronouns?: string;
 }
 
 interface IAuthContext {

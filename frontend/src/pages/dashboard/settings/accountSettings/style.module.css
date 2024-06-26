@@ -57,21 +57,10 @@
   transition: border-color 0.3s;
 }
 
-.input_wrapper .input:focus {
-  border-color: #007bff;
-}
-
 .bio_wrapper textarea {
-  padding: 10px;
-  height: 80px;
-  resize: none;
-  outline: none;
-  border-radius: 5px;
-  transition: border-color 0.3s;
-  width: 350px;
 }
 
-.bio_wrapper textarea:focus {
+.bio_input:focus {
   border-color: #007bff;
 }
 
@@ -128,4 +117,30 @@
 }
 
 .save_btn {
+}
+
+.bio_input {
+  width: 350px;
+  height: 100px;
+  border-radius: 5px;
+  width: 340px;
+  outline: none;
+  padding: 10px;
+  resize: none;
+  outline: none;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+.input_wrapper .input:focus {
+  border-color: #007bff;
+}
+.error_message {
+  font-weight: normal;
+  font-size: 14px;
+  color: #a84a4a;
+  display: flex;
+  width: 320px;
+  padding: 8px;
+  align-items: center;
 }

@@ -66,7 +66,7 @@ export default function UsernameInput(props: usernameInputProps) {
   };
 
   return (
-    <div className={style.input_wrapper}>
+    <div className={`form-group ${style.input_wrapper}`}>
       <label>Username</label>
       <div className={style.username_input_wrapper}>
         <input

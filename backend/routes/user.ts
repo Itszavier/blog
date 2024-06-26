@@ -12,6 +12,7 @@ import {
   getUserById,
   getUserByUsername,
   unFollowUser,
+  updateProfile,
 } from "../controller/user";
 
 const router = Router();
@@ -25,18 +26,20 @@ const router = Router();
 }
 */
 
-
 router.get("/", getAllUsers);
 router.get("/id/:id", getUserById);
 router.get("/username/:username", getUserByUsername);
 
 const profileUpload = multer();
-
+router.put(
+  "/update/profile",
+  ensureAuthenticated,
+  profileUpload.single("profileImage"),
+  updateProfile
+);
 router.put("/follow", ensureAuthenticated, followUser);
 /// Route for unfollowing a user
 router.put("/unfollow", ensureAuthenticated, unFollowUser);
-
 router.get("/isAvailable/username/:username", getIsAvailable);
 
 export default router;
-
