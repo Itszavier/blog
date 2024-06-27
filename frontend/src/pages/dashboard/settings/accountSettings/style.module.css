@@ -26,6 +26,7 @@
   display: flex;
   flex-direction: row;
   gap: 20px;
+  padding-bottom: 50px;
 }
 
 .input_group {
@@ -77,6 +78,9 @@
   border-radius: 50%;
   cursor: pointer;
   opacity: 0;
+  position: absolute;
+  background-color: white;
+  z-index: 10;
 }
 
 .profile_image_container {
@@ -97,15 +101,17 @@
   object-fit: cover;
 }
 
-.submit_button {
+.submit_btn {
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
   background-color: #007bff;
   color: #fff;
+  display: flex;
+  align-items: center;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  border-radius: 8px;
 }
 
 .submit_button:hover {

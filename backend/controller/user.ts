@@ -1,7 +1,7 @@
 /** @format */
 import { NextFunction, Request, Response } from "express";
 import UserModel from "../model/user";
-import { getSelectedUserFields, userSelectedFields } from "../utils/";
+import uploadImageFile, { getSelectedUserFields, userSelectedFields } from "../utils/";
 import { errorMessage } from "../middleware/error";
 import { z } from "zod";
 import { isArray, min } from "lodash";
@@ -263,7 +263,7 @@ export async function updateProfile(req: Request, res: Response, next: NextFunct
 
     const body = bodySchema.parse(req.body);
 
-    const userId = req.user?._id;
+    const userId = req.user!._id;
 
     const user = await UserModel.findById(userId);
 
@@ -289,7 +289,12 @@ export async function updateProfile(req: Request, res: Response, next: NextFunct
 
     if (body.username) {
       const existingUser = await UserModel.findOne({ username: body.username });
-      if (existingUser) {
+      if (existingUser && existingUser._id.toString() !== userId.toString()) {
+        console.log(
+          existingUser._id.toString(),
+          userId.toString(),
+          existingUser._id.toString() !== userId
+        );
         return next(errorMessage(400, "username taken"));
       }
     }
@@ -298,8 +303,23 @@ export async function updateProfile(req: Request, res: Response, next: NextFunct
       user.socials = [...new Set([...user.socials, ...body.socials])];
     }
 
+    if (req.file) {
+      const { public_id, secure_url } = await uploadImageFile({
+        file: req.file,
+        folder: "profileImage",
+        previous: user.profileImage,
+      });
+
+      user.profileImage = {
+        url: secure_url,
+        storage: "cloud",
+        id: public_id,
+      };
+    }
+
     const updatedProfile = await user.save();
-    await updatedProfile.populate("author", getAuthorFields());
+
+    await updatedProfile.populate("following followers", getSelectedUserFields("follow"));
 
     res.status(200).json({
       success: "Successfully updated profile",
@@ -307,6 +327,6 @@ export async function updateProfile(req: Request, res: Response, next: NextFunct
     });
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 }

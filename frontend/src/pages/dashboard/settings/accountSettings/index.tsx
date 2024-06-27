@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { z } from "zod";
 import { isAxiosError } from "axios";
 import { serverAxios } from "../../../../api/axios";
+import { ButtonLoader } from "../../../../components/loading";
 
 const FormSchema = z.object({
   name: z
@@ -19,19 +20,13 @@ const FormSchema = z.object({
     .min(5, { message: "Username must be at least 5 characters long" })
     .max(12, "Username must be at most 12 characters long")
     .optional(),
-  occupation: z
-    .string()
-    .min(1, { message: "Occupation must be at least 1 character long" })
-    .optional(),
+  occupation: z.string().optional(),
   bio: z
     .string()
     .min(5, { message: "Bio must be at least 5 characters long" })
     .max(150, { message: "Bio must be at most 150 characters long" }),
   socials: z.array(z.string()).max(3, "You can only have must 3 socials").optional(),
-  pronouns: z
-    .string()
-    .min(1, { message: "Pronouns must be at least 1 character long" })
-    .optional(),
+  pronouns: z.string().optional(),
 });
 
 interface InitialState {
@@ -64,7 +59,7 @@ export default function AccountSettings() {
 
   useEffect(() => {
     if (userState.file) {
-      URL.createObjectURL(userState.file);
+      setFilePreview(URL.createObjectURL(userState.file));
     }
 
     return () => {
@@ -83,12 +78,15 @@ export default function AccountSettings() {
       const responseData = await saveUserData({ ...data, file: userState.file });
       // Handle successful submission
       auth.setUser(responseData.user);
+      console.log(responseData);
       toast.success("Account settings updated successfully!", {
         theme: "dark",
         delay: 2000,
         position: "top-right",
       });
     } catch (error: any) {
+      console.log(error);
+
       if (isAxiosError(error)) {
         return toast.error(error.response?.data.message || "something went wrong", {
           theme: "dark",
@@ -105,14 +103,13 @@ export default function AccountSettings() {
           validationErrors[path] = err.message;
         });
         setErrors(validationErrors);
-        toast.error("Vaildation error review article information for more details");
+        toast.error("Vaildation error review profile details for more information");
       } else {
         toast.error(
-          "Failed to publish Article. Please check your internet connection and try again.",
+          "Failed to update Profile. Please check your internet connection and try again.",
           { theme: "dark", delay: 2000, position: "top-right" }
         );
       }
-      console.log(error);
     } finally {
       setIsSubmitLoading(false);
     }
@@ -157,6 +154,7 @@ export default function AccountSettings() {
       <ToastContainer />
       <div className={style.input_group}>
         <div className={`form-group  ${style.input_wrapper} `}>
+          <label>ProfileImage</label>
           <div className={style.profile_image_container}>
             {filePreview ? (
               <img className={style.preview_image} src={filePreview} alt="" />
@@ -170,11 +168,11 @@ export default function AccountSettings() {
                 />
               )
             )}
-            <input className={style.file_input} type="file" />
+            <input onChange={handleFileChange} className={style.file_input} type="file" />
           </div>
         </div>{" "}
-        <div className="flex row pad-10 ">
-          <div className={`form-group ${style.input_wrapper}`}>
+        <div className="flex row border-top">
+          <div className={`form-group  ${style.input_wrapper}`}>
             <label>name</label>
             <input
               value={userState.name}
@@ -190,7 +188,7 @@ export default function AccountSettings() {
 
           <UsernameInput username={userState.username} onChange={handleChange} />
         </div>
-        <div className="flex row ">
+        <div className="flex row border-top border-bottom ">
           <div className="column">
             <div className={`form-group ${style.input_wrapper}`}>
               <label>occupation</label>
@@ -252,7 +250,9 @@ export default function AccountSettings() {
           </div>
         </div>
         <div>
-          <button className={`btn btn-primary ${style.save_btn}`}>Save Changes</button>
+          <button type="submit" className={`btn btn-primary ${style.submit_btn}`}>
+            Save Changes {isSubmitLoading && <ButtonLoader />}
+          </button>
         </div>
       </div>
     </form>
@@ -272,16 +272,16 @@ async function saveUserData(data: {
     const formData = new FormData();
 
     // Add fields to FormData if they are defined
-    if (data.name !== undefined) {
+    if (data.name !== undefined && data.name.length > 0) {
       formData.append("name", data.name);
     }
-    if (data.username !== undefined) {
+    if (data.username !== undefined && data.username.length > 0) {
       formData.append("username", data.username);
     }
     if (data.bio !== undefined) {
       formData.append("bio", data.bio);
     }
-    if (data.occupation !== undefined) {
+    if (data.occupation !== undefined && data.occupation.length > 0) {
       formData.append("occupation", data.occupation);
     }
     if (data.socials !== undefined) {
@@ -302,9 +302,3 @@ async function saveUserData(data: {
     throw error;
   }
 }
-/* <SocialInput
-            socialList={[
-              "https://www.tiktok.com/@your_profile",
-              "https://www.tiktok.com/@your_profile",
-              "https://www.tiktok.com/@your_profile",
-            ]}*/

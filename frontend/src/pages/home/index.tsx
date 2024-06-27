@@ -6,6 +6,7 @@ import styles from "./style.module.css";
 import style from "./style.module.css";
 import image from "../../assets/landing.png";
 import Footer from "../../components/footer";
+import { Container } from "@chakra-ui/react";
 export default function Home() {
   return (
     <div className={styles.container}>

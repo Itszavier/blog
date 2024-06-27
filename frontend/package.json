@@ -10,6 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@reactuses/core": "^5.0.15",
     "@tiptap/extension-floating-menu": "^2.4.0",
     "@tiptap/extension-font-family": "^2.4.0",
@@ -22,6 +26,7 @@
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "draft-js": "^0.11.7",
+    "framer-motion": "^11.2.12",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "react": "^18.2.0",

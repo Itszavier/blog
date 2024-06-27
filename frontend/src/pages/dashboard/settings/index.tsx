@@ -22,7 +22,7 @@ export default function ProfileTab() {
         <Tab label="Public Profile">
           <AccountSettings />
         </Tab>
-        <Tab label="Privicy">"hello wrold"</Tab>
+        <Tab label="Privacy">"hello wrold"</Tab>
 
         <Tab label="Billing & MemberShip">"hello wrold"</Tab>
       </Tabs>

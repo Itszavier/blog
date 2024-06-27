@@ -57,7 +57,6 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       {/*<CreateModal /> */}
-      <AuthModal />
     </>
   );
 }

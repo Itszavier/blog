@@ -50,8 +50,6 @@
 .link {
   align-items: center;
   display: flex;
-  padding: 8px;
-  border-radius: 8px;
   transition: background-color 400ms ease-in-out;
 }
 .link i {

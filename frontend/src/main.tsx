@@ -10,16 +10,20 @@ import "./index.css";
 import { AuthProvider } from "./context/auth.tsx";
 import { ThemeProvider } from "./context/theme.tsx";
 
+import { ChakraProvider } from "@chakra-ui/react";
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider>
-        <AuthProvider>
-          <ModalProvider>
-            <App />
-          </ModalProvider>
-        </AuthProvider>
-      </ThemeProvider>
+      <ChakraProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <ModalProvider>
+              <App />
+            </ModalProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </ChakraProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

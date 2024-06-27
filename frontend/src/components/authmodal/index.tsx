@@ -1,40 +1,55 @@
 /** @format */
 
-import style from "./style.module.css";
-import googleIcon from "../../assets/google.png";
-import welcomeImage from "../../assets/welcome.jpg";
-import Modal from "../modal";
-import { useModal } from "../../context/modalContext";
 import { FaGoogle } from "react-icons/fa";
+import style from "./style.module.css";
 
-export default function AuthModal() {
-  const { isOpen, closeModal } = useModal("auth");
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  Box,
+  Icon,
+} from "@chakra-ui/react";
 
+interface AuthModalsProps {
+  isOpen: boolean;
+  onClose: any;
+}
+
+export default function AuthModal(props: AuthModalsProps) {
   const handleLogin = () => {
     window.open(`https://narrate-server.loca.lt/auth/login/google`, "_self");
   };
 
   return (
-    <Modal
-      contentClassName={style.container}
-      handleClose={closeModal}
-      isOpen={isOpen}
-      modalKey="auth"
-    >
-      <div className={style.content}>
-        <div className={style.header}>
-          <h2>Sign in</h2>
-          <p>
-            click the button below to sign in with your Google account for quick and
-            secure access to our services.
-          </p>
-        </div>
-        <div onClick={handleLogin} className={style.button_container}>
-          <button className={`button ${style.google_signin_btn}`}>
-            <i className="bx bxl-google"></i>Sign in with Google
-          </button>
-        </div>
-      </div>
+    <Modal scrollBehavior={"outside"} isOpen={props.isOpen} onClose={props.onClose}>
+      <ModalOverlay />
+      <ModalContent h={"250px"} bgColor={"grey.200"}>
+        <ModalHeader>Login</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Box display={"flex"} flexDirection={"column"}>
+            <Button
+              onClick={handleLogin}
+              h="60px"
+              leftIcon={<Icon as={FaGoogle} className={style.icon} />}
+            >
+              Sign in with Google
+            </Button>
+          </Box>
+        </ModalBody>
+
+        <ModalFooter>
+          <Button colorScheme="blue" mr={3} onClick={props.onClose}>
+            Close
+          </Button>
+        </ModalFooter>
+      </ModalContent>
     </Modal>
   );
 }
