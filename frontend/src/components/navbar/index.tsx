@@ -7,19 +7,35 @@ import ProfileDropdown from "../profileDropdown";
 import style from "./styles.module.css";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../context/theme";
-import { Box, Text, List, ListItem, Button, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  List,
+  ListItem,
+  Button,
+  useDisclosure,
+  useColorModeValue,
+  DarkMode,
+  useColorMode,
+} from "@chakra-ui/react";
 import AuthModal from "../authmodal";
 
 export default function Navbar() {
   const auth = useAuth();
   // const postModal = useModal("createPost");
   //const { theme, toggleTheme } = useTheme();
+  const { colorMode, toggleColorMode } = useColorMode();
+
   const { openModal } = useModal("auth");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleLoginPopup = () => {
     openModal();
   };
+
+
+
+  console.log(colorMode);
 
   return (
     <Box
@@ -32,11 +48,13 @@ export default function Navbar() {
       position={"fixed"}
       h={"68px"}
       zIndex={99}
-      background={"gray.100"}
+
+      bgColor={"light.background"}
+      color={"light.headerFooterText"}
     >
-      <Box className={style.logo_container}>
+      <Box  className={style.logo_container}>
         <Link to="/" className={style.logo_link}>
-          <Text fontSize={"larger"}>ProArticle</Text>
+          <Text fontSize={"larger"}>ProArticle </Text>
         </Link>
       </Box>
       <Box display={"flex"} gap={2} alignItems={"center"} ml={"auto"}>
@@ -50,7 +68,11 @@ export default function Navbar() {
             </Button>
           </>
         ) : (
-          <ProfileDropdown />
+          <>
+            <Link to={"/create"}>Create</Link>
+
+            <ProfileDropdown />
+          </>
         )}{" "}
       </Box>
 

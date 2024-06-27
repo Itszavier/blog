@@ -14,24 +14,13 @@ import PostView from "./pages/article";
 import Browse from "./pages/browse";
 import Create from "./pages/create";
 import NotFound from "./pages/404";
-import "./css/theme.css";
-import CreateModal from "./components/createModal";
 
 import Publish from "./pages/publish";
-import { useTheme } from "./context/theme";
+import { useColorMode } from "@chakra-ui/react";
 
 function App() {
   const location = useLocation();
-  const { theme } = useTheme();
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.body.classList.add("dark-theme");
-    } else {
-      document.body.classList.remove("dark-theme");
-    }
-  }, [theme]);
-
+  
   const path = location.pathname;
   // Define the paths where the Navbar should be hidden
   const pathsWithoutNavbar = ["/dashboard", "/editor"];

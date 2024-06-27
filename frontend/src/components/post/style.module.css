@@ -16,9 +16,7 @@
   background-color: var(--card-background-color);
   transition: transform ease-in-out;
 }
-.post_card:hover {
-  transform: scale(1.01);
-}
+
 .profile_image {
   border-radius: 50px;
   height: 26px;

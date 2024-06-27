@@ -8,6 +8,7 @@ import useFetch from "../../../hooks/useFetch";
 import style from "./style.module.css";
 import { IoHeart, IoHeartDislike } from "react-icons/io5";
 import { MdComment } from "react-icons/md";
+import { SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Text,
@@ -26,7 +27,10 @@ import {
   Td,
   TableContainer,
   Button,
+  Input,
 } from "@chakra-ui/react";
+import { map } from "lodash";
+import { useState } from "react";
 
 export default function Overview() {
   const auth = useAuth();
@@ -34,13 +38,6 @@ export default function Overview() {
   const { isPending, data } = useFetch<IPost[]>(`/article/user/${auth.user!._id}`, {
     key: "posts",
   });
-
-  const recentPosts = data?.map((post) => ({
-    _id: post._id,
-    title: post.title,
-    excerpt: post.subtitle,
-    handle: post.handle,
-  }));
 
   if (isPending) return <Loading />;
 
@@ -85,25 +82,20 @@ export default function Overview() {
           </StatHelpText>
         </Stat>
       </StatGroup>
-      <ActivitySummary title="Drafts" posts={recentPosts!} />
+      <PostTable title="Drafts" posts={data!} />
     </Box>
   );
 }
 
-interface Post {
-  _id: string;
+interface TableProps {
   title: string;
-  excerpt: string;
-  handle: string;
+  posts: IPost[];
 }
 
-interface ActivitySummaryProps {
-  title: string;
-  posts: Post[];
-}
-
-function ActivitySummary(props: ActivitySummaryProps) {
+function PostTable(props: TableProps) {
   const navigate = useNavigate();
+  const [posts, setPost] = useState<IPost[]>(() => props.posts || []);
+
   const editPost = (postId: string): void => {
     navigate(`/editor/${postId}`);
     console.log("Editing post", postId);
@@ -114,9 +106,15 @@ function ActivitySummary(props: ActivitySummaryProps) {
   };
 
   return (
-    <Box className={style.recent_activity}>
+    <Box mt={"20px"} className={style.recent_activity}>
+      <Box w={"450px"} display={"flex"} alignItems={"center"}>
+        <Input flex={1} rounded={0} placeholder="Filter" />
+        <Button rounded={0}>
+          <SearchIcon />
+        </Button>
+      </Box>
       <TableContainer>
-        <Table variant={"simple"}>
+        <Table overflowY={"auto"} h={"120px"}>
           <Thead>
             <Tr>
               <Th>Title</Th>
@@ -127,15 +125,23 @@ function ActivitySummary(props: ActivitySummaryProps) {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>Some Title 1</Td>
-              <Td isNumeric>100</Td>
-              <Td isNumeric>50</Td>
-              <Td isNumeric>10</Td>
-              <Td>
-                <Button>Edit</Button>
-              </Td>
-            </Tr>
+            {props.posts.map((post) => {
+              return (
+                <Tr>
+                  <Td isNumeric>
+                    <Text isTruncated textAlign={"start"} width={"340px"}>
+                      {post.title}
+                    </Text>
+                  </Td>
+                  <Td isNumeric>{post.likes.length}</Td>
+                  <Td isNumeric>0</Td>
+                  <Td isNumeric>0</Td>
+                  <Td>
+                    <Button>Edit</Button>
+                  </Td>
+                </Tr>
+              );
+            })}
           </Tbody>
         </Table>
       </TableContainer>

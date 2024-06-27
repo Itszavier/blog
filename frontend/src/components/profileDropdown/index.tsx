@@ -1,11 +1,12 @@
 /** @format */
 
 import style from "./style.module.css";
-import { useAuth } from "../../context/auth";
+import { authContext, useAuth } from "../../context/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { serverAxios } from "../../api/axios";
 import { IoNotifications } from "react-icons/io5";
+import { Avatar, Box, useColorModeValue } from "@chakra-ui/react";
 
 export default function ProfileDropdown() {
   const [toggle, setToggle] = useState(false);
@@ -29,7 +30,6 @@ export default function ProfileDropdown() {
   if (!user) {
     return "";
   }
-
   const hideMenu = () => setToggle(false);
 
   const handleLogout = async () => {
@@ -43,17 +43,17 @@ export default function ProfileDropdown() {
     }
   };
   return (
-    <div id={"profileDropdown"} className={` ${style.container}`}>
+    <Box id={"profileDropdown"} className={` ${style.container}`}>
       <button
         id={"profileDropdown"}
         onClick={() => setToggle((prev) => !prev)}
         className={`border-none ${style.header}`}
       >
-        <img className={style.user_profile} src={user.profileImage.url} alt="" />
+        <Avatar name={user.name} src={user.profileImage.url} />
       </button>
 
       {toggle && (
-        <div id={"profileDropdown"} className={`card ${style.body}`}>
+        <Box bg={'dark.cardBackground'}  id={"profileDropdown"} className={` ${style.body}`}>
           <div className={style.body_header}>
             <Link to={`/profile/${user.username}`}>
               <span>{user.name}</span>
@@ -93,12 +93,15 @@ export default function ProfileDropdown() {
             notification
           </Link>
           <div className={style.footer}>
-            <button onClick={handleLogout} className={`btn btn-secondary border  ${style.logout_btn}`}>
+            <button
+              onClick={handleLogout}
+              className={`btn btn-secondary border  ${style.logout_btn}`}
+            >
               logout
             </button>
           </div>
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }

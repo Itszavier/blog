@@ -8,21 +8,49 @@ import { BrowserRouter } from "react-router-dom";
 import "./css/lib.css";
 import "./index.css";
 import { AuthProvider } from "./context/auth.tsx";
-import { ThemeProvider } from "./context/theme.tsx";
+import {
+  ChakraProvider,
+  ColorModeProvider,
+  CSSReset,
+  LightMode,
+  DarkMode,
+} from "@chakra-ui/react";
+import theme from "./theme.ts";
 
-import { ChakraProvider } from "@chakra-ui/react";
+const DarkOrLightMode = ({
+  forceThemeMode,
+  children,
+}: {
+  forceThemeMode?: "light" | "dark" | undefined;
+  children: React.ReactNode;
+}) => {
+  if (forceThemeMode === "light") {
+    return <LightMode>{children}</LightMode>;
+  }
+
+  if (forceThemeMode === "dark") {
+    return <DarkMode>{children}</DarkMode>;
+  }
+
+  return <>{children}</>;
+};
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ChakraProvider>
-        <ThemeProvider>
+      <ChakraProvider theme={theme}>
+        <ColorModeProvider
+          options={{ initialColorMode: "dark", useSystemColorMode: true }}
+        >
+          <CSSReset />
           <AuthProvider>
             <ModalProvider>
-              <App />
+              <DarkOrLightMode forceThemeMode="dark">
+                <App />
+              </DarkOrLightMode>
             </ModalProvider>
-          </AuthProvider>
-        </ThemeProvider>
+          </AuthProvider>{" "}
+        </ColorModeProvider>
       </ChakraProvider>
     </BrowserRouter>
   </React.StrictMode>
