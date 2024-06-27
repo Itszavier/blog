@@ -39,18 +39,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       <ChakraProvider theme={theme}>
-        <ColorModeProvider
-          options={{ initialColorMode: "dark", useSystemColorMode: true }}
-        >
-          <CSSReset />
-          <AuthProvider>
-            <ModalProvider>
-              <DarkOrLightMode forceThemeMode="dark">
-                <App />
-              </DarkOrLightMode>
-            </ModalProvider>
-          </AuthProvider>{" "}
-        </ColorModeProvider>
+        <CSSReset />
+        <AuthProvider>
+          <ModalProvider>
+            <App />
+          </ModalProvider>
+        </AuthProvider>{" "}
       </ChakraProvider>
     </BrowserRouter>
   </React.StrictMode>

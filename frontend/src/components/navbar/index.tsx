@@ -19,6 +19,7 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import AuthModal from "../authmodal";
+import CreateButton from "../createButton";
 
 export default function Navbar() {
   const auth = useAuth();
@@ -33,8 +34,6 @@ export default function Navbar() {
     openModal();
   };
 
-
-
   console.log(colorMode);
 
   return (
@@ -48,11 +47,10 @@ export default function Navbar() {
       position={"fixed"}
       h={"68px"}
       zIndex={99}
-
       bgColor={"light.background"}
       color={"light.headerFooterText"}
     >
-      <Box  className={style.logo_container}>
+      <Box className={style.logo_container}>
         <Link to="/" className={style.logo_link}>
           <Text fontSize={"larger"}>ProArticle </Text>
         </Link>
@@ -69,8 +67,7 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <Link to={"/create"}>Create</Link>
-
+            <CreateButton />
             <ProfileDropdown />
           </>
         )}{" "}

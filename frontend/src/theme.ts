@@ -10,7 +10,7 @@ const colors = {
     primaryText: "#333333",
     secondaryText: "#555555",
     accent: "#1E88E5",
-    buttonBackground: "#E0E0E0",
+    buttonBackground: "#a19c9c",
     buttonText: "#333333",
     buttonBorder: "#CCCCCC",
     secondaryButtonBackground: "#D3D3D3",

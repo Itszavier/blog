@@ -18,12 +18,13 @@ import {
   Text,
   Image,
   Heading,
-  Avatar,
   Flex,
-  IconButton,
   CardFooter,
   Button,
+  Divider,
+  Avatar,
 } from "@chakra-ui/react";
+import { PiAvocadoThin } from "react-icons/pi";
 
 interface PostProps {
   post: IPost;
@@ -53,48 +54,61 @@ export default function PostCard({
       bg={"light.cardBackground"}
       color={"light.cardText"}
       width={"100%"}
-      height={"320px"}
     >
-      <CardHeader>
-        <Flex>
-          <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-            <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
-
-            <Box>
-              <Heading size="sm">Segun Adebayo</Heading>
-              <Text>Creator, Chakra UI</Text>
-            </Box>
+      <CardBody>
+        <Box display={"flex"} alignItems={"center"}>
+          <Flex flexDirection={"column"}>
+            <Heading size={"xl"}>{post.title}</Heading>
+            <Text color={"light.secondaryText"}>
+              {post.subtitle || "subtitle from content"}
+            </Text>
           </Flex>
-          <IconButton
-            variant="ghost"
-            colorScheme="gray"
-            aria-label="See menu"
-            icon={<BsThreeDotsVertical />}
-          />
-        </Flex>
-      </CardHeader>
-      <CardBody display={"flex"}>
-        <Flex flexDirection={"column"}>
-          <Heading size={"xl"}>{post.title}</Heading>
-          <Text color={"light.secondaryText"}>
-            {post.subtitle || "subtitle from content"}
-          </Text>
-        </Flex>
 
-        {post.heroImage?.url && (
-          <Image
-            className={style.heroImage}
-            src={post.heroImage?.url}
-            width={"200px"}
-            height={"120px"}
-          />
-        )}
+          {post.heroImage?.url && (
+            <Image
+              className={style.heroImage}
+              src={post.heroImage?.url}
+              width={"129px"}
+              objectFit={"fill"}
+            />
+          )}
+        </Box>
       </CardBody>
 
-      <CardFooter>
-        <Button color={"light.primaryText"}>
-          <i className="bx bxs-heart"></i>
-        </Button>
+      <CardFooter w={"100%"}>
+        <Flex alignItems={"center"}>
+          <Avatar
+            size={"sm"}
+            name={post.author.name}
+            src={post.author.profileImage.url}
+          />
+          <Flex flexDirection={"column"}>
+            <Text>{post.author.name}</Text>
+          </Flex>
+        </Flex>
+
+        <Box ml={"auto"} gap={4} justifyContent={"flex-end"}>
+          <Button bg={"transparent"} p={3} fontSize={"20px"} color={"light.primaryText"}>
+            <Text>0</Text>
+            <i className="bx bxs-heart"></i>
+          </Button>
+
+          <Button bg={"transparent"} fontSize={"20px"} p={3} color={"light.primaryText"}>
+            <Text>0</Text>
+            <i className="bx bxs-bookmark"></i>
+          </Button>
+
+          <Button
+            ml={"auto"}
+            bg={"transparent"}
+            fontSize={"20px"}
+            p={3}
+            color={"light.primaryText"}
+          >
+            <Text>0</Text>
+            <i className="bx bxs-message-dots"></i>
+          </Button>
+        </Box>
       </CardFooter>
     </Card>
   );

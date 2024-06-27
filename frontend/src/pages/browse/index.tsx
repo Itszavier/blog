@@ -6,6 +6,7 @@ import { serverAxios } from "../../api/axios";
 import { Loading } from "../../components/loading";
 import PostCard from "../../components/post";
 import BrowseSideNav from "../../components/browseSideNav";
+import { Box, Flex } from "@chakra-ui/react";
 
 export default function Browse() {
   const [loading, setLoading] = useState(true);
@@ -34,11 +35,19 @@ export default function Browse() {
       <BrowseSideNav />
 
       <div className={style.posts_container}>
-        <div className={style.posts_container_header}>
+        <Flex
+          bg={"light.background"}
+          width={"100%"}
+          top={0}
+          alignItems={"center"}
+          zIndex={99}
+          mt={10}
+          p={1}
+        >
           <button className={style.filter_btn}>Relevant</button>
           <button className={style.filter_btn}>Trending</button>
           <button className={style.filter_btn}>Following</button>
-        </div>
+        </Flex>
         {posts.length > 0
           ? posts.map((post) => {
               return (
