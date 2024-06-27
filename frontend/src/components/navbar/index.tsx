@@ -11,7 +11,7 @@ import { Box, Text, List, ListItem, Button, useDisclosure } from "@chakra-ui/rea
 import AuthModal from "../authmodal";
 
 export default function Navbar() {
-  const { user } = useAuth();
+  const auth = useAuth();
   // const postModal = useModal("createPost");
   //const { theme, toggleTheme } = useTheme();
   const { openModal } = useModal("auth");
@@ -40,12 +40,18 @@ export default function Navbar() {
         </Link>
       </Box>
       <Box display={"flex"} gap={2} alignItems={"center"} ml={"auto"}>
-        <Link to={"/#"} className={style.link}>
-          MemberShip
-        </Link>
-        <Button onClick={onOpen} fontWeight={400}>
-          Get Started
-        </Button>
+        {!auth.user ? (
+          <>
+            <Link to={"/#"} className={style.link}>
+              MemberShip
+            </Link>
+            <Button onClick={onOpen} fontWeight={400}>
+              Get Started
+            </Button>
+          </>
+        ) : (
+          <ProfileDropdown />
+        )}{" "}
       </Box>
 
       <AuthModal isOpen={isOpen} onClose={onClose} />

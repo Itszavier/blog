@@ -8,6 +8,25 @@ import useFetch from "../../../hooks/useFetch";
 import style from "./style.module.css";
 import { IoHeart, IoHeartDislike } from "react-icons/io5";
 import { MdComment } from "react-icons/md";
+import {
+  Box,
+  Text,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatHelpText,
+  StatArrow,
+  StatGroup,
+  Heading,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  Button,
+} from "@chakra-ui/react";
 
 export default function Overview() {
   const auth = useAuth();
@@ -26,32 +45,48 @@ export default function Overview() {
   if (isPending) return <Loading />;
 
   return (
-    <div className={style.container}>
-      <div className={`card ${style.welcome_section}`}>
-        <h2>Welcome, {auth.user?.name}!</h2>
-        <p>Here’s a summary of your activity on the platform.</p>
-      </div>
+    <Box className={style.container} bg={"grey.100"} p={10}>
+      <Box bg={"lavender"} className={`card ${style.welcome_section}`}>
+        <Heading>Welcome, {auth.user?.name}!</Heading>
+        <Text>Here’s a summary of your activity on the platform.</Text>
+      </Box>
 
-      <div className={`card ${style.activity_summary} `}>
-        <div className={style.summary_item}>
-          <h3>Published Posts</h3>
-          <p>0</p>
-        </div>
-        <div className={style.summary_item}>
-          <h3>Draft Posts</h3>
-          <p>0</p>
-        </div>
-        <div className={style.summary_item}>
-          <h3>Comments</h3>
-          <p>0</p>
-        </div>
-        <div className={style.summary_item}>
-          <h3>Likes Received</h3>
-          <p>0</p>
-        </div>
-      </div>
+      <StatGroup gap={8}>
+        <Stat rounded={10} boxShadow={"md"} className={style.summary_item}>
+          <StatLabel>Total Drafts</StatLabel>
+          <StatNumber>0</StatNumber>
+          <StatHelpText>
+            <StatArrow type="increase" />
+            <StatArrow type="decrease" />
+          </StatHelpText>
+        </Stat>
+        <Stat rounded={10} boxShadow={"md"} className={style.summary_item}>
+          <StatLabel>Published Posts</StatLabel>
+          <StatNumber>0</StatNumber>
+          <StatHelpText>
+            <StatArrow type="increase" />
+            <StatArrow type="decrease" />
+          </StatHelpText>
+        </Stat>
+        <Stat rounded={10} boxShadow={"md"} className={style.summary_item}>
+          <StatLabel>Comments</StatLabel>
+          <StatNumber>0</StatNumber>
+          <StatHelpText>
+            <StatArrow type="increase" />
+            <StatArrow type="decrease" />
+          </StatHelpText>
+        </Stat>
+        <Stat rounded={10} boxShadow={"md"} className={style.summary_item}>
+          <StatLabel>Total Likes</StatLabel>
+          <StatNumber>0</StatNumber>
+          <StatHelpText>
+            <StatArrow type="increase" />
+            <StatArrow type="decrease" />
+          </StatHelpText>
+        </Stat>
+      </StatGroup>
       <ActivitySummary title="Drafts" posts={recentPosts!} />
-    </div>
+    </Box>
   );
 }
 
@@ -79,39 +114,31 @@ function ActivitySummary(props: ActivitySummaryProps) {
   };
 
   return (
-    <div className={style.recent_activity}>
-      <h3>{props.title}</h3>
-      <ul className={style.recent_posts}>
-        {props.posts.map((post) => (
-          <li
-            onClick={(e) => {
-              navigate(`/editor/${post._id}`);
-            }}
-            key={post._id}
-            className={`card ${style.recent_post_item}`}
-          >
-            <img src="https://picsum.photos/320/120" alt="" />
-            <div className={style.recent_post_text_wrapper}>
-              <h4 className={style.post_title}>{post.title}</h4>
-
-              <p className={style.post_excerpt}>{post.excerpt}</p>
-            </div>
-
-            <div className={style.recent_post_footer}>
-              <p>
-                <IoHeart /> <span>0</span>
-              </p>
-              <p>
-                <IoHeartDislike /> <span>0</span>
-              </p>
-              <p>
-                <MdComment />
-                <span>0</span>
-              </p>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Box className={style.recent_activity}>
+      <TableContainer>
+        <Table variant={"simple"}>
+          <Thead>
+            <Tr>
+              <Th>Title</Th>
+              <Th isNumeric>Impressions</Th>
+              <Th isNumeric>Likes</Th>
+              <Th isNumeric>Comments</Th>
+              <Th>options</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Td>Some Title 1</Td>
+              <Td isNumeric>100</Td>
+              <Td isNumeric>50</Td>
+              <Td isNumeric>10</Td>
+              <Td>
+                <Button>Edit</Button>
+              </Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }
