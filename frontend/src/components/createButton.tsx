@@ -6,9 +6,10 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  Button,
   ModalCloseButton,
+  Button,
   useDisclosure,
+  Flex,
 } from "@chakra-ui/react";
 import CreateForm from "./createForm";
 
@@ -17,21 +18,22 @@ export default function CreateButton() {
   return (
     <>
       <Button onClick={onOpen}>Create Post</Button>
-
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create a new Article</ModalHeader>
+          <ModalHeader>Create A New article</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <CreateForm />
           </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              close
+          <ModalFooter gap={3} flexDirection={"column"}>
+            <Button width={"100%"} colorScheme="blue" onClick={onClose}>
+              Close
             </Button>
-            <Button variant="ghost">Secondary Action</Button>
+            <Button width={"100%"} type="submit" form="create">
+              continue
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
