@@ -1,6 +1,6 @@
 /** @format */
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IPost } from "../../../api/types";
 import { Loading } from "../../../components/loading";
 import { useAuth } from "../../../context/auth";
@@ -130,7 +130,7 @@ function PostTable(props: TableProps) {
                 <Tr>
                   <Td isNumeric>
                     <Text isTruncated textAlign={"start"} width={"340px"}>
-                      {post.title}
+                      <Link to={`/editor/${post._id}`}>{post.title}</Link>
                     </Text>
                   </Td>
                   <Td isNumeric>{post.likes.length}</Td>

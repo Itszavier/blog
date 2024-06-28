@@ -9,12 +9,13 @@ import {
   ModalCloseButton,
   Button,
   useDisclosure,
-  Flex,
 } from "@chakra-ui/react";
 import CreateForm from "./createForm";
+import { useState } from "react";
 
 export default function CreateButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   return (
     <>
       <Button onClick={onOpen}>Create Post</Button>
@@ -24,15 +25,22 @@ export default function CreateButton() {
           <ModalHeader>Create A New article</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <CreateForm />
+            <CreateForm setIsLoading={setIsLoading} />
           </ModalBody>
 
           <ModalFooter gap={3} flexDirection={"column"}>
-            <Button width={"100%"} colorScheme="blue" onClick={onClose}>
+            <Button width={"100%"} onClick={onClose}>
               Close
             </Button>
-            <Button width={"100%"} type="submit" form="create">
-              continue
+            <Button
+              isLoading={isLoading}
+              loadingText="Saving"
+              width={"100%"}
+              colorScheme="blue"
+              type="submit"
+              form="create"
+            >
+              Continue
             </Button>
           </ModalFooter>
         </ModalContent>

@@ -1,10 +1,8 @@
 /** @format */
 import { EditorContent, useEditor } from "@tiptap/react";
 import style from "./style.module.css";
-import Toolbar from "../../components/EditorToolbar";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ProfileDropdown from "../../components/profileDropdown";
 import { Loading } from "../../components/loading";
 import "./prosemirror.css";
 import useFetch from "../../hooks/useFetch";
@@ -12,7 +10,8 @@ import { extenions } from "../../tipTap.config";
 import { IPost } from "../../api/types";
 import useAutoSave from "../../hooks/useAutoSave";
 import PublishModal from "../../components/publishModal";
-import { useModal } from "../../context/modalContext";
+import { Box, Button, Container, Flex, Input, Text } from "@chakra-ui/react";
+import Header from "./header";
 
 interface IPostInitailData {
   _id: string;
@@ -30,7 +29,7 @@ async function handleAutoSave(unSavedData: IPostInitailData) {
 export default function EditorPage() {
   const { postId } = useParams();
   const navigate = useNavigate();
-  const { closeModal, openModal, isOpen } = useModal("publish");
+
   // Use state with an initial function
   const [post, setPost] = useState<IPostInitailData>(() => ({
     _id: "",
@@ -41,7 +40,7 @@ export default function EditorPage() {
     },
   }));
 
-  const { isPending, data } = useFetch<IPost>(`/posts/editable/${postId}`, {
+  const { isPending, data } = useFetch<IPost>(`/article/editable/${postId}`, {
     key: "post",
     onfetch: (data) => {
       console.log("saved handle save function", data);
@@ -97,72 +96,52 @@ export default function EditorPage() {
   if (!editor) return null;
 
   return (
-    <div className={style.container}>
-      <div className={style.header}>
-        <div className={style.control}>
-          <div className={style.right_container}>
-            <button className={style.back_btn} onClick={() => navigate(-1)}>
-              <i className="bx bx-arrow-back"></i>
-            </button>
-            <div className={style.title_wrapper}>
-              <p className={style.page_title}>{post.title}</p>
-            </div>
-          </div>
+    <Box>
+      <Header isSaving={isSaving} editor={editor} post={data} />
 
-          <div className={style.left_container}>
-            <span className={style.saved_text}>{!isSaving && "Changes saved"}</span>
-            {!data?.published && (
-              <button
-                onClick={() => openModal()}
-                className={`primary ${style.control_btn} ${style.publish_btn}`}
-              >
-                Publish Article
-              </button>
-            )}
-          </div>
-        </div>
-        <Toolbar editor={editor} />
-      </div>
-
-      <div className={style.content}>
-        <div className={style.middle_content}>
-          <div className={style.meta_container}>
-            <div className={style.input_wrapper}>
-              <input
-                placeholder="Title"
-                value={post.title}
-                className={`${style.input} ${style.title_input}`}
-                onChange={handleChange}
-                name={"title"}
-              />
-            </div>
-            <div className={style.input_wrapper}>
-              <input
-                placeholder="Subtitle"
-                value={post.subtitle}
-                onChange={handleChange}
-                name="subtitle"
-                type="text"
-                className={`${style.input} ${style.subtitle_input}`}
-              />
-            </div>
-          </div>
-          <div className="editor_container">
-            <EditorContent editor={editor} className={"tiptap-content"} />
-          </div>
-        </div>
-      </div>
-
-      <PublishModal
-        post={{
-          ...post,
-          heroImage: data?.heroImage?.url,
-          tags: data!.tags,
-          description: data?.description,
-        }}
-        open={isOpen}
-        onClose={() => closeModal()}
-      />
-    </div>
+      <Box
+        p={"8px"}
+        bg={"light.cardBackground"}
+        mt={"25px"}
+        width={"60%"}
+        ml={"auto"}
+        mr={"auto"}
+        boxShadow={"md"}
+        borderTopLeftRadius={"8px"}
+        borderTopRightRadius={"8px"}
+      >
+        <Box>
+          <Box>
+            <Input
+              placeholder="Title"
+              value={post.title}
+              onChange={handleChange}
+              name={"title"}
+              rounded={0}
+              fontSize={"25px"}
+              fontWeight={"600"}
+              border={"none"}
+              p={2}
+            />
+          </Box>
+          <Box className={style.input_wrapper}>
+            <Input
+              placeholder="Subtitle"
+              value={post.subtitle}
+              onChange={handleChange}
+              name="subtitle"
+              type="text"
+              fontSize={"18px"}
+              rounded={0}
+              border={"none"}
+              outline={"none"}
+            />
+          </Box>
+        </Box>
+        <Box color={"black"}>
+          <EditorContent editor={editor} />
+        </Box>
+      </Box>
+    </Box>
   );
 }

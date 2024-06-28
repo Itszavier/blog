@@ -1,6 +1,6 @@
 /** @format */
 
-import { Menu } from "../dropdown";
+import { Menu } from "../../../components/dropdown";
 
 export const fontFamilies: Menu[] = [
   { type: "FONTFAMILY", label: "Arial", value: "Arial, sans-serif" },

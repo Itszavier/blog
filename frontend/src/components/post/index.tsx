@@ -23,6 +23,8 @@ import {
   Button,
   Divider,
   Avatar,
+  Stack,
+  AspectRatio,
 } from "@chakra-ui/react";
 import { PiAvocadoThin } from "react-icons/pi";
 
@@ -56,23 +58,21 @@ export default function PostCard({
       width={"100%"}
     >
       <CardBody>
-        <Box display={"flex"} alignItems={"center"}>
-          <Flex flexDirection={"column"}>
-            <Heading size={"xl"}>{post.title}</Heading>
-            <Text color={"light.secondaryText"}>
-              {post.subtitle || "subtitle from content"}
-            </Text>
-          </Flex>
-
-          {post.heroImage?.url && (
-            <Image
-              className={style.heroImage}
-              src={post.heroImage?.url}
-              width={"129px"}
-              objectFit={"fill"}
-            />
-          )}
-        </Box>
+        {post.heroImage?.url && (
+          <Image
+            width={"100%"}
+            height={"234px"}
+            aspectRatio={"auto"}
+            className={style.heroImage}
+            src={post.heroImage?.url}
+          />
+        )}
+        <Stack mt="6" spacing="3">
+          <Heading size={"xl"}>{post.title}</Heading>
+          <Text color={"light.secondaryText"}>
+            {post.subtitle || "subtitle from content"}
+          </Text>
+        </Stack>
       </CardBody>
 
       <CardFooter w={"100%"}>

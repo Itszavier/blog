@@ -3,9 +3,10 @@
 import { Editor } from "@tiptap/react";
 import style from "./style.module.css";
 
-import Dropdown, { Menu } from "../../components/dropdown";
+import Dropdown, { Menu } from "../../../components/dropdown";
 import { fontFamilies } from "./variables";
 import { useState, useCallback, useEffect } from "react";
+import { Box } from "@chakra-ui/react";
 
 interface ToolBarProps {
   editor: Editor;
@@ -43,7 +44,6 @@ const CommandShortHand = {
 };
 
 export default function Toolbar({ editor }: ToolBarProps) {
-
   const handleHeading = (selected: Menu) => {
     if (selected.type === "PARAGRAPH") {
       return editor.chain().focus().setParagraph().run();
@@ -64,8 +64,6 @@ export default function Toolbar({ editor }: ToolBarProps) {
     }
     editor.chain().focus().setFontFamily(selected.value).run();
   };
-
-
 
   const handleCommand = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const command = e.currentTarget.name;
@@ -136,7 +134,17 @@ export default function Toolbar({ editor }: ToolBarProps) {
   };
 
   return (
-    <div className={`${style.toolbar} `}>
+    <Box
+      display={"flex"}
+      alignItems={"center"}
+      justifyContent={"center"}
+      gap={8}
+      bg={"light.cardBackground"}
+      justifyItems={"center"}
+      position={"sticky"}
+      top={0}
+      width={"100%"}
+    >
       <div className={`${style.section}`}>
         <button
           onClick={handleCommand}
@@ -172,9 +180,7 @@ export default function Toolbar({ editor }: ToolBarProps) {
       </div>
       <div className={`${style.section} ${style.format_textStyles_section}`}>
         <Dropdown
-          defaultValue={
-            fontFamilies[0]
-          }
+          defaultValue={fontFamilies[0]}
           type="heading/Normal"
           onSelect={handleHeading}
           options={list}
@@ -240,6 +246,6 @@ export default function Toolbar({ editor }: ToolBarProps) {
           <i className="bx bx-code-block"></i>
         </button>
       </div>
-    </div>
+    </Box>
   );
 }
