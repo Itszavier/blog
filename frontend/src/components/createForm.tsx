@@ -6,10 +6,12 @@ import {
   Input,
   FormHelperText,
   Box,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { serverAxios } from "../api/axios";
 import { useState } from "react";
 import { z } from "zod";
+import useZodErrorFilter from "../hooks/useZodErrorFilter";
 
 interface CreateFormProps {
   onSubmit?: (e?: React.FormEvent<HTMLFormElement>) => any;
@@ -17,7 +19,7 @@ interface CreateFormProps {
 
 export default function CreateForm(props: CreateFormProps) {
   const [title, setTitle] = useState("");
-
+  const { error, filterZodErrors } = useZodErrorFilter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,12 +33,10 @@ export default function CreateForm(props: CreateFormProps) {
         .min(5, { message: "Title must be at least 5 characters long" })
         .max(120, { message: "Title cannot exceed 100 characters" }),
     });
-    
+
     try {
       const response = await serverAxios.post("/article/create", { title });
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 
   return (
@@ -45,7 +45,10 @@ export default function CreateForm(props: CreateFormProps) {
         <FormControl>
           <FormLabel>Title</FormLabel>
           <Input title={title} onChange={(e) => setTitle(e.target.value)} type="email" />
-          <FormHelperText>Provide a title to start with </FormHelperText>
+          <FormHelperText>
+            <FormErrorMessage></FormErrorMessage>
+            Provide a title to start with
+          </FormHelperText>
         </FormControl>
       </form>
     </Box>
