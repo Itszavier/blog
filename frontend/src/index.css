@@ -1,9 +1,10 @@
 /** @format */
 
+
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url("https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css");
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-@import url("./css/colors.css");
+
 
 * {
   padding: 0;
@@ -22,14 +23,6 @@ body {
   height: 100%;
 }
 
-.tiptap p.is-editor-empty:first-child::before {
-  color: rgb(192, 192, 192);
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
-  color: var(--secondaryFontColor);
-}
 ::-webkit-scrollbar {
   width: 0px; /* Adjust the width if necessary */
   background-color: transparent;

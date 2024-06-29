@@ -11,5 +11,8 @@
   "dependencies": {
     "@tiptap/extension-placeholder": "^2.4.0",
     "react-spinners": "^0.13.8"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.4"
   }
 }

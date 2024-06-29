@@ -100,7 +100,6 @@ export default function EditorPage() {
       <Header isSaving={isSaving} editor={editor} post={data} />
 
       <Box
-        p={"8px"}
         bg={"light.cardBackground"}
         mt={"25px"}
         width={"60%"}
@@ -110,7 +109,7 @@ export default function EditorPage() {
         borderTopLeftRadius={"8px"}
         borderTopRightRadius={"8px"}
       >
-        <Box>
+        <Flex mb={'5'} gap={"2"} direction={"column"} pl={"6"} pr={"6"} pt={"5"}>
           <Box>
             <Input
               placeholder="Title"
@@ -121,7 +120,7 @@ export default function EditorPage() {
               fontSize={"25px"}
               fontWeight={"600"}
               border={"none"}
-              p={2}
+              variant="unstyled"
             />
           </Box>
           <Box className={style.input_wrapper}>
@@ -134,11 +133,11 @@ export default function EditorPage() {
               fontSize={"18px"}
               rounded={0}
               border={"none"}
-              outline={"none"}
+              variant="unstyled"
             />
           </Box>
-        </Box>
-        <Box color={"black"}>
+        </Flex>
+        <Box pl={"5"} pr={"5"} color={"black"}>
           <EditorContent editor={editor} />
         </Box>
       </Box>

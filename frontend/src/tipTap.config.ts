@@ -10,9 +10,6 @@ const placeholder: string =
 
 export const extenions: Extensions = [
   StarterKit,
-  Placeholder.configure({
-    placeholder,
-  }),
 
   FontFamily.configure({
     types: ["textStyle"],

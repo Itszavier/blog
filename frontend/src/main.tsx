@@ -7,6 +7,8 @@ import { ModalProvider } from "./context/modalContext.tsx";
 import { BrowserRouter } from "react-router-dom";
 import "./css/lib.css";
 import "./index.css";
+import "./css/tiptap.css";
+
 import { AuthProvider } from "./context/auth.tsx";
 import {
   ChakraProvider,
@@ -44,7 +46,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <ModalProvider>
             <App />
           </ModalProvider>
-        </AuthProvider>{" "}
+        </AuthProvider>
       </ChakraProvider>
     </BrowserRouter>
   </React.StrictMode>
