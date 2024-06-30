@@ -61,9 +61,10 @@ export default function Navbar() {
             <Link to={"/#"} className={style.link}>
               MemberShip
             </Link>
-            <Button onClick={onOpen} fontWeight={400}>
-              Get Started
-            </Button>
+
+            <Link to={"/auth"} className={style.link}>
+              Login/Signup
+            </Link>
           </>
         ) : (
           <>
@@ -77,3 +78,9 @@ export default function Navbar() {
     </Box>
   );
 }
+
+/* <Button onClick={onOpen} fontWeight={400}>
+   Get Started
+ </Button>;
+
+ */

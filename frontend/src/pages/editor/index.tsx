@@ -103,13 +103,14 @@ export default function EditorPage() {
         bg={"light.cardBackground"}
         mt={"25px"}
         width={"60%"}
+        padding={"20px"}
         ml={"auto"}
         mr={"auto"}
         boxShadow={"md"}
         borderTopLeftRadius={"8px"}
         borderTopRightRadius={"8px"}
       >
-        <Flex mb={'5'} gap={"2"} direction={"column"} pl={"6"} pr={"6"} pt={"5"}>
+        <Flex mb={"5"} gap={"2"} direction={"column"}>
           <Box>
             <Input
               placeholder="Title"
@@ -137,7 +138,7 @@ export default function EditorPage() {
             />
           </Box>
         </Flex>
-        <Box pl={"5"} pr={"5"} color={"black"}>
+        <Box color={"black"}>
           <EditorContent editor={editor} />
         </Box>
       </Box>
