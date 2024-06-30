@@ -53,7 +53,7 @@ export default function ProfileDropdown() {
       </button>
 
       {toggle && (
-        <Box bg={'dark.cardBackground'}  id={"profileDropdown"} className={` ${style.body}`}>
+        <Box bg={'light.cardBackground'}  id={"profileDropdown"} className={` ${style.body}`}>
           <div className={style.body_header}>
             <Link to={`/profile/${user.username}`}>
               <span>{user.name}</span>

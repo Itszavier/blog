@@ -1,4 +1,5 @@
 /** @format */
+import { Box } from "@chakra-ui/react";
 import style from "./style.module.css";
 const notifications = [
   {
@@ -42,7 +43,7 @@ const notifications = [
 export default function Notifcations() {
   console.log("runing notifcation page");
   return (
-    <div className={style.container}>
+    <Box p={10} w={"100%"}>
       <h2 className={style.title}>Notifications</h2>
       <div className={style.controls}>
         <input className={style.input} type="text" placeholder="Search notifications" />
@@ -83,6 +84,6 @@ export default function Notifcations() {
           );
         })}
       </ul>
-    </div>
+    </Box>
   );
 }

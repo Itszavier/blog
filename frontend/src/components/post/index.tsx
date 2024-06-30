@@ -53,26 +53,25 @@ export default function PostCard({
       onClick={() => {
         navigate(`/article/${title}/${handle}`);
       }}
-      bg={"light.cardBackground"}
-      color={"light.cardText"}
       width={"100%"}
     >
-      <CardBody>
+      <CardBody display={"flex"} alignItems={"center"}>
         {post.heroImage?.url && (
           <Image
-            width={"100%"}
-            height={"234px"}
+            width={"120px"}
+            height={"100px"}
             aspectRatio={"auto"}
+            mr={2}
             className={style.heroImage}
             src={post.heroImage?.url}
           />
         )}
-        <Stack mt="6" spacing="3">
-          <Heading size={"xl"}>{post.title}</Heading>
+        <Box width={"100%"} mt="6" display={"flex"} flexDirection={"column"}>
+          <Heading size={"md"}>{post.title}</Heading>
           <Text color={"light.secondaryText"}>
             {post.subtitle || "subtitle from content"}
           </Text>
-        </Stack>
+        </Box>
       </CardBody>
 
       <CardFooter w={"100%"}>

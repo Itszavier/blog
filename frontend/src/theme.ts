@@ -15,7 +15,7 @@ const colors = {
     buttonBorder: "#CCCCCC",
     secondaryButtonBackground: "#D3D3D3",
     secondaryButtonText: "#555555",
-    successButtonBackground: "#4CAF50",
+    successBtn: "#4CAF50",
     successButtonText: "#FFFFFF",
     dangerButtonBackground: "#F44336",
     dangerButtonText: "#FFFFFF",
@@ -88,7 +88,7 @@ const theme: ThemeOverride = extendTheme({
           color: colors.light.secondaryButtonText,
         },
         "&.success": {
-          bg: colors.light.successButtonBackground,
+          bg: colors.light.successBtn,
           color: colors.light.successButtonText,
         },
         "&.danger": {
