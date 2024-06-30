@@ -29,8 +29,8 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
-import { map } from "lodash";
-import { useState } from "react";
+
+import PostTable from "./table";
 
 export default function Overview() {
   const auth = useAuth();
@@ -83,68 +83,6 @@ export default function Overview() {
         </Stat>
       </StatGroup>
       <PostTable title="Drafts" posts={data!} />
-    </Box>
-  );
-}
-
-interface TableProps {
-  title: string;
-  posts: IPost[];
-}
-
-function PostTable(props: TableProps) {
-  const navigate = useNavigate();
-  const [posts, setPost] = useState<IPost[]>(() => props.posts || []);
-
-  const editPost = (postId: string): void => {
-    navigate(`/editor/${postId}`);
-    console.log("Editing post", postId);
-  };
-
-  const unpublishPost = (postId: string): void => {
-    console.log("Unpublishing post", postId);
-  };
-
-  return (
-    <Box mt={"20px"} className={style.recent_activity}>
-      <Box w={"450px"} display={"flex"} alignItems={"center"}>
-        <Input flex={1} rounded={0} placeholder="Filter" />
-        <Button rounded={0}>
-          <SearchIcon />
-        </Button>
-      </Box>
-      <TableContainer>
-        <Table overflowY={"auto"} h={"120px"}>
-          <Thead>
-            <Tr>
-              <Th>Title</Th>
-              <Th isNumeric>Impressions</Th>
-              <Th isNumeric>Likes</Th>
-              <Th isNumeric>Comments</Th>
-              <Th>options</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {props.posts.map((post) => {
-              return (
-                <Tr>
-                  <Td isNumeric>
-                    <Text isTruncated textAlign={"start"} width={"340px"}>
-                      <Link to={`/editor/${post._id}`}>{post.title}</Link>
-                    </Text>
-                  </Td>
-                  <Td isNumeric>{post.likes.length}</Td>
-                  <Td isNumeric>0</Td>
-                  <Td isNumeric>0</Td>
-                  <Td>
-                    <Button>Edit</Button>
-                  </Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
-      </TableContainer>
     </Box>
   );
 }

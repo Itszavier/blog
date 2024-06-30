@@ -36,7 +36,7 @@ export default function SideNav() {
           <Text p={0} m={0}>
             {auth.user?.name}
           </Text>
-          <Text color={'light.secondaryColor'} fontSize={"13px"} p={0} m={0}>
+          <Text color={"light.secondaryColor"} fontSize={"13px"} p={0} m={0}>
             Web developer
           </Text>
         </Box>
@@ -44,7 +44,7 @@ export default function SideNav() {
       <div className={style.list_container}>
         <ul className={style.navlist}>
           <li className={style.navlist_item}>
-            <NavLink to="/dashboard" className={style.navlink}>
+            <NavLink className={style.navlink} to="/dashboard">
               <i className="bx bxs-dashboard"></i>
               <span className="">Dashboard</span>
             </NavLink>{" "}

@@ -124,3 +124,6 @@
   background-color: var(--primary-color-light);
 }
 
+.active {
+  background-color: blue;
+}
