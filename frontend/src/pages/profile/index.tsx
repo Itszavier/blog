@@ -18,7 +18,6 @@ export default function Profile() {
   const [memberLoading, setMemberLoading] = useState<boolean>(false);
   const [posts, setPosts] = useState<IPost[]>([]);
 
-
   useEffect(() => {
     setMemberLoading(true);
     const abortController = new AbortController();
@@ -39,7 +38,7 @@ export default function Profile() {
     };
   }, [username]);
 
-  if (auth.loading || memberLoading ) {
+  if (auth.loading || memberLoading) {
     return <Loading />;
   }
 
@@ -48,8 +47,8 @@ export default function Profile() {
   }
 
   return (
-    <Box display={"flex"} justifyContent={"center"} className={style.container}>
-      <Box w={"fit-content"}>
+    <Box display={"flex"} w={'100%'}justifyContent={"center"} className={style.container}>
+      <Box bg={['non3', 'none', 'green']} w={['100%', '90%', 'fit-content']} p={{ sm: 0, md: 0 }}>
         <UserProfile
           userId={member._id as string}
           member={member}

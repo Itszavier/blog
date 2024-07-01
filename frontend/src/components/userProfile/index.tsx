@@ -20,6 +20,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { SettingsIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 interface IUserProfileProps {
   userId: string;
@@ -31,7 +32,8 @@ export default function UserProfile(props: IUserProfileProps) {
   const auth = useAuth();
   const [isFollowLoading, setIsFollowLoading] = useState<boolean>(false);
   const [member, setMember] = useState(() => props.member);
- // const toast = useToast();
+  const navigate = useNavigate();
+  // const toast = useToast();
 
   const handleFollow = async (e: any) => {
     if (!auth.user) {
@@ -155,9 +157,15 @@ export default function UserProfile(props: IUserProfileProps) {
   };
 
   return (
-    <Box p={"10px"} w={"680px"} maxW={"100%"} h={"255px"} mt={"10"} boxShadow={"md"}>
+    <Box
+      p={"10px"}
+      w={["100%", "100%", "100%"]}
+      h={["290px", "255px"]}
+      mt={"10"}
+      boxShadow={"md"}
+    >
       <Box padding={4}>
-        <Flex alignItems={"center"}>
+        <Flex alignItems={"center"} flexDirection={["column", "row", "row"]}>
           <Avatar
             mr={"4"}
             name={member.username}
@@ -171,18 +179,24 @@ export default function UserProfile(props: IUserProfileProps) {
               alignItems={"center"}
               fontSize={"17px"}
               fontWeight={"bold"}
+              textAlign={["center", "unset"]}
               m={0}
             >
               <span style={{ fontSize: "17px" }}>@</span>
               {member.username}
             </Text>
-            <Text fontSize={"13px"} m={0} width={"245px"}>
-              {member.bio || "Programmer, writer and athlete i am also a businees owner"}
+            <Text
+              textAlign={["center", "unset"]}
+              fontSize={"13px"}
+              m={0}
+              width={["100%", "245px"]}
+            >
+              {member.bio || "I Am a Programmer"}
             </Text>
           </Flex>
         </Flex>
       </Box>
-      <Flex gap={8} padding={4} direction={"row"}>
+      <Flex justifyContent={["center", "normal"]} gap={8} padding={4} direction={"row"}>
         <Flex gap={2}>
           <Text fontWeight={"bold"} m={0}>
             {member.following.length}
@@ -209,8 +223,11 @@ export default function UserProfile(props: IUserProfileProps) {
           <IconButton
             bg={"black"}
             color={"white"}
-            aria-label={""}
+            aria-label={"Settings"}
             w={"85px"}
+            onClick={() => {
+              navigate("/dashboard/settings");
+            }}
             icon={<SettingsIcon />}
           />
         ) : (
