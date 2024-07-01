@@ -8,6 +8,8 @@ import { useAuth } from "../../context/auth";
 import { IMember, IPost } from "../../api/types";
 import PostCard from "../../components/post";
 import UserProfile from "../../components/userProfile";
+import { Box, Divider } from "@chakra-ui/react";
+import UserCreations from "./userCreations";
 
 export default function Profile() {
   const { username } = useParams();
@@ -63,10 +65,22 @@ export default function Profile() {
   }
 
   return (
-    <div className={style.container}>
-      <UserProfile userId={member._id as string} member={member} setMember={setMember} />
+    <Box display={"flex"} justifyContent={"center"} className={style.container}>
+      <Box w={"fit-content"}>
+        <UserProfile
+          userId={member._id as string}
+          member={member}
+          setMember={setMember}
+        />
+        <Divider h={8} />
+        <UserCreations />
+      </Box>
+    </Box>
+  );
+}
 
-      <div className={style.posts}>
+/**
+ *   <div className={style.posts}>
         {posts.length > 0 ? (
           posts.map((post, index) => (
             <PostCard key={index} post={post} statusText={true} showMenu />
@@ -83,6 +97,4 @@ export default function Profile() {
           </div>
         )}
       </div>
-    </div>
-  );
-}
+ */

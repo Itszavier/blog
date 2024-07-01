@@ -11,6 +11,7 @@ import postRoutes from "./routes/article";
 import UserModel, { IUser } from "./model/user";
 import session from "express-session";
 import "./stratetgies/google";
+import "./stratetgies/local";
 import errorHandler from "./middleware/error";
 import mongoStore from "connect-mongo";
 
@@ -61,8 +62,6 @@ passport.deserializeUser(async function (id, done) {
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 
 app.use(
   cors({

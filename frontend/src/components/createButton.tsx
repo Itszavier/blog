@@ -18,7 +18,9 @@ export default function CreateButton() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   return (
     <>
-      <Button onClick={onOpen}>Create Post</Button>
+      <Button bg={"black"} color={"white"}  onClick={onOpen}>
+        Create Post
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

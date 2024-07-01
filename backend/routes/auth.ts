@@ -14,15 +14,18 @@ dotenv.config();
 
 const router = Router();
 
-router.get("/login/google", passport.authenticate("google"));
-
 router.post("/login", passport.authenticate("local"), function (req, res) {
   console.log("Successfully login with local Strategy", req.body, req.user);
-  res.redirect(`http://localhost:5173/profile/${req.user?.username}`);
+  res.json({
+    user: req.user,
+  });
 });
 
 router.post("/signup", SignUp);
 
+router.get("/login/google", passport.authenticate("google"), function (req, res) {
+  res.redirect(`http://localhost:5173/profile/${req.user?.username}`);
+});
 router.get(
   "/google/redirect",
   passport.authenticate("google", { failureMessage: "failed" }),

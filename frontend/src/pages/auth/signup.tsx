@@ -12,12 +12,18 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-import axios from "axios";
+
 import { FormEvent, useState } from "react";
 import { serverAxios } from "../../api/axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/auth";
+import { isAxiosError } from "axios";
 
 export default function SignUp() {
   const toast = useToast();
+  const auth = useAuth();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,8 +31,10 @@ export default function SignUp() {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const data = { email, password };
       const response = await serverAxios.post("/auth/signup", data);
+      auth.setUser(response.data.user);
       console.log(response);
       toast({
         description: "We've created your Account",
@@ -34,14 +42,30 @@ export default function SignUp() {
         duration: 9000,
         isClosable: true,
       });
+
+      navigate(`/profile/${response.data.user._id}`);
     } catch (err) {
+      if (isAxiosError(err) && err.response?.data.message) {
+        return toast({
+          position: "top-right",
+          title: "Error",
+          description: err.response.data.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
       toast({
+        title: "Error",
+        position: "top-right",
         description: "Unexpected error",
         status: "error",
         duration: 9000,
         isClosable: true,
       });
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -57,14 +81,14 @@ export default function SignUp() {
         </Button>
       </Box>
 
-      <Box display={"flex"} flexDirection={"column"} gap={"8"}>
+      <Flex display={"flex"} flexDirection={"column"} p={2} gap={"8"}>
         <FormControl>
           <FormLabel>Email</FormLabel>
           <Input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            type="email"
+            type={"email"}
           />
         </FormControl>
 
@@ -74,16 +98,23 @@ export default function SignUp() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
+            type={"password"}
           />
         </FormControl>
-      </Box>
+      </Flex>
       <Text m={5} textAlign={"left"} fontSize={"13"}>
         By creating an account, you agree to our Terms of Service and acknowledge our
         Privacy Policy
       </Text>
-      <Box p={2}>
-        <Button type="submit" colorScheme="blue" width={"100%"}>
-          Sign Up
+      <Box mt={2} p={2}>
+        <Button
+          isLoading={isLoading}
+          loadingText={"Signing up"}
+          type="submit"
+          colorScheme="blue"
+          width={"100%"}
+        >
+          Sign up
         </Button>
       </Box>
     </form>

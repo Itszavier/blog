@@ -1,5 +1,5 @@
 /** @format */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FormControl,
   FormLabel,
@@ -14,9 +14,14 @@ import {
 } from "@chakra-ui/react";
 import { FormEvent, useState } from "react";
 import { serverAxios } from "../../api/axios";
+import { isAxiosError } from "axios";
+import { useAuth } from "../../context/auth";
 
 export default function Login() {
   const toast = useToast();
+  const auth = useAuth();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -28,24 +33,44 @@ export default function Login() {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const data = { email, password };
+
       const response = await serverAxios.post("/auth/login", data);
-      console.log(response);
+      auth.setUser(response.data.user);
       toast({
         description: "Successfully logged in",
         title: "Logged in",
+        position: "top-right",
         status: "success",
         duration: 9000,
         isClosable: true,
       });
+      console.log(response);
+      navigate(`/profile/${response.data.user.username}`);
     } catch (err) {
+      if (isAxiosError(err) && err.response?.data.message) {
+        return toast({
+          position: "top-right",
+          title: "Error",
+          description: err.response.data.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
       toast({
+        title: "Error",
+        position: "top-right",
         description: "Unexpected error",
         status: "error",
         duration: 9000,
         isClosable: true,
       });
+
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -58,7 +83,7 @@ export default function Login() {
         </Button>
       </Box>
 
-      <Box display={"flex"} flexDirection={"column"} gap={"8"}>
+      <Flex display={"flex"} flexDirection={"column"} p={2} gap={"8"}>
         <FormControl>
           <FormLabel>Email</FormLabel>
           <Input
@@ -78,15 +103,21 @@ export default function Login() {
             type={"password"}
           />
         </FormControl>
-      </Box>
+      </Flex>
 
       <Flex justifyContent={"flex-end"} p={2} width={"100%"}>
         <Link to={"/password"}>Forgot Password</Link>
       </Flex>
 
       <Box mt={2} p={2}>
-        <Button type="submit" colorScheme="blue" width={"100%"}>
-          Sign Up
+        <Button
+          isLoading={isLoading}
+          loadingText={"Logging in"}
+          type="submit"
+          colorScheme="blue"
+          width={"100%"}
+        >
+          Login
         </Button>
       </Box>
     </form>

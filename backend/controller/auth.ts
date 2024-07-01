@@ -32,8 +32,8 @@ export default async function SignUp(req: Request, res: Response, next: NextFunc
         return next(err);
       }
       console.log("signup user and logIn");
-
-      res.json({ message: "successfully created user" });
+      // Todo remove password field
+      res.json({ message: "successfully created user", user: createdUser });
     });
   } catch (error) {
     console.log(error);

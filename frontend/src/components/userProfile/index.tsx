@@ -8,6 +8,17 @@ import { followUser, unFollowUser } from "../../api/functions";
 import { useState } from "react";
 import { ImGift } from "react-icons/im";
 import { ButtonLoader } from "../loading";
+import {
+  Avatar,
+  Box,
+  Button,
+  Center,
+  Flex,
+  HStack,
+  IconButton,
+  Text,
+} from "@chakra-ui/react";
+import { SettingsIcon } from "@chakra-ui/icons";
 
 interface IUserProfileProps {
   userId: string;
@@ -116,17 +127,20 @@ export default function UserProfile(props: IUserProfileProps) {
 
     if (!isUserFollowingMember) {
       return (
-        <button
+        <Button
+          bg={"black"}
+          color={"white"}
+          _hover={{ bg: "#121313" }}
           disabled={isFollowLoading}
           onClick={handleFollow}
           className={style.button}
         >
           {isFollowLoading ? <ButtonLoader /> : "Follow"}
-        </button>
+        </Button>
       );
     } else {
       return (
-        <button
+        <Button
           disabled={isFollowLoading}
           onClick={handleUnFollow}
           className={`${style.button}  ${
@@ -134,71 +148,62 @@ export default function UserProfile(props: IUserProfileProps) {
           }`}
         >
           {isFollowLoading ? <ButtonLoader /> : "Following"}
-        </button>
+        </Button>
       );
     }
   };
 
   return (
-    <div className={style.profile_card}>
-      <div className={style.profile_info_container}>
-        <div className={`${style.data_wrapper} ${style.profile_info}`}>
-          <img
-            className={style.profileImage}
+    <Box p={"10px"} w={"680px"} maxW={"100%"} h={"255px"} mt={"10"} boxShadow={"md"}>
+      <Box padding={4}>
+        <Flex alignItems={"center"}>
+          <Avatar
+            mr={"4"}
+            name={member.username}
             src={member.profileImage.url}
-            width={50}
-            height={50}
+            size={"xl"}
           />
-          <span>{member.name}</span>
-        </div>
-        <div className={style.data_wrapper}>
-          <p>
-            <strong>0</strong>
-          </p>
-          <span>Posts</span>
-        </div>
-        <div className={style.data_wrapper}>
-          <p>
-            <strong>{member.followers.length}</strong>
-          </p>
-          <span>followers</span>
-        </div>
-        <div className={style.data_wrapper}>
-          <p>
-            <strong>{member.following.length}</strong>
-          </p>
-          <span>following</span>
-        </div>
-      </div>
-      <div className={style.body}>
-        <div>
-          <p className={style.bio}>
-            {member.bio} I am a programmer writer and ddddadasdasd
-          </p>
-        </div>
-        <div className={style.button_container}>
-          <DisplayFollowButton />
-          {member._id === auth.user?._id && (
-            <>
-              <button className={style.button}>Share</button>
-              <button className={style.button}>
-                <IoSettings size={15} />
-              </button>
-            </>
-          )}
-        </div>
+          <Flex direction={"column"} gap={2}>
+            <Text fontSize={"16px"} fontWeight={"bold"} m={0}>
+              {member.username}
+            </Text>
+            <Text fontSize={"13px"} m={0} width={"245px"}>
+              {member.bio || "Programmer, writer and athlete i am also a businees owner"}
+            </Text>
+          </Flex>
+        </Flex>
+      </Box>
+      <Flex gap={8} padding={4} direction={"row"}>
+        <Flex gap={2}>
+          <Text fontWeight={"bold"} m={0}>
+            {member.following.length}
+          </Text>
+          <Text m={0}>Posts</Text>
+        </Flex>
 
-        {/* <div className={style.following_container}>
-          {member.following.map((following) => {
-            return (
-              <div>
-                <img src={following.profileImage} alt="" width={20} height={20} />
-                <span>{following.name}</span>
-              </div>
-            );
-          })}
-        </div>*/}
-      </div>
-    </div>
+        <Flex gap={2}>
+          <Text fontWeight={"bold"} m={0}>
+            {member.followers.length}
+          </Text>
+          <Text m={0}>Followers</Text>
+        </Flex>
+
+        <Flex gap={2}>
+          <Text fontWeight={"bold"} m={0}>
+            0
+          </Text>
+          <Text m={0}>Following</Text>
+        </Flex>
+      </Flex>
+      <HStack mt={2} pl={4}>
+        {auth.user?._id === member._id ? (
+          <IconButton aria-label={""} icon={<SettingsIcon />} />
+        ) : (
+          ""
+        )}
+        <DisplayFollowButton />
+        <Button colorScheme={"blue"}>Share</Button>
+      </HStack>
+    </Box>
   );
 }

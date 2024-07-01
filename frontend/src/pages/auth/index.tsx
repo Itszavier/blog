@@ -7,7 +7,14 @@ import { Box, Tabs, Tab, TabPanels, TabList, TabPanel } from "@chakra-ui/react";
 
 export default function Auth() {
   return (
-    <Box justifyContent={"center"} display={"flex"} pt={"68"} w={"100%"} h={"100vh"}>
+    <Box
+      justifyContent={"center"}
+      display={"flex"}
+      pt={"68"}
+      w={"100%"}
+      h={"100vh"}
+      overflowY={"auto"}
+    >
       <Tabs
         boxShadow={"md"}
         mt={"40px"}
