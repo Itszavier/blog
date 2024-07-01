@@ -17,6 +17,7 @@ import {
   HStack,
   IconButton,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { SettingsIcon } from "@chakra-ui/icons";
 
@@ -30,7 +31,7 @@ export default function UserProfile(props: IUserProfileProps) {
   const auth = useAuth();
   const [isFollowLoading, setIsFollowLoading] = useState<boolean>(false);
   const [member, setMember] = useState(() => props.member);
-  //const [followError, setFollowError] = useState<string | undefined>();
+  const toast = useToast();
 
   const handleFollow = async (e: any) => {
     if (!auth.user) {
@@ -164,7 +165,15 @@ export default function UserProfile(props: IUserProfileProps) {
             size={"xl"}
           />
           <Flex direction={"column"} gap={2}>
-            <Text fontSize={"16px"} fontWeight={"bold"} m={0}>
+            <Text
+              color={"light.accent"}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize={"17px"}
+              fontWeight={"bold"}
+              m={0}
+            >
+              <span style={{ fontSize: "17px" }}>@</span>
               {member.username}
             </Text>
             <Text fontSize={"13px"} m={0} width={"245px"}>
@@ -197,12 +206,18 @@ export default function UserProfile(props: IUserProfileProps) {
       </Flex>
       <HStack mt={2} pl={4}>
         {auth.user?._id === member._id ? (
-          <IconButton aria-label={""} icon={<SettingsIcon />} />
+          <IconButton
+            bg={"black"}
+            color={"white"}
+            aria-label={""}
+            w={"85px"}
+            icon={<SettingsIcon />}
+          />
         ) : (
           ""
         )}
         <DisplayFollowButton />
-        <Button colorScheme={"blue"}>Share</Button>
+        <Button colorScheme="blue">Share</Button>
       </HStack>
     </Box>
   );

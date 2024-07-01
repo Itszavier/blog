@@ -17,7 +17,7 @@ export default function Profile() {
   const [member, setMember] = useState<IMember | null>(null);
   const [memberLoading, setMemberLoading] = useState<boolean>(false);
   const [posts, setPosts] = useState<IPost[]>([]);
-  const [postsLoading, setPostsLoading] = useState<boolean>(true);
+
 
   useEffect(() => {
     setMemberLoading(true);
@@ -39,24 +39,7 @@ export default function Profile() {
     };
   }, [username]);
 
-  useEffect(() => {
-    if (member) {
-      setPostsLoading(true);
-      serverAxios
-        .get(`/posts/id/${member._id}`)
-        .then((response) => {
-          setPosts(response.data.posts);
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          setPostsLoading(false);
-        });
-    }
-  }, [member]);
-
-  if (auth.loading || memberLoading || postsLoading) {
+  if (auth.loading || memberLoading ) {
     return <Loading />;
   }
 
@@ -72,8 +55,8 @@ export default function Profile() {
           member={member}
           setMember={setMember}
         />
-        <Divider h={8} />
-        <UserCreations />
+
+        <UserCreations memberId={member._id} />
       </Box>
     </Box>
   );
