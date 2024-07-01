@@ -8,12 +8,11 @@ import passport from "passport";
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
 import postRoutes from "./routes/article";
-import { IUser } from "./model/user";
+import UserModel, { IUser } from "./model/user";
 import session from "express-session";
 import "./stratetgies/google";
 import errorHandler from "./middleware/error";
 import mongoStore from "connect-mongo";
-
 
 dotenv.config();
 
@@ -46,13 +45,28 @@ app.use(
     },
   })
 );
+passport.serializeUser(function (user: any, done) {
+  done(null, user._id);
+});
+
+passport.deserializeUser(async function (id, done) {
+  try {
+    const user = await UserModel.findOne({ _id: id });
+    done(null, user);
+  } catch (error) {
+    console.log(error);
+    done(error);
+  }
+});
 
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
 app.use(
   cors({
-    origin: "https://narrate-client.loca.lt",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );

@@ -3,6 +3,9 @@
 import { UploadApiResponse } from "cloudinary";
 import cloudinary from "../cloudinaryConfig";
 import generateUniqueId from "generate-unique-id";
+import bcrypt from "bcrypt";
+import TokenModel, { tokenTypes } from "../model/token";
+import mongoose from "mongoose";
 export const unsupportedSymbols = [
   " ",
   "<",
@@ -111,3 +114,32 @@ export const getSelectedUserFields = (type: SelectedUserFields) => {
     return userSelectedFields.join(" ");
   }
 };
+
+export function verifyPassword(verifyPass: string, encryptedPass: string) {
+  return new Promise<boolean>(function (resolve, reject) {
+    bcrypt.compare(verifyPass, encryptedPass, (err, isMatch) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(isMatch);
+    });
+  });
+}
+
+export async function createTokon(userId: string, type: (typeof tokenTypes)[number]) {
+  const randomtoken = generateUniqueId({
+    length: 20,
+    useLetters: true,
+    useNumbers: true,
+  });
+
+  const token = new TokenModel({
+    userId: userId,
+    token: randomtoken, // Generate your token here
+    type,
+    expires: new Date(Date.now() + 3600000), // Token expires in 1 hour
+  });
+
+  await token.save();
+  console.log("Token created successfully!");
+}

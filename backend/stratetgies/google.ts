@@ -33,6 +33,7 @@ passport.use(
             name: profile.displayName,
             email: userEmail,
             avater: profile.profileUrl,
+            authService: "google",
           });
 
           const savedUser = await createdUser.save();
@@ -47,19 +48,5 @@ passport.use(
     }
   )
 );
-
-passport.serializeUser(function (user: any, done) {
-  done(null, user._id);
-});
-
-passport.deserializeUser(async function (id, done) {
-  try {
-    const user = await UserModel.findOne({ _id: id });
-    done(null, user);
-  } catch (error) {
-    console.log(error);
-    done(error);
-  }
-});
 
 export default passport;

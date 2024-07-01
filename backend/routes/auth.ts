@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 
 import passport from "passport";
 import ensureAuthenticated from "../middleware/checkauth";
+import SignUp from "../controller/auth";
 
 dotenv.config();
 
@@ -15,11 +16,18 @@ const router = Router();
 
 router.get("/login/google", passport.authenticate("google"));
 
+router.post("/login", passport.authenticate("local"), function (req, res) {
+  console.log("Successfully login with local Strategy", req.body, req.user);
+  res.redirect(`http://localhost:5173/profile/${req.user?.username}`);
+});
+
+router.post("/signup", SignUp);
+
 router.get(
   "/google/redirect",
   passport.authenticate("google", { failureMessage: "failed" }),
   (req, res, next) => {
-    res.redirect(`https://narrate-client.loca.lt/profile/${req.user?._id}`);
+    res.redirect(`https://narrate-client.loca.lt/profile/${req.user?.username}`);
   }
 );
 
