@@ -31,7 +31,7 @@ export default function UserProfile(props: IUserProfileProps) {
   const auth = useAuth();
   const [isFollowLoading, setIsFollowLoading] = useState<boolean>(false);
   const [member, setMember] = useState(() => props.member);
-  const toast = useToast();
+ // const toast = useToast();
 
   const handleFollow = async (e: any) => {
     if (!auth.user) {
