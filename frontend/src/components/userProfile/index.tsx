@@ -160,7 +160,7 @@ export default function UserProfile(props: IUserProfileProps) {
     <Box
       p={"10px"}
       w={["100%", "100%", "100%"]}
-      h={["290px", "255px"]}
+      h={["312px", "255px"]}
       mt={"10"}
       boxShadow={"md"}
     >
@@ -199,7 +199,7 @@ export default function UserProfile(props: IUserProfileProps) {
       <Flex justifyContent={["center", "normal"]} gap={8} padding={4} direction={"row"}>
         <Flex gap={2}>
           <Text fontWeight={"bold"} m={0}>
-            {member.following.length}
+            0
           </Text>
           <Text m={0}>Posts</Text>
         </Flex>
@@ -213,12 +213,12 @@ export default function UserProfile(props: IUserProfileProps) {
 
         <Flex gap={2}>
           <Text fontWeight={"bold"} m={0}>
-            0
+            {member.following.length}
           </Text>
           <Text m={0}>Following</Text>
         </Flex>
       </Flex>
-      <HStack mt={2} pl={4}>
+      <HStack justifyContent={["center", "normal"]} mt={2} pl={4}>
         {auth.user?._id === member._id ? (
           <IconButton
             bg={"black"}

@@ -3,35 +3,27 @@
 import style from "./style.module.css";
 import { authContext, useAuth } from "../../context/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { serverAxios } from "../../api/axios";
 import { IoNotifications } from "react-icons/io5";
-import { Avatar, Box, useColorModeValue } from "@chakra-ui/react";
+import { Avatar, Box, Button } from "@chakra-ui/react";
+import { useClickOutside } from "@reactuses/core";
 
 export default function ProfileDropdown() {
   const [toggle, setToggle] = useState(false);
   const { user, setUser } = useAuth();
   const Navgate = useNavigate();
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (event: any) => {
-    if (toggle && !event.target.closest("#profileDropdown")) {
-      setToggle(false);
-    }
-  };
-
-  useEffect(() => {
-    // Add event listener on document mount
-    document.addEventListener("click", handleClickOutside);
-
-    // Cleanup function to remove listener on unmount
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [toggle]); // Re-run effect only when toggle changes
-
-  if (!user) {
-    return "";
-  }
   const hideMenu = () => setToggle(false);
 
+  useClickOutside(dropdownRef, () => {
+    setToggle(false);
+  });
+
+  if (!user) {
+    return null;
+  }
   const handleLogout = async () => {
     try {
       setToggle(false);
@@ -43,17 +35,24 @@ export default function ProfileDropdown() {
     }
   };
   return (
-    <Box id={"profileDropdown"} className={` ${style.container}`}>
-      <button
-        id={"profileDropdown"}
+    <Box ref={dropdownRef}>
+      <Button
+        size={{ base: "md" }}
+        bg={"transparent"}
+        _hover={{ bg: "transparent" }}
+        p={0}
+        w={"fit-content"}
         onClick={() => setToggle((prev) => !prev)}
-        className={`border-none ${style.header}`}
       >
         <Avatar name={user.name} src={user.profileImage.url} />
-      </button>
+      </Button>
 
       {toggle && (
-        <Box bg={'light.cardBackground'}  id={"profileDropdown"} className={` ${style.body}`}>
+        <Box
+          bg={"light.cardBackground"}
+          id={"profileDropdown"}
+          className={` ${style.body}`}
+        >
           <div className={style.body_header}>
             <Link to={`/profile/${user.username}`}>
               <span>{user.name}</span>

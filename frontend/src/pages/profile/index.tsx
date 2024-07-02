@@ -47,8 +47,13 @@ export default function Profile() {
   }
 
   return (
-    <Box display={"flex"} w={'100%'}justifyContent={"center"} className={style.container}>
-      <Box bg={['non3', 'none', 'green']} w={['100%', '90%', 'fit-content']} p={{ sm: 0, md: 0 }}>
+    <Box
+      display={"flex"}
+      w={"100%"}
+      justifyContent={"center"}
+      className={style.container}
+    >
+      <Box w={{ base: "90%", md: "60%", lg: "55%" }} p={{ sm: 0, md: 0 }}>
         <UserProfile
           userId={member._id as string}
           member={member}

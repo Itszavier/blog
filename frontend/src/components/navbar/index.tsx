@@ -17,35 +17,30 @@ import {
   useColorModeValue,
   DarkMode,
   useColorMode,
+  IconButton,
+  Flex,
 } from "@chakra-ui/react";
 import AuthModal from "../authmodal";
 import CreateButton from "../createButton";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useState } from "react";
 
 export default function Navbar() {
   const auth = useAuth();
+  const [toggleMenu, setToggleMenu] = useState(false);
   // const postModal = useModal("createPost");
   //const { theme, toggleTheme } = useTheme();
-  const { colorMode, toggleColorMode } = useColorMode();
-
-  const { openModal } = useModal("auth");
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const handleLoginPopup = () => {
-    openModal();
-  };
-
-  console.log(colorMode);
 
   return (
     <Box
       display={"flex"}
       alignItems={"center"}
       width={"100%"}
-      pl={10}
-      pr={10}
-      boxShadow={"md"}
+      boxShadow={{ base: "md", sm: "md" }}
       position={"fixed"}
       h={"68px"}
+      pl={"4px"}
+      pr={"4px"}
       zIndex={99}
       bgColor={"light.background"}
       color={"light.headerFooterText"}
@@ -55,7 +50,20 @@ export default function Navbar() {
           <Text fontSize={"larger"}>ProArticle </Text>
         </Link>
       </Box>
-      <Box display={"flex"} gap={2} alignItems={"center"} ml={"auto"}>
+      <Box
+        className={style.links}
+        display={{ base: "none", sm: "flex" }}
+        gap={2}
+        position={{ base: "absolute", sm: "unset" }}
+        left={{ base: 0, sm: "unset" }}
+        top={{ base: "68px", sm: "unset" }}
+        w={{ base: "100%", sm: "fit-content" }}
+        ml={{ base: 0, sm: "auto" }}
+        flexDirection={{ base: "column", sm: "unset" }}
+        alignItems={"center"}
+        bgColor={"light.background"}
+        boxShadow={{ base: "md", sm: "none" }}
+      >
         {!auth.user ? (
           <>
             <Link to={"/#"} className={style.link}>
@@ -69,12 +77,22 @@ export default function Navbar() {
         ) : (
           <>
             <CreateButton />
-            <ProfileDropdown />
           </>
         )}{" "}
       </Box>
 
-      <AuthModal isOpen={isOpen} onClose={onClose} />
+      <Flex gap={2} ml={{ base: "auto", sm: "4" }} alignItems={"center"}>
+        <ProfileDropdown />
+        <IconButton
+          display={{ base: "flex", sm: "none" }}
+          m={0}
+          fontSize={"35px"}
+          icon={<GiHamburgerMenu />}
+          aria-label=""
+          size={"lg"}
+          mr="2px"
+        />
+      </Flex>
     </Box>
   );
 }

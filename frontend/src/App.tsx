@@ -17,10 +17,11 @@ import NotFound from "./pages/404";
 import Publish from "./pages/publish";
 import { useColorMode } from "@chakra-ui/react";
 import Auth from "./pages/auth";
+import { useAuth } from "./context/auth";
 
 function App() {
   const location = useLocation();
-
+  const auth = useAuth();
   const path = location.pathname;
   // Define the paths where the Navbar should be hidden
   const pathsWithoutNavbar = ["/dashboard", "/editor"];
@@ -34,7 +35,7 @@ function App() {
 
       <Routes>
         <Route path="/editor/:postId" element={<EditorPage />} />
-        <Route path={"/"} element={<Home />} />
+        <Route path={"/"} element={!auth.user ? <Home /> : <Browse />} />
         <Route path={"/auth"} element={<Auth />} />
         <Route path="/profile/:username" element={<Profile />} />
         <Route element={<ProtectedRoutes />}>

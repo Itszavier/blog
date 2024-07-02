@@ -20,8 +20,8 @@ export default function UserCreations(props: Props) {
   console.log(postFetchData.data);
 
   return (
-    <Box boxShadow={"md"} mt={20}>
-      <Tabs mt={8} variant="enclosed" colorScheme="black">
+    <Box boxShadow={"md"} mt={15}>
+      <Tabs  variant="enclosed" colorScheme="black">
         <TabList>
           <Tab>Articles</Tab>
           <Tab isDisabled>Collections</Tab>
