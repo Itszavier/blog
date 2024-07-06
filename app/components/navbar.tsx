@@ -25,10 +25,15 @@ const links: { path: string; type?: "auth" | "normal"; label: string }[] = [
     path: "#",
     label: "membership",
   },
+  {
+    type: "normal",
+    path: "/auth/login",
+    label: "login",
+  },
 
   {
     type: "auth",
-    path: "/auth",
+    path: "/auth/signup",
     label: "Sign up",
   },
 ];
@@ -57,12 +62,12 @@ export default function Navbar() {
         </Text>
       </Flex>
 
-      <SearchBar />
+      {/* <SearchBar /> */}
 
       <Flex
         position={{ base: "fixed", md: "unset" }}
         w={{ base: "100%", md: "fit-content" }}
-        //  ml={{ base: 0, md: "auto" }}
+        ml={{ base: 0, md: "auto" }}
         display={{ base: showMenu ? "flex" : "none", md: "flex" }}
         h={{ base: "100%", md: "unset" }}
         bg={{ base: "white", md: "unset" }}
