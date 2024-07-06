@@ -2,23 +2,45 @@
   "name": "blog",
   "version": "0.1.0",
   "private": true,
+  "main": "server.ts",
   "scripts": {
-    "dev": "next dev",
+    "dev": "ts-node-dev ./server.ts",
     "build": "next build",
-    "start": "next start",
+    "start": "ts-node ./server.ts",
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/next-js": "^2.2.0",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@fluidjs/multer-cloudinary": "^1.0.4",
+    "@tiptap/pm": "^2.4.0",
+    "@tiptap/react": "^2.4.0",
+    "@tiptap/starter-kit": "^2.4.0",
+    "cloudinary": "^2.2.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "framer-motion": "^11.2.13",
+    "mongoose": "^8.4.5",
+    "multer": "^1.4.5-lts.1",
+    "next": "14.2.4",
+    "passport": "^0.7.0",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.4"
+    "react-icons": "^5.2.1",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@types/express": "^4.17.21",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.4"
+    "eslint-config-next": "14.2.4",
+    "typescript": "^5"
   }
 }
