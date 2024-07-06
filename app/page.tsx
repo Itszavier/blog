@@ -1,95 +1,107 @@
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Heading,
+  Text,
+  List,
+  ListItem,
+  ListIcon,
+  Image as CImage,
+} from "@chakra-ui/react";
 import Image from "next/image";
-import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
+    <Box>
+      <Box
+        as="header"
+        padding={{ md: "90px" }}
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        position={"relative"}
+        height={"100vh"}
+        gap={"20px"}
+      >
         <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+          src="/landing.png"
+          alt="social network"
+          width={250}
+          height={245}
+          className="landingImage"
         />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Heading as={"h3"} size={"lg"} textAlign={"center"}>
+          OurCommunity - Your Community, Your Voice
+        </Heading>
+        <Text
+          textAlign={"center"}
+          w={{ md: "740px" }}
+          color={"light.secondaryText"}
         >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+          Discover and share what's happening in your community with our
+          platform! Stay informed and connected by writing about local events,
+          news, and stories. Follow fellow users to keep up with their updates
+          and engage with the community by commenting on articles. Join us in
+          creating a vibrant space for local voices and stories.
+        </Text>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+        <Button ml={"auto"} mr={"auto"} w={"fit-content"} colorScheme="blue">
+          Get Started For Free
+        </Button>
+      </Box>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+      <Flex
+        padding={"25px"}
+        gap={"20px"}
+        flexDirection={"column"}
+        width={"100%"}
+      >
+        <Flex
+          w={"100%"}
+          padding={"8px"}
+          flexDirection={{ md: "column" }}
+          gap={"16px"}
         >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
+          <Heading as={"h2"} textAlign={"left"}>
+            Powerful Rich Text Editor
+          </Heading>
+          <Text w={{ md: "640px" }}>
+            Our intuitive rich text editor makes writing and formatting your
+            articles a breeze. With a wide range of styling options and media
+            integration, you can focus on crafting compelling content without
+            any distractions.
+          </Text>
+        </Flex>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+        <List spacing={4} display={"flex"} flexDir={"row"}>
+          <ListItem boxShadow={"md"} padding={"18px"}>
+            <h2>Easy Formatting</h2>
+            <p>Bold, italicize, underline, and more with a single click.</p>
+          </ListItem>
+
+          <ListItem boxShadow={"md"} padding={"18px"}>
+            <h2>Media Integration</h2>
+            <p>
+              Embed images, videos, and other media directly into your articles.
+            </p>
+          </ListItem>
+
+          <ListItem boxShadow={"md"} padding={"18px"}>
+            <h2>Media Integration</h2>
+            <p>
+              Embed images, videos, and other media directly into your articles.
+            </p>
+          </ListItem>
+
+          <ListItem boxShadow={"md"} padding={"18px"}>
+            <h2>Live Preview</h2>
+            <p>See how your article will look to your readers in real-time.</p>
+          </ListItem>
+        </List>
+      </Flex>
+    </Box>
   );
 }

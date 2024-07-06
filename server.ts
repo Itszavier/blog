@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-const port = 3000
-const app = next({dev: false});
+const port = process.env.PORT || 3000
+const app = next({dev: true});
 const handle = app.getRequestHandler();
 
 
@@ -15,7 +15,7 @@ app.prepare().then(function (){
 
     server.get('*', async (req, res) => {
         try {
-         await handle(req, res)
+         return await handle(req, res)
         } catch (error) {
           res.status(500)
         }  
