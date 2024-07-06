@@ -8,7 +8,6 @@ import {
   List,
   ListItem,
   ListIcon,
-  Image as CImage,
 } from "@chakra-ui/react";
 import Image from "next/image";
 
@@ -16,23 +15,16 @@ export default function Home() {
   return (
     <Box>
       <Box
-        as="header"
         padding={{ md: "90px" }}
         display={"flex"}
         flexDirection={"column"}
         justifyContent={"center"}
         alignItems={"center"}
+        
         position={"relative"}
-        height={"100vh"}
+        height={"460px"}
         gap={"20px"}
       >
-        <Image
-          src="/landing.png"
-          alt="social network"
-          width={250}
-          height={245}
-          className="landingImage"
-        />
         <Heading as={"h3"} size={"lg"} textAlign={"center"}>
           OurCommunity - Your Community, Your Voice
         </Heading>
@@ -49,7 +41,7 @@ export default function Home() {
         </Text>
 
         <Button ml={"auto"} mr={"auto"} w={"fit-content"} colorScheme="blue">
-          Get Started For Free
+          Get Started
         </Button>
       </Box>
 
@@ -57,6 +49,7 @@ export default function Home() {
         padding={"25px"}
         gap={"20px"}
         flexDirection={"column"}
+        bg={"light.cardBackground"}
         width={"100%"}
       >
         <Flex

@@ -46,24 +46,26 @@ export default function Navbar() {
       boxShadow={"md"}
       display={"flex"}
       alignItems={"center"}
-      p={5}
       h={68}
+      pl={{ md: "8px" }}
+      pr={{ md: "8px" }}
       zIndex={99}
     >
-      <Box>
+      <Flex p={"10px"}>
         <Text fontSize={20} fontWeight={500}>
           OurCommunity
         </Text>
-      </Box>
+      </Flex>
 
       <SearchBar />
 
       <Flex
         position={{ base: "fixed", md: "unset" }}
         w={{ base: "100%", md: "fit-content" }}
+        //  ml={{ base: 0, md: "auto" }}
         display={{ base: showMenu ? "flex" : "none", md: "flex" }}
         h={{ base: "100%", md: "unset" }}
-        bg={"white"}
+        bg={{ base: "white", md: "unset" }}
         left={{ base: 0, md: "unset" }}
         top={{ base: 0, md: "unset" }}
         gap={"5px"}
@@ -73,6 +75,7 @@ export default function Navbar() {
         flexDirection={{ base: "column", md: "row" }}
         // color={"red"}
         zIndex={200}
+        fontSize={{ base: "larger", md: "initial" }}
       >
         <Flex
           display={{ base: "flex", md: "none" }}
@@ -105,6 +108,7 @@ export default function Navbar() {
                 _hover={{ bg: "gray.100", textDecoration: "none" }}
                 textTransform={"capitalize"}
                 href={link.path}
+                mb={{ base: "19px", md: "unset" }}
               >
                 {link.label}
               </Link>
