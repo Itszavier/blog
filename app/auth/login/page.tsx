@@ -1,4 +1,4 @@
-import LoginWithGoogle from "@/app/components/googleButton";
+import { GoogleButton } from "@/app/components/authButton";
 import {
   FormControl,
   FormLabel,
@@ -21,12 +21,9 @@ import { FormEvent } from "react";
 // import { useAuth } from "../../context/auth";
 
 export default function Login() {
-
-
   const handleLogin = () => {
     window.open(`https://narrate-server.loca.lt/auth/login/google`, "_self");
   };
-
 
   return (
     <Box
@@ -78,7 +75,7 @@ export default function Login() {
         <Divider h={"20px"} />
         <Box padding={"10px"}>
           <Flex justify={"center"} alignItems={"center"}>
-            <LoginWithGoogle />
+            <GoogleButton />
           </Flex>
         </Box>
       </Box>

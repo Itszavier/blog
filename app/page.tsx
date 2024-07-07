@@ -9,9 +9,10 @@ import {
   ListItem,
   ListIcon,
 } from "@chakra-ui/react";
+import { connect } from "http2";
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
   return (
     <Box>
       <Box
@@ -20,7 +21,6 @@ export default function Home() {
         flexDirection={"column"}
         justifyContent={"center"}
         alignItems={"center"}
-        
         position={"relative"}
         height={"460px"}
         gap={"20px"}
