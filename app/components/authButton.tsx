@@ -1,10 +1,12 @@
 "use client";
 
 import { Button, IconButton } from "@chakra-ui/react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { FaGoogle } from "react-icons/fa";
+import { LoginIn } from "../lib/auth";
 
 export function GoogleButton() {
+  const {} = useSession();
   return (
     <Button
       onClick={() => {

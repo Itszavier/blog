@@ -12,6 +12,7 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { GoogleButton, XButton } from "@/app/components/authButton";
+import { signIn } from "@/app/auth";
 
 export default function Signup() {
   return (
@@ -23,7 +24,13 @@ export default function Signup() {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <Box as="form" width={"470px"} h="fit-content" p={"10px"}>
+      <Box
+        action={'api/auth/signin/'}
+        as="form"
+        width={"470px"}
+        h="fit-content"
+        p={"10px"}
+      >
         <Box padding={"5px"}>
           <Heading textAlign={"center"}>Sign up</Heading>
         </Box>

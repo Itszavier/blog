@@ -9,8 +9,6 @@ import {
   ListItem,
   ListIcon,
 } from "@chakra-ui/react";
-import { connect } from "http2";
-import Image from "next/image";
 
 export default async function Home() {
   return (
