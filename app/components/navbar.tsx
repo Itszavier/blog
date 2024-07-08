@@ -13,11 +13,6 @@ const links: { path: string; type?: "auth" | "normal"; label: string }[] = [
   {
     type: "normal",
     path: "#",
-    label: "contact",
-  },
-  {
-    type: "normal",
-    path: "#",
     label: "blog",
   },
 
@@ -28,13 +23,13 @@ const links: { path: string; type?: "auth" | "normal"; label: string }[] = [
   },
   {
     type: "normal",
-    path: "/auth/login",
+    path: "/login",
     label: "login",
   },
 
   {
     type: "auth",
-    path: "/auth/signup",
+    path: "/signup",
     label: "Sign up",
   },
 ];
@@ -46,18 +41,18 @@ export default function Navbar() {
   console.log(session);
   return (
     <Box
+      as={"nav"}
       position={"fixed"}
       left={0}
       w={"100%"}
-      bg={"white"}
       top={0}
       boxShadow={"md"}
       display={"flex"}
       alignItems={"center"}
       h={68}
-      pl={{ md: "8px" }}
-      pr={{ md: "8px" }}
+      p={"8px"}
       zIndex={99}
+      bg={"light.background"}
     >
       <Flex p={"10px"}>
         <Text fontSize={20} fontWeight={500}>
@@ -129,8 +124,7 @@ export default function Navbar() {
                 onClick={() => {
                   setShowMenu(false);
                 }}
-                bg={"#3182ce"}
-                color={"#ffffff"}
+                bg={"light.secondaryBtn"}
                 w={{ base: "80%", md: "unset" }}
                 borderRadius={"10px"}
                 textAlign={{ base: "center", md: "unset" }}

@@ -4,9 +4,9 @@
   "private": true,
   "main": "server.ts",
   "scripts": {
-    "dev": "ts-node-dev ./server.ts",
+    "dev": "next dev",
     "build": "next build",
-    "start": "ts-node ./server.ts",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {

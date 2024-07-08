@@ -1,16 +1,20 @@
 "use client";
 
 import { Button, IconButton } from "@chakra-ui/react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { FaGoogle } from "react-icons/fa";
-import { LoginIn } from "../lib/auth";
 
 export function GoogleButton() {
-  const {} = useSession();
   return (
     <Button
-      onClick={() => {
-        signIn("google");
+      bg={"light.secondaryBtn"}
+      onClick={async () => {
+        try {
+          await signIn("google");
+        } catch (error) {
+          console.error("Error signing in with Google:", error);
+          // Handle the error (e.g., show an error message to the user)
+        }
       }}
       w={"90%"}
     >
@@ -20,5 +24,9 @@ export function GoogleButton() {
 }
 
 export function XButton() {
-  return <Button w={"90%"}>Sign in with Twitter</Button>;
+  return (
+    <Button bg={"light.secondaryBtn"} w={"90%"}>
+      Sign in with Twitter(x)
+    </Button>
+  );
 }

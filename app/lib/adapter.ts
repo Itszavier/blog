@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 export default function MongooseAdapter() {
   return {
     async createUser(user: any) {
+      console.log(user);
       return;
     },
     async getUser(id: any) {

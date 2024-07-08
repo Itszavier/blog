@@ -13,8 +13,8 @@ const colors = {
     buttonBackground: "#a19c9c",
     buttonText: "#333333",
     buttonBorder: "#CCCCCC",
-    secondaryButtonBackground: "#D3D3D3",
-    secondaryButtonText: "#555555",
+    secondaryBtn: "#D3D3D3",
+    secondaryBtnText: "#555555",
     successBtn: "#4CAF50",
     successButtonText: "#FFFFFF",
     dangerButtonBackground: "#F44336",
@@ -39,7 +39,7 @@ const colors = {
     buttonBackground: "#1F1F1F",
     buttonText: "#FFFFFF",
     buttonBorder: "#272727",
-    secondaryButtonBackground: "#333333",
+    secondarybtn: "#333333",
     secondaryButtonText: "#B0B0B0",
     successButtonBackground: "#388E3C",
     successButtonText: "#FFFFFF",
@@ -83,9 +83,9 @@ const theme: ThemeOverride = extendTheme({
           color: "#FFFFFF",
         },
         "&.secondary": {
-          bg: colors.light.secondaryButtonBackground,
+          bg: colors.light.secondaryBtn,
 
-          color: colors.light.secondaryButtonText,
+          color: colors.light.secondaryText,
         },
         "&.success": {
           bg: colors.light.successBtn,

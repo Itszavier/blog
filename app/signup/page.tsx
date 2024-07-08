@@ -24,33 +24,20 @@ export default function Signup() {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <Box
-        action={'api/auth/signin/'}
-        as="form"
-        width={"470px"}
-        h="fit-content"
-        p={"10px"}
-      >
-        <Box padding={"5px"}>
-          <Heading textAlign={"center"}>Sign up</Heading>
-        </Box>
-
-        <Flex display={"flex"} flexDirection={"column"} p={8} gap={"8"}>
-          <FormControl>
+      <Box as="form" p={"14px"} boxShadow={"md"} width={"450px"}>
+        <Heading size={"lg"} p={"14px"} textAlign={"center"}>
+          Sign up
+        </Heading>
+        <Flex flexDir={"column"} alignItems={"center"}>
+          <FormControl w="90%" p={"14px"}>
             <FormLabel>Email</FormLabel>
-            <Input placeholder="Email" type={"email"} />
+            <Input placeholder="Email" />
           </FormControl>
 
-          <FormControl>
+          <FormControl w="90%" p={"14px"}>
             <FormLabel>Password</FormLabel>
-            <Input placeholder="Password" type={"password"} />
+            <Input placeholder="Password" />
           </FormControl>
-        </Flex>
-
-        <Flex justifyContent={"space-evenly"} p={2} width={"100%"}>
-          <Text>
-            Already have an account? <Link href={"/auth/login"}>Signup</Link>
-          </Text>
         </Flex>
 
         <Flex mt={2} p={2} w={"100%"} justify={"center"}>
@@ -58,10 +45,10 @@ export default function Signup() {
             Sign up
           </Button>
         </Flex>
-        <Flex alignItems="center">
-          <Divider orientation="horizontal" height="2px" flex="1" />
+        <Flex justifyContent={"center"} w={"100%"} alignItems="center">
+          <Divider w={"20px"} orientation="horizontal" height="2px" flex="1" />
           <Text mx={2}>Or</Text>
-          <Divider orientation="horizontal" height="2px" flex="1" />
+          <Divider w={"20px"} orientation="horizontal" height="2px" flex="1" />
         </Flex>
         <Flex
           mt={2}
