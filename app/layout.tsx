@@ -14,11 +14,13 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  session,
 }: Readonly<{
   children: React.ReactNode;
+  session: any;
 }>) {
   connectDB();
-  
+
   return (
     <html lang="en">
       <body className={inter.className}>

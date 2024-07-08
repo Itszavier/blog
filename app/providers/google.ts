@@ -5,6 +5,7 @@ export const GoogleProvider = Google({
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 
   profile(user, tokens) {
+    console.log('user from google provider', user)
     return user;
   },
 });

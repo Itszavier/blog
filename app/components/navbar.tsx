@@ -7,6 +7,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "@chakra-ui/next-js";
 import { useState } from "react";
 import SearchBar from "./search";
+import { useSession } from "next-auth/react";
 
 const links: { path: string; type?: "auth" | "normal"; label: string }[] = [
   {
@@ -40,7 +41,9 @@ const links: { path: string; type?: "auth" | "normal"; label: string }[] = [
 
 export default function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
+  const session = useSession();
 
+  console.log(session);
   return (
     <Box
       position={"fixed"}
