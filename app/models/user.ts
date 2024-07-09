@@ -1,7 +1,6 @@
-import { Schema, SchemaTypes, model, Document } from "mongoose";
+import mongoose, { Schema, SchemaTypes, model, Document } from "mongoose";
 import generateUniqueId from "generate-unique-id";
 import { generateUsername, generateFromEmail } from "unique-username-generator";
-import { min } from "lodash";
 import bcrypt from "bcrypt";
 
 export interface IUser extends Document {
@@ -9,21 +8,20 @@ export interface IUser extends Document {
   name: string;
   username: string;
   bio?: string;
-  pronouns?: string;
+  gender?: string;
   bannerUrl?: string;
+  accountId: string;
 
-  profileImage: {
+  picture: {
     id: string;
     storage: "url" | "cloud";
     url: string;
   };
   email: string;
+  emailVerified: boolean;
   password: string;
-  socials: string[];
-  occupation?: string;
   followers: Schema.Types.ObjectId[] | string[];
   following: Schema.Types.ObjectId[] | string[];
-  authService: "google" | "local";
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -32,7 +30,7 @@ const userSchema = new Schema<IUser>({
 
   username: { type: SchemaTypes.String, unique: true },
 
-  profileImage: {
+  picture: {
     url: {
       type: SchemaTypes.String,
       default: "https://avatar.iran.liara.run/public/boy?username=Ash",
@@ -45,12 +43,17 @@ const userSchema = new Schema<IUser>({
 
     storage: {
       type: SchemaTypes.String,
-      enum: ["cloud", "url"],
+      enum: ["us", "url"],
       defualt: "url",
     },
   },
 
-  email: { type: SchemaTypes.String, required: true, unique: true },
+  email: {
+    type: SchemaTypes.String,
+    lowercase: true,
+    required: true,
+    unique: true,
+  },
 
   password: { type: SchemaTypes.String },
 
@@ -58,13 +61,8 @@ const userSchema = new Schema<IUser>({
     type: SchemaTypes.String,
   },
 
-  pronouns: {
+  gender: {
     type: SchemaTypes.String,
-  },
-
-  socials: {
-    type: [SchemaTypes.String],
-    default: [],
   },
 
   bannerUrl: {
@@ -81,12 +79,6 @@ const userSchema = new Schema<IUser>({
     type: [SchemaTypes.ObjectId],
     ref: "User",
     default: [],
-  },
-
-  authService: {
-    type: SchemaTypes.String,
-    enum: ["local", "google"],
-    required: true,
   },
 });
 
@@ -130,6 +122,7 @@ userSchema.methods.comparePassword = async function (
 ): Promise<boolean> {
   return bcrypt.compare(candidatePassword, this.password);
 };
-const UserModel = model<IUser>("User", userSchema, "users");
+const UserModel =
+  mongoose.models.User<IUser> || model<IUser>("User", userSchema, "users");
 
 export default UserModel;

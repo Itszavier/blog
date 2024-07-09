@@ -1,50 +1,9 @@
-/** @return { import("next-auth/adapters").Adapter } */
+import { Adapter } from "@auth/core/adapters";
 import mongoose from "mongoose";
+import UserModel from "../models/user";
+import AccountModel from "../models/account"; // Assuming you have an Account model
+// Assuming you have a Session model
 
-export default function MongooseAdapter() {
-  return {
-    async createUser(user: any) {
-      console.log(user);
-      return;
-    },
-    async getUser(id: any) {
-      return;
-    },
-    async getUserByEmail(email: any) {
-      return;
-    },
-    async getUserByAccount({ providerAccountId, provider }: any) {
-      return;
-    },
-    async updateUser(user: any) {
-      return;
-    },
-    async deleteUser(userId: any) {
-      return;
-    },
-    async linkAccount(account: any) {
-      return;
-    },
-    async unlinkAccount({ providerAccountId, provider }: any) {
-      return;
-    },
-    async createSession({ sessionToken, userId, expires }: any) {
-      return;
-    },
-    async getSessionAndUser(sessionToken: any) {
-      return;
-    },
-    async updateSession({ sessionToken }: any) {
-      return;
-    },
-    async deleteSession(sessionToken: any) {
-      return;
-    },
-    async createVerificationToken({ identifier, expires, token }: any) {
-      return;
-    },
-    async useVerificationToken({ identifier, token }: any) {
-      return;
-    },
-  };
+export default function MongooseAdapter(): Adapter {
+  return {};
 }

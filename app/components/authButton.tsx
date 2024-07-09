@@ -7,7 +7,8 @@ import { FaGoogle } from "react-icons/fa";
 export function GoogleButton() {
   return (
     <Button
-      bg={"light.secondaryBtn"}
+      w={{ base: "90%", md: "335px" }}
+      colorScheme="blue"
       onClick={async () => {
         try {
           await signIn("google");
@@ -16,7 +17,6 @@ export function GoogleButton() {
           // Handle the error (e.g., show an error message to the user)
         }
       }}
-      w={"90%"}
     >
       Sign in with Google
     </Button>
@@ -25,7 +25,7 @@ export function GoogleButton() {
 
 export function XButton() {
   return (
-    <Button bg={"light.secondaryBtn"} w={"90%"}>
+    <Button colorScheme="blue" w={{ base: "90%", md: "335px" }}>
       Sign in with Twitter(x)
     </Button>
   );
