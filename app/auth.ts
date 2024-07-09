@@ -22,23 +22,29 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
     Credentials({
       name: "Credentials",
-
+      type: "credentials",
       credentials: {
-        email: { label: "username", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: { label: "email" },
+        password: { label: "password" },
       },
 
-      async authorize(credentials, req) {
-        const user = await UserModel.findOne({ email: credentials.email });
+      authorize: async ({ email, password }) => {
+        console.log(email, password);
+        const user = await UserModel.findOne({ email: email });
 
         if (!user) {
-          return null;
-        } else {
-          if (!(await user.comparePassword(credentials.password as string))) {
-            return null;
-          }
-          return user;
+          console.log("no user with that password");
+          throw new Error("Invalid credentials");
         }
+
+        const vaildPassword = await user!.comparePassword(password as string);
+        console.log(vaildPassword);
+        if (!vaildPassword) {
+          console.log("password not valid");
+          throw new Error("Invalid credentials");
+        }
+
+        return user;
       },
     }),
   ],

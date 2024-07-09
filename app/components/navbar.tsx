@@ -1,13 +1,13 @@
 /** @format */
 "use client";
 
-import { Box, Text, Flex, IconButton } from "@chakra-ui/react";
+import { Box, Text, Flex, IconButton, Button } from "@chakra-ui/react";
 import { MdClose } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "@chakra-ui/next-js";
 import { useState } from "react";
 import SearchBar from "./search";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 const links: { path: string; type?: "auth" | "normal"; label: string }[] = [
   {
@@ -39,6 +39,7 @@ export default function Navbar() {
   const session = useSession();
 
   console.log(session);
+
   return (
     <Box
       as={"nav"}
@@ -151,6 +152,12 @@ export default function Navbar() {
         }}
         ml={{ base: "auto", md: 0 }}
       />
+
+      {session.status === "authenticated" && (
+        <Button onClick={async () => await signOut({ redirect: false })}>
+          logout
+        </Button>
+      )}
     </Box>
   );
 }

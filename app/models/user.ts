@@ -123,6 +123,7 @@ userSchema.methods.comparePassword = async function (
   return bcrypt.compare(candidatePassword, this.password);
 };
 const UserModel =
-  mongoose.models.User<IUser> || model<IUser>("User", userSchema, "users");
+  (mongoose.models.User as mongoose.Model<IUser>) ||
+  model<IUser>("User", userSchema, "users");
 
 export default UserModel;

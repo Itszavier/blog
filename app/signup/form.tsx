@@ -20,6 +20,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { redirect } from "next/dist/server/api-utils";
 
 interface Inputs {
   email: string;
@@ -37,15 +39,12 @@ const FormSchema = z.object({
 });
 
 export default function SignUpForm() {
+  const router = useRouter();
   const toast = useToast({ position: "bottom-right" });
   const { register, handleSubmit, formState } = useForm<Inputs>({
     resolver: zodResolver(FormSchema),
   });
-  const { errors, isLoading } = formState;
-
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
+  const { errors, isSubmitting } = formState;
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
@@ -70,19 +69,17 @@ export default function SignUpForm() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
+      await signIn("credentials", {
+        ...data,
+      });
       toast({
         title: "Signup",
         status: "success",
         description: "Successfully registered your account",
       });
 
-      await signIn("credentials", {
-        ...data,
-        redirect: true,
-        callbackUrl: "/profile/",
-      });
-
       console.log(result);
+      router.push("/profile");
     } catch (error: any) {
       console.log("error", error);
       toast({
@@ -142,7 +139,7 @@ export default function SignUpForm() {
 
           <Flex mt={{ base: "2px" }} p={2} w={"100%"} justify={"center"}>
             <Button
-              isLoading={isLoading}
+              isLoading={isSubmitting}
               type="submit"
               bg="light.secondaryBtn"
               width={{ base: "90%" }}

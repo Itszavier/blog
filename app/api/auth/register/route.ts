@@ -35,10 +35,12 @@ export async function POST(request: NextRequest) {
       password,
     });
 
+    await createdUser;
+
     console.log(createdUser);
 
     return NextResponse.json(
-      { message: "successfuly created user" },
+      { message: "successfuly created user", user: createdUser },
       { status: 200 }
     );
   } catch (error) {
