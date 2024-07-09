@@ -20,8 +20,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
 
 interface Inputs {
   email: string;

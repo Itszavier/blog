@@ -2,6 +2,7 @@
 
 import { Button, IconButton } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 import { FaGoogle } from "react-icons/fa";
 
 export function GoogleButton() {
@@ -11,7 +12,7 @@ export function GoogleButton() {
       colorScheme="blue"
       onClick={async () => {
         try {
-          await signIn("google");
+          await signIn("google", { redirect: true, callbackUrl: "/profile" });
         } catch (error) {
           console.error("Error signing in with Google:", error);
           // Handle the error (e.g., show an error message to the user)

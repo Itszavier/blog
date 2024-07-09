@@ -14,7 +14,7 @@ export interface IUser extends Document {
 
   picture: {
     id: string;
-    storage: "url" | "cloud";
+    storage: "url" | "us";
     url: string;
   };
   email: string;

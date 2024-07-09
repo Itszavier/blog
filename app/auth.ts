@@ -6,7 +6,7 @@ import UserModel from "./models/user";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: true,
-
+  adapter: MongooseAdapter(),
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,

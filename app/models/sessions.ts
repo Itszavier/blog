@@ -1,8 +1,8 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose, { Document, Schema, Model, model } from "mongoose";
 
 // Interface for defining the session document
 interface ISession extends Document {
-  id: string;
+  _id: string;
   timestamp: Date;
   expires: Date;
   sessionToken: string;
@@ -11,10 +11,7 @@ interface ISession extends Document {
 
 // Define mongoose schema for Session
 const SessionSchema: Schema = new Schema({
-  id: {
-    type: String,
-    required: true,
-  },
+ 
   timestamp: {
     type: Date,
     default: Date.now,
@@ -34,10 +31,8 @@ const SessionSchema: Schema = new Schema({
   },
 });
 
-// Define mongoose model for Session
-const SessionModel: Model<ISession> = mongoose.model<ISession>(
-  "Session",
-  SessionSchema
-);
+const SessionModel =
+  (mongoose.models.Session as mongoose.Model<ISession>) ||
+  model("Session", SessionSchema);
 
 export default SessionModel;
