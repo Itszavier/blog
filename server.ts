@@ -19,10 +19,8 @@ async function startServer() {
   // Use Vite middleware in development, static serving in production
   app.use(vite ? vite.middlewares : express.static("build/client"));
 
-  const build = vite
-    ? ((await vite.ssrLoadModule("virtual:remix/server-build")) as ServerBuild) // Load Remix server build using Vite in development
-    : await import("./build/server/index.js"); // Import the pre-built server build in production
-
+  const build = await vite!.ssrLoadModule("virtual:remix/server-build") as ServerBuild // Load Remix server build using Vite in development
+    
   // Serve static assets from the build/client directory
 
   app.use(express.static("public", { maxAge: "1h" }));
