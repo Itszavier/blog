@@ -3,3 +3,4 @@ node_modules
 /.cache
 build
 .env
+vite.config.ts.timestamp-1722473319489-b5992f94acee1.mjs
